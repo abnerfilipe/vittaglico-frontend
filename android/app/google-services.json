@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "218265796992",
+    "project_id": "tnc-in",
+    "storage_bucket": "tnc-in.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:218265796992:android:dadc0d714a15ff470f4165",
+        "android_client_info": {
+          "package_name": "com.mycompany.tncin"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDqNmmT6MwbEq6b_LaJ4VLE0BwqcFj0hEE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

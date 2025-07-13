@@ -1,0 +1,35 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /user/{document} {
+      allow create: if true;
+      allow read: if true;
+      allow write: if true;
+      allow delete: if true;
+    }
+
+    match /user/{parent}/user_events/{document} {
+      allow create: if request.auth.uid == parent;
+      allow read: if true;
+      allow write: if true;
+      allow delete: if true;
+    }
+
+    match /{path=**}/user_events/{document} {
+      allow read: if true;
+    }
+
+
+    match /user/{parent}/notification/{document} {
+      allow create: if request.auth.uid == parent;
+      allow read: if true;
+      allow write: if true;
+      allow delete: if true;
+    }
+
+    match /{path=**}/notification/{document} {
+      allow read: if true;
+    }
+
+  }
+}
