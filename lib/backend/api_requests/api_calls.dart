@@ -23,6 +23,9 @@ class VittaglicoBackendaDevelopmentGroup {
   static ProfileCall profileCall = ProfileCall();
   static ListarUsuariosCall listarUsuariosCall = ListarUsuariosCall();
   static AtualizarUsuarioCall atualizarUsuarioCall = AtualizarUsuarioCall();
+  static AtualizarUsuarioTelefoneDataDeNascimentoCall
+      atualizarUsuarioTelefoneDataDeNascimentoCall =
+      AtualizarUsuarioTelefoneDataDeNascimentoCall();
   static ValidateAuthorizationCall validateAuthorizationCall =
       ValidateAuthorizationCall();
 }
@@ -300,13 +303,45 @@ class AtualizarUsuarioCall {
     final ffApiRequestBody = '''
 {
   "nome": "${escapeStringForJson(nome)}",
-  "email": "${escapeStringForJson(email)}",
-  "senha": "${escapeStringForJson(senha)}",
   "telefone": "${escapeStringForJson(telefone)}",
   "dataDeNascimento": "${escapeStringForJson(dataDeNascimento)}"
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'atualizarUsuario',
+      apiUrl: '${baseUrl}/usuario',
+      callType: ApiCallType.PUT,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${token}',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class AtualizarUsuarioTelefoneDataDeNascimentoCall {
+  Future<ApiCallResponse> call({
+    String? token = '',
+    String? telefone = '',
+    String? dataDeNascimento = '',
+  }) async {
+    final baseUrl = VittaglicoBackendaDevelopmentGroup.getBaseUrl();
+
+    final ffApiRequestBody = '''
+{
+  "telefone": "${escapeStringForJson(telefone)}",
+  "dataDeNascimento": "${escapeStringForJson(dataDeNascimento)}"
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'atualizarUsuarioTelefoneDataDeNascimento',
       apiUrl: '${baseUrl}/usuario',
       callType: ApiCallType.PUT,
       headers: {

@@ -1,3 +1,4 @@
+import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/index.dart';
 import 'sign_up_page_widget.dart' show SignUpPageWidget;
@@ -41,6 +42,10 @@ class SignUpPageModel extends FlutterFlowModel<SignUpPageWidget> {
   String? Function(BuildContext, String?)? senhaTextControllerValidator;
   // State field(s) for aceiteTermosEhPolitica widget.
   bool? aceiteTermosEhPoliticaValue;
+  // Stores action output result for [Backend Call - API (login)] action in Button widget.
+  ApiCallResponse? apiResult;
+  // Stores action output result for [Backend Call - API (profile)] action in Button widget.
+  ApiCallResponse? apiResultProfile;
 
   @override
   void initState(BuildContext context) {

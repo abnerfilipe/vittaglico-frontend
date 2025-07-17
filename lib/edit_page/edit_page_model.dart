@@ -16,17 +16,13 @@ class EditPageModel extends FlutterFlowModel<EditPageWidget> {
   // State field(s) for TextField widget.
   FocusNode? textFieldFocusNode2;
   TextEditingController? textController2;
+  late MaskTextInputFormatter textFieldMask2;
   String? Function(BuildContext, String?)? textController2Validator;
   // State field(s) for TextField widget.
   FocusNode? textFieldFocusNode3;
   TextEditingController? textController3;
   late MaskTextInputFormatter textFieldMask3;
   String? Function(BuildContext, String?)? textController3Validator;
-  // State field(s) for TextField widget.
-  FocusNode? textFieldFocusNode4;
-  TextEditingController? textController4;
-  late MaskTextInputFormatter textFieldMask4;
-  String? Function(BuildContext, String?)? textController4Validator;
   // Stores action output result for [Backend Call - API (atualizarUsuario)] action in Button widget.
   ApiCallResponse? apiResponse;
 
@@ -43,8 +39,5 @@ class EditPageModel extends FlutterFlowModel<EditPageWidget> {
 
     textFieldFocusNode3?.dispose();
     textController3?.dispose();
-
-    textFieldFocusNode4?.dispose();
-    textController4?.dispose();
   }
 }

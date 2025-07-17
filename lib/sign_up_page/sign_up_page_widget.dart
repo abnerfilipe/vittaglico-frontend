@@ -1,4 +1,6 @@
+import '/auth/custom_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
+import '/backend/schema/structs/index.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -975,7 +977,138 @@ class _SignUpPageWidgetState extends State<SignUpPageWidget> {
                                       _model.aceiteTermosEhPoliticaValue,
                                 );
 
-                                context.goNamed(UploadPhoneWidget.routeName);
+                                _model.apiResult =
+                                    await VittaglicoBackendaDevelopmentGroup
+                                        .loginCall
+                                        .call(
+                                  email: _model.emailTextController.text,
+                                  senha: _model.senhaTextController.text,
+                                );
+
+                                if ((_model.apiResult?.succeeded ?? true)) {
+                                  FFAppState().token = AuthStruct(
+                                    token: VittaglicoBackendaDevelopmentGroup
+                                        .loginCall
+                                        .token(
+                                      (_model.apiResult?.jsonBody ?? ''),
+                                    ),
+                                  );
+                                  safeSetState(() {});
+                                  GoRouter.of(context).prepareAuthEvent();
+                                  await authManager.signIn(
+                                    authenticationToken:
+                                        VittaglicoBackendaDevelopmentGroup
+                                            .loginCall
+                                            .token(
+                                      (_model.apiResult?.jsonBody ?? ''),
+                                    ),
+                                  );
+                                  _model.apiResultProfile =
+                                      await VittaglicoBackendaDevelopmentGroup
+                                          .profileCall
+                                          .call(
+                                    token: FFAppState().token.token,
+                                  );
+
+                                  if ((_model.apiResultProfile?.succeeded ??
+                                      true)) {
+                                    FFAppState().usuario = UsuarioStruct(
+                                      id: VittaglicoBackendaDevelopmentGroup
+                                          .profileCall
+                                          .id(
+                                        (_model.apiResultProfile?.jsonBody ??
+                                            ''),
+                                      ),
+                                      nome: VittaglicoBackendaDevelopmentGroup
+                                          .profileCall
+                                          .nome(
+                                        (_model.apiResultProfile?.jsonBody ??
+                                            ''),
+                                      ),
+                                      email: VittaglicoBackendaDevelopmentGroup
+                                          .profileCall
+                                          .email(
+                                        (_model.apiResultProfile?.jsonBody ??
+                                            ''),
+                                      ),
+                                      telefone:
+                                          VittaglicoBackendaDevelopmentGroup
+                                              .profileCall
+                                              .telefone(
+                                        (_model.apiResultProfile?.jsonBody ??
+                                            ''),
+                                      ),
+                                      dataDeNascimento:
+                                          VittaglicoBackendaDevelopmentGroup
+                                              .profileCall
+                                              .dataDeNascimento(
+                                                (_model.apiResultProfile
+                                                        ?.jsonBody ??
+                                                    ''),
+                                              )
+                                              .toString(),
+                                      aceiteTermosCondicoes:
+                                          VittaglicoBackendaDevelopmentGroup
+                                              .profileCall
+                                              .aceiteTermosCondicoes(
+                                        (_model.apiResultProfile?.jsonBody ??
+                                            ''),
+                                      ),
+                                      aceitePoliticaDePrivacidade:
+                                          VittaglicoBackendaDevelopmentGroup
+                                              .profileCall
+                                              .aceitePoliticaDePrivacidade(
+                                        (_model.apiResultProfile?.jsonBody ??
+                                            ''),
+                                      ),
+                                    );
+                                    FFAppState().update(() {});
+
+                                    context.pushNamedAuth(
+                                        UploadPhoneWidget.routeName,
+                                        context.mounted);
+                                  } else {
+                                    context.pushNamedAuth(
+                                        LoginPageWidget.routeName,
+                                        context.mounted);
+
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text(
+                                          'Erro ao carregar o perfil.',
+                                          style: TextStyle(
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryText,
+                                          ),
+                                        ),
+                                        duration: Duration(milliseconds: 4000),
+                                        backgroundColor:
+                                            FlutterFlowTheme.of(context)
+                                                .secondary,
+                                      ),
+                                    );
+                                  }
+                                } else {
+                                  context.pushNamedAuth(
+                                      LoginPageWidget.routeName,
+                                      context.mounted);
+
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text(
+                                        '\tCredenciais inválidas.',
+                                        style: TextStyle(
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryText,
+                                        ),
+                                      ),
+                                      duration: Duration(milliseconds: 4000),
+                                      backgroundColor:
+                                          FlutterFlowTheme.of(context)
+                                              .secondary,
+                                    ),
+                                  );
+                                }
                               } else {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
@@ -992,6 +1125,8 @@ class _SignUpPageWidgetState extends State<SignUpPageWidget> {
                                   ),
                                 );
                               }
+
+                              safeSetState(() {});
                             },
                             text: 'Cadastrar',
                             options: FFButtonOptions(

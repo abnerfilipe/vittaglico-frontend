@@ -494,45 +494,63 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                               ),
                             ),
                           ),
-                          RichText(
-                            textScaler: MediaQuery.of(context).textScaler,
-                            text: TextSpan(
-                              children: [
-                                TextSpan(
-                                  text: 'Não tem uma conta?',
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        font: GoogleFonts.poppins(
+                          InkWell(
+                            splashColor: Colors.transparent,
+                            focusColor: Colors.transparent,
+                            hoverColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
+                            onTap: () async {
+                              context.pushNamed(SignUpPageWidget.routeName);
+                            },
+                            child: RichText(
+                              textScaler: MediaQuery.of(context).textScaler,
+                              text: TextSpan(
+                                children: [
+                                  TextSpan(
+                                    text: 'Não tem uma conta?',
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          font: GoogleFonts.poppins(
+                                            fontWeight: FontWeight.w500,
+                                            fontStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyMedium
+                                                    .fontStyle,
+                                          ),
+                                          color: FlutterFlowTheme.of(context)
+                                              .textColor,
+                                          fontSize: 12.0,
+                                          letterSpacing: 0.0,
                                           fontWeight: FontWeight.w500,
                                           fontStyle:
                                               FlutterFlowTheme.of(context)
                                                   .bodyMedium
                                                   .fontStyle,
                                         ),
-                                        color: FlutterFlowTheme.of(context)
-                                            .textColor,
-                                        fontSize: 12.0,
-                                        letterSpacing: 0.0,
-                                        fontWeight: FontWeight.w500,
+                                  ),
+                                  TextSpan(
+                                    text: 'Cadastra-se',
+                                    style: GoogleFonts.poppins(
+                                      color:
+                                          FlutterFlowTheme.of(context).primary,
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 12.0,
+                                    ),
+                                  )
+                                ],
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      font: GoogleFonts.poppins(
+                                        fontWeight: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .fontWeight,
                                         fontStyle: FlutterFlowTheme.of(context)
                                             .bodyMedium
                                             .fontStyle,
                                       ),
-                                ),
-                                TextSpan(
-                                  text: 'Cadastra-se',
-                                  style: GoogleFonts.poppins(
-                                    color: FlutterFlowTheme.of(context).primary,
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 12.0,
-                                  ),
-                                )
-                              ],
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    font: GoogleFonts.poppins(
+                                      letterSpacing: 0.0,
                                       fontWeight: FlutterFlowTheme.of(context)
                                           .bodyMedium
                                           .fontWeight,
@@ -540,14 +558,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                           .bodyMedium
                                           .fontStyle,
                                     ),
-                                    letterSpacing: 0.0,
-                                    fontWeight: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .fontWeight,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .fontStyle,
-                                  ),
+                              ),
                             ),
                           ),
                           InkWell(
@@ -589,6 +600,13 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                         );
 
                         if ((_model.apiResult?.succeeded ?? true)) {
+                          FFAppState().token = AuthStruct(
+                            token: VittaglicoBackendaDevelopmentGroup.loginCall
+                                .token(
+                              (_model.apiResult?.jsonBody ?? ''),
+                            ),
+                          );
+                          safeSetState(() {});
                           GoRouter.of(context).prepareAuthEvent();
                           await authManager.signIn(
                             authenticationToken:
@@ -597,13 +615,6 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                               (_model.apiResult?.jsonBody ?? ''),
                             ),
                           );
-                          FFAppState().token = AuthStruct(
-                            token: VittaglicoBackendaDevelopmentGroup.loginCall
-                                .token(
-                              (_model.apiResult?.jsonBody ?? ''),
-                            ),
-                          );
-                          safeSetState(() {});
                           _model.apiResultProfile =
                               await VittaglicoBackendaDevelopmentGroup
                                   .profileCall
