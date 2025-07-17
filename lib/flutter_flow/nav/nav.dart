@@ -2,9 +2,10 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '/backend/backend.dart';
 
-import '/auth/base_auth_user_provider.dart';
+import '/backend/schema/structs/index.dart';
+
+import '/auth/custom_auth/custom_auth_user_provider.dart';
 
 import '/flutter_flow/flutter_flow_util.dart';
 
@@ -23,8 +24,8 @@ class AppStateNotifier extends ChangeNotifier {
   static AppStateNotifier? _instance;
   static AppStateNotifier get instance => _instance ??= AppStateNotifier._();
 
-  BaseAuthUser? initialUser;
-  BaseAuthUser? user;
+  VittaglicoAuthUser? initialUser;
+  VittaglicoAuthUser? user;
   bool showSplashImage = true;
   String? _redirectLocation;
 
@@ -49,7 +50,7 @@ class AppStateNotifier extends ChangeNotifier {
   /// to perform subsequent actions (such as navigation) afterwards.
   void updateNotifyOnAuthChange(bool notify) => notifyOnAuthChange = notify;
 
-  void update(BaseAuthUser newUser) {
+  void update(VittaglicoAuthUser newUser) {
     final shouldUpdate =
         user?.uid == null || newUser.uid == null || user?.uid != newUser.uid;
     initialUser ??= newUser;
@@ -113,15 +114,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: EditPageWidget.routeName,
           path: EditPageWidget.routePath,
-          asyncParams: {
-            'updateUser': getDoc(['user'], UserRecord.fromSnapshot),
-          },
-          builder: (context, params) => EditPageWidget(
-            updateUser: params.getParam(
-              'updateUser',
-              ParamType.Document,
-            ),
-          ),
+          builder: (context, params) => EditPageWidget(),
         ),
         FFRoute(
           name: SettingsWidget.routeName,
@@ -131,21 +124,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: InvitePageWidget.routeName,
           path: InvitePageWidget.routePath,
-          asyncParams: {
-            'inviteDetail':
-                getDoc(['user', 'user_events'], UserEventsRecord.fromSnapshot),
-          },
-          builder: (context, params) => InvitePageWidget(
-            inviteDetail: params.getParam(
-              'inviteDetail',
-              ParamType.Document,
-            ),
-          ),
-        ),
-        FFRoute(
-          name: FogetWidget.routeName,
-          path: FogetWidget.routePath,
-          builder: (context, params) => FogetWidget(),
+          builder: (context, params) => InvitePageWidget(),
         ),
         FFRoute(
           name: NotificationsWidget.routeName,
@@ -155,31 +134,12 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: EditInviteWidget.routeName,
           path: EditInviteWidget.routePath,
-          asyncParams: {
-            'editEvent':
-                getDoc(['user', 'user_events'], UserEventsRecord.fromSnapshot),
-          },
-          builder: (context, params) => EditInviteWidget(
-            editEvent: params.getParam(
-              'editEvent',
-              ParamType.Document,
-            ),
-          ),
-        ),
-        FFRoute(
-          name: CustomerSupportWidget.routeName,
-          path: CustomerSupportWidget.routePath,
-          builder: (context, params) => CustomerSupportWidget(),
+          builder: (context, params) => EditInviteWidget(),
         ),
         FFRoute(
           name: ConnectionsWidget.routeName,
           path: ConnectionsWidget.routePath,
           builder: (context, params) => ConnectionsWidget(),
-        ),
-        FFRoute(
-          name: EventsignupWidget.routeName,
-          path: EventsignupWidget.routePath,
-          builder: (context, params) => EventsignupWidget(),
         ),
         FFRoute(
           name: TermsAndConditionsWidget.routeName,
@@ -207,9 +167,9 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => Notifications2Widget(),
         ),
         FFRoute(
-          name: JoinedEventPageWidget.routeName,
-          path: JoinedEventPageWidget.routePath,
-          builder: (context, params) => JoinedEventPageWidget(),
+          name: ListarGlicemiaWidget.routeName,
+          path: ListarGlicemiaWidget.routePath,
+          builder: (context, params) => ListarGlicemiaWidget(),
         ),
         FFRoute(
           name: TermsAndConditionsSignWidget.routeName,
@@ -220,20 +180,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: UploadPhoneWidget.routeName,
           path: UploadPhoneWidget.routePath,
           builder: (context, params) => UploadPhoneWidget(),
-        ),
-        FFRoute(
-          name: EventDescriptionWidget.routeName,
-          path: EventDescriptionWidget.routePath,
-          asyncParams: {
-            'eventDes': getDoc(
-                ['user', 'notification'], NotificationRecord.fromSnapshot),
-          },
-          builder: (context, params) => EventDescriptionWidget(
-            eventDes: params.getParam(
-              'eventDes',
-              ParamType.Document,
-            ),
-          ),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
@@ -352,7 +298,6 @@ class FFParameters {
     String paramName,
     ParamType type, {
     bool isList = false,
-    List<String>? collectionNamePath,
     StructBuilder<T>? structBuilder,
   }) {
     if (futureParamValues.containsKey(paramName)) {
@@ -371,7 +316,6 @@ class FFParameters {
       param,
       type,
       isList,
-      collectionNamePath: collectionNamePath,
       structBuilder: structBuilder,
     );
   }
@@ -423,7 +367,7 @@ class FFRoute {
               ? Container(
                   color: Colors.transparent,
                   child: Image.asset(
-                    'assets/images/Sign_Up_(2).png',
+                    'assets/images/Group_4-1.png',
                     fit: BoxFit.cover,
                   ),
                 )

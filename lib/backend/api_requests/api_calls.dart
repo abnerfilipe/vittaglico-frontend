@@ -9,6 +9,355 @@ export 'api_manager.dart' show ApiCallResponse;
 
 const _kPrivateApiFunctionName = 'ffPrivateApiCall';
 
+/// Start VittaglicoBackendaDevelopment Group Code
+
+class VittaglicoBackendaDevelopmentGroup {
+  static String getBaseUrl() => 'http://localhost:3000';
+  static Map<String, String> headers = {
+    'Content-Type': 'application/json',
+  };
+  static LoginCall loginCall = LoginCall();
+  static LogoutCall logoutCall = LogoutCall();
+  static CadastroUsuarioCall cadastroUsuarioCall = CadastroUsuarioCall();
+  static SubstituirCall substituirCall = SubstituirCall();
+  static ProfileCall profileCall = ProfileCall();
+  static ListarUsuariosCall listarUsuariosCall = ListarUsuariosCall();
+  static AtualizarUsuarioCall atualizarUsuarioCall = AtualizarUsuarioCall();
+  static ValidateAuthorizationCall validateAuthorizationCall =
+      ValidateAuthorizationCall();
+}
+
+class LoginCall {
+  Future<ApiCallResponse> call({
+    String? email = '',
+    String? senha = '',
+  }) async {
+    final baseUrl = VittaglicoBackendaDevelopmentGroup.getBaseUrl();
+
+    final ffApiRequestBody = '''
+{
+  "email":"${escapeStringForJson(email)}" ,
+  "password": "${escapeStringForJson(senha)}"
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'login',
+      apiUrl: '${baseUrl}/auth/login',
+      callType: ApiCallType.POST,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  String? accessToken(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.access_token''',
+      ));
+  String? token(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.access_token''',
+      ));
+}
+
+class LogoutCall {
+  Future<ApiCallResponse> call({
+    String? token = '',
+  }) async {
+    final baseUrl = VittaglicoBackendaDevelopmentGroup.getBaseUrl();
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'logout',
+      apiUrl: '${baseUrl}/auth/logout',
+      callType: ApiCallType.POST,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${token}',
+      },
+      params: {},
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class CadastroUsuarioCall {
+  Future<ApiCallResponse> call({
+    String? nome = '',
+    String? email = '',
+    String? senha = '',
+    String? telefone = '',
+    String? dataDeNascimento = '',
+    bool? aceiteTermosCondicoes = true,
+    bool? aceitePoliticaDePrivacidade = true,
+  }) async {
+    final baseUrl = VittaglicoBackendaDevelopmentGroup.getBaseUrl();
+
+    final ffApiRequestBody = '''
+{
+  "nome": "${escapeStringForJson(nome)}",
+  "email": "${escapeStringForJson(email)}",
+  "senha": "${escapeStringForJson(senha)}",
+  "telefone": "${escapeStringForJson(telefone)}",
+  "dataDeNascimento": "${escapeStringForJson(dataDeNascimento)}",
+   "aceiteTermosCondicoes": "${aceiteTermosCondicoes}",
+  "aceitePoliticaDePrivacidade": "${aceitePoliticaDePrivacidade}"
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'CadastroUsuario',
+      apiUrl: '${baseUrl}/usuario',
+      callType: ApiCallType.POST,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class SubstituirCall {
+  Future<ApiCallResponse> call() async {
+    final baseUrl = VittaglicoBackendaDevelopmentGroup.getBaseUrl();
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'substituir',
+      apiUrl: '${baseUrl}/substituir',
+      callType: ApiCallType.GET,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      params: {},
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class ProfileCall {
+  Future<ApiCallResponse> call({
+    String? token = '',
+  }) async {
+    final baseUrl = VittaglicoBackendaDevelopmentGroup.getBaseUrl();
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'profile',
+      apiUrl: '${baseUrl}/auth/profile',
+      callType: ApiCallType.GET,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${token}',
+      },
+      params: {},
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  dynamic userJSON(dynamic response) => getJsonField(
+        response,
+        r'''$''',
+      );
+  String? id(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.id''',
+      ));
+  String? nome(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.nome''',
+      ));
+  String? email(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.email''',
+      ));
+  String? telefone(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.telefone''',
+      ));
+  dynamic dataDeNascimento(dynamic response) => getJsonField(
+        response,
+        r'''$.dataDeNascimento''',
+      );
+  bool? aceiteTermosCondicoes(dynamic response) =>
+      castToType<bool>(getJsonField(
+        response,
+        r'''$.aceiteTermosCondicoes''',
+      ));
+  bool? aceitePoliticaDePrivacidade(dynamic response) =>
+      castToType<bool>(getJsonField(
+        response,
+        r'''$.aceitePoliticaDePrivacidade''',
+      ));
+}
+
+class ListarUsuariosCall {
+  Future<ApiCallResponse> call({
+    String? token = '',
+  }) async {
+    final baseUrl = VittaglicoBackendaDevelopmentGroup.getBaseUrl();
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'listarUsuarios',
+      apiUrl: '${baseUrl}/usuario',
+      callType: ApiCallType.GET,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${token}',
+      },
+      params: {},
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  dynamic data(dynamic response) => getJsonField(
+        response,
+        r'''$''',
+      );
+  String? mensagem(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.mensagem''',
+      ));
+  List? usuarios(dynamic response) => getJsonField(
+        response,
+        r'''$.usuarios''',
+        true,
+      ) as List?;
+  String? usuariosId(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.usuarios[:].id''',
+      ));
+  String? usuariosNome(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.usuarios[:].nome''',
+      ));
+  String? usuariosEmail(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.usuarios[:].email''',
+      ));
+  dynamic usuariosCreatedAt(dynamic response) => getJsonField(
+        response,
+        r'''$.usuarios[:].createdAt''',
+      );
+  dynamic usuariosUpdatedAt(dynamic response) => getJsonField(
+        response,
+        r'''$.usuarios[:].updatedAt''',
+      );
+  String? usuariosTelefone(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.usuarios[:].telefone''',
+      ));
+  dynamic usuariosDataDeNascimento(dynamic response) => getJsonField(
+        response,
+        r'''$.usuarios[:].dataDeNascimento''',
+      );
+}
+
+class AtualizarUsuarioCall {
+  Future<ApiCallResponse> call({
+    String? id = '',
+    String? token = '',
+    String? nome = '',
+    String? email = '',
+    String? senha = '',
+    String? telefone = '',
+    String? dataDeNascimento = '',
+  }) async {
+    final baseUrl = VittaglicoBackendaDevelopmentGroup.getBaseUrl();
+
+    final ffApiRequestBody = '''
+{
+  "nome": "${escapeStringForJson(nome)}",
+  "email": "${escapeStringForJson(email)}",
+  "senha": "${escapeStringForJson(senha)}",
+  "telefone": "${escapeStringForJson(telefone)}",
+  "dataDeNascimento": "${escapeStringForJson(dataDeNascimento)}"
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'atualizarUsuario',
+      apiUrl: '${baseUrl}/usuario',
+      callType: ApiCallType.PUT,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${token}',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class ValidateAuthorizationCall {
+  Future<ApiCallResponse> call({
+    String? token = '',
+  }) async {
+    final baseUrl = VittaglicoBackendaDevelopmentGroup.getBaseUrl();
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'validateAuthorization',
+      apiUrl: '${baseUrl}/auth/validate',
+      callType: ApiCallType.GET,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${token}',
+      },
+      params: {},
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  bool? valid(dynamic response) => castToType<bool>(getJsonField(
+        response,
+        r'''$.valid''',
+      ));
+}
+
+/// End VittaglicoBackendaDevelopment Group Code
+
 class CityApiCall {
   static Future<ApiCallResponse> call() async {
     return ApiManager.instance.makeApiCall(
@@ -49,9 +398,6 @@ class ApiPagingParams {
 }
 
 String _toEncodable(dynamic item) {
-  if (item is DocumentReference) {
-    return item.path;
-  }
   return item;
 }
 
@@ -77,4 +423,15 @@ String _serializeJson(dynamic jsonVar, [bool isList = false]) {
     }
     return isList ? '[]' : '{}';
   }
+}
+
+String? escapeStringForJson(String? input) {
+  if (input == null) {
+    return null;
+  }
+  return input
+      .replaceAll('\\', '\\\\')
+      .replaceAll('"', '\\"')
+      .replaceAll('\n', '\\n')
+      .replaceAll('\t', '\\t');
 }

@@ -1,5 +1,4 @@
-import '/auth/firebase_auth/auth_util.dart';
-import '/backend/backend.dart';
+import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -1186,17 +1185,8 @@ class _CreateEventWidgetState extends State<CreateEventWidget> {
                         if (_model.datePicked2 == null) {
                           return;
                         }
-
-                        await UserEventsRecord.createDoc(currentUserReference!)
-                            .set(createUserEventsRecordData(
-                          eventName: _model.eventNameTextController.text,
-                          eventDate: _model.datePicked1,
-                          eventTime: _model.datePicked2,
-                          aboutEvent: _model.eventAboutTextController.text,
-                          eventLocation:
-                              _model.eventLocationTextController.text,
-                          eventEmail: _model.eventEmailTextController.text,
-                        ));
+                        await VittaglicoBackendaDevelopmentGroup.substituirCall
+                            .call();
 
                         context.pushNamed(DashboardWidget.routeName);
 

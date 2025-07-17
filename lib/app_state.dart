@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'flutter_flow/request_manager.dart';
-import '/backend/backend.dart';
+import '/backend/schema/structs/index.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'flutter_flow/flutter_flow_util.dart';
 
 class FFAppState extends ChangeNotifier {
   static FFAppState _instance = FFAppState._internal();
@@ -15,12 +16,37 @@ class FFAppState extends ChangeNotifier {
     _instance = FFAppState._internal();
   }
 
-  Future initializePersistedState() async {}
+  Future initializePersistedState() async {
+    prefs = await SharedPreferences.getInstance();
+    _safeInit(() {
+      if (prefs.containsKey('ff_usuario')) {
+        try {
+          final serializedData = prefs.getString('ff_usuario') ?? '{}';
+          _usuario =
+              UsuarioStruct.fromSerializableMap(jsonDecode(serializedData));
+        } catch (e) {
+          print("Can't decode persisted data type. Error: $e.");
+        }
+      }
+    });
+    _safeInit(() {
+      if (prefs.containsKey('ff_token')) {
+        try {
+          final serializedData = prefs.getString('ff_token') ?? '{}';
+          _token = AuthStruct.fromSerializableMap(jsonDecode(serializedData));
+        } catch (e) {
+          print("Can't decode persisted data type. Error: $e.");
+        }
+      }
+    });
+  }
 
   void update(VoidCallback callback) {
     callback();
     notifyListeners();
   }
+
+  late SharedPreferences prefs;
 
   bool _signIschecked = false;
   bool get signIschecked => _signIschecked;
@@ -28,76 +54,39 @@ class FFAppState extends ChangeNotifier {
     _signIschecked = value;
   }
 
-  List<bool> _inviteCheck = [];
-  List<bool> get inviteCheck => _inviteCheck;
-  set inviteCheck(List<bool> value) {
-    _inviteCheck = value;
+  UsuarioStruct _usuario = UsuarioStruct();
+  UsuarioStruct get usuario => _usuario;
+  set usuario(UsuarioStruct value) {
+    _usuario = value;
+    prefs.setString('ff_usuario', value.serialize());
   }
 
-  void addToInviteCheck(bool value) {
-    inviteCheck.add(value);
+  void updateUsuarioStruct(Function(UsuarioStruct) updateFn) {
+    updateFn(_usuario);
+    prefs.setString('ff_usuario', _usuario.serialize());
   }
 
-  void removeFromInviteCheck(bool value) {
-    inviteCheck.remove(value);
+  AuthStruct _token = AuthStruct();
+  AuthStruct get token => _token;
+  set token(AuthStruct value) {
+    _token = value;
+    prefs.setString('ff_token', value.serialize());
   }
 
-  void removeAtIndexFromInviteCheck(int index) {
-    inviteCheck.removeAt(index);
+  void updateTokenStruct(Function(AuthStruct) updateFn) {
+    updateFn(_token);
+    prefs.setString('ff_token', _token.serialize());
   }
+}
 
-  void updateInviteCheckAtIndex(
-    int index,
-    bool Function(bool) updateFn,
-  ) {
-    inviteCheck[index] = updateFn(_inviteCheck[index]);
-  }
+void _safeInit(Function() initializeField) {
+  try {
+    initializeField();
+  } catch (_) {}
+}
 
-  void insertAtIndexInInviteCheck(int index, bool value) {
-    inviteCheck.insert(index, value);
-  }
-
-  List<InvitecheckStruct> _Invite = [];
-  List<InvitecheckStruct> get Invite => _Invite;
-  set Invite(List<InvitecheckStruct> value) {
-    _Invite = value;
-  }
-
-  void addToInvite(InvitecheckStruct value) {
-    Invite.add(value);
-  }
-
-  void removeFromInvite(InvitecheckStruct value) {
-    Invite.remove(value);
-  }
-
-  void removeAtIndexFromInvite(int index) {
-    Invite.removeAt(index);
-  }
-
-  void updateInviteAtIndex(
-    int index,
-    InvitecheckStruct Function(InvitecheckStruct) updateFn,
-  ) {
-    Invite[index] = updateFn(_Invite[index]);
-  }
-
-  void insertAtIndexInInvite(int index, InvitecheckStruct value) {
-    Invite.insert(index, value);
-  }
-
-  final _shareListManager = FutureRequestManager<List<UserRecord>>();
-  Future<List<UserRecord>> shareList({
-    String? uniqueQueryKey,
-    bool? overrideCache,
-    required Future<List<UserRecord>> Function() requestFn,
-  }) =>
-      _shareListManager.performRequest(
-        uniqueQueryKey: uniqueQueryKey,
-        overrideCache: overrideCache,
-        requestFn: requestFn,
-      );
-  void clearShareListCache() => _shareListManager.clear();
-  void clearShareListCacheKey(String? uniqueKey) =>
-      _shareListManager.clearRequest(uniqueKey);
+Future _safeInitAsync(Function() initializeField) async {
+  try {
+    await initializeField();
+  } catch (_) {}
 }

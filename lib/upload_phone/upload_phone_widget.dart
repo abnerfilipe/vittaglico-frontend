@@ -1,9 +1,6 @@
-import '/auth/firebase_auth/auth_util.dart';
-import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import '/index.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
@@ -94,7 +91,7 @@ class _UploadPhoneWidgetState extends State<UploadPhoneWidget> {
                         Container(
                           decoration: BoxDecoration(),
                           child: Text(
-                            'RU-In',
+                            'Vittaglico',
                             style: FlutterFlowTheme.of(context)
                                 .bodyMedium
                                 .override(
@@ -133,7 +130,7 @@ class _UploadPhoneWidgetState extends State<UploadPhoneWidget> {
                           height: 144.0,
                           decoration: BoxDecoration(),
                           child: Text(
-                            'Add your phone number',
+                            'Adicione seu número de telefone',
                             style: FlutterFlowTheme.of(context)
                                 .bodyMedium
                                 .override(
@@ -158,13 +155,6 @@ class _UploadPhoneWidgetState extends State<UploadPhoneWidget> {
                           width: 154.0,
                           height: 175.0,
                           decoration: BoxDecoration(),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(12.0),
-                            child: Image.asset(
-                              'assets/images/Frame_1000003930.png',
-                              fit: BoxFit.cover,
-                            ),
-                          ),
                         ),
                       ],
                     ),
@@ -201,7 +191,7 @@ class _UploadPhoneWidgetState extends State<UploadPhoneWidget> {
                                       alignment:
                                           AlignmentDirectional(-1.0, -1.0),
                                       child: Text(
-                                        'Your Phone Number',
+                                        'Seu número de telefone',
                                         style: FlutterFlowTheme.of(context)
                                             .bodyMedium
                                             .override(
@@ -236,6 +226,9 @@ class _UploadPhoneWidgetState extends State<UploadPhoneWidget> {
                                         controller: _model.textController,
                                         focusNode: _model.textFieldFocusNode,
                                         autofocus: true,
+                                        autofillHints: [
+                                          AutofillHints.telephoneNumber
+                                        ],
                                         textCapitalization:
                                             TextCapitalization.none,
                                         obscureText: false,
@@ -269,7 +262,8 @@ class _UploadPhoneWidgetState extends State<UploadPhoneWidget> {
                                                         .labelMedium
                                                         .fontStyle,
                                               ),
-                                          hintText: 'Enter your phone number',
+                                          hintText:
+                                              'Digite seu número de telefone',
                                           hintStyle: FlutterFlowTheme.of(
                                                   context)
                                               .labelMedium
@@ -374,20 +368,10 @@ class _UploadPhoneWidgetState extends State<UploadPhoneWidget> {
                           ),
                         ),
                         FFButtonWidget(
-                          onPressed: () async {
-                            if (_model.formKey.currentState == null ||
-                                !_model.formKey.currentState!.validate()) {
-                              return;
-                            }
-
-                            await currentUserReference!
-                                .update(createUserRecordData(
-                              phoneNumber: _model.textController.text,
-                            ));
-
-                            context.pushNamed(DashboardWidget.routeName);
+                          onPressed: () {
+                            print('Button pressed ...');
                           },
-                          text: 'Proceed',
+                          text: 'Continuar',
                           options: FFButtonOptions(
                             width: 350.0,
                             height: 48.0,

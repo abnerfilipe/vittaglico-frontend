@@ -1,3 +1,4 @@
+import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/index.dart';
 import 'login_page_widget.dart' show LoginPageWidget;
@@ -7,11 +8,11 @@ class LoginPageModel extends FlutterFlowModel<LoginPageWidget> {
   ///  State fields for stateful widgets in this page.
 
   final formKey = GlobalKey<FormState>();
-  // State field(s) for log_email widget.
-  FocusNode? logEmailFocusNode;
-  TextEditingController? logEmailTextController;
-  String? Function(BuildContext, String?)? logEmailTextControllerValidator;
-  String? _logEmailTextControllerValidator(BuildContext context, String? val) {
+  // State field(s) for email widget.
+  FocusNode? emailFocusNode;
+  TextEditingController? emailTextController;
+  String? Function(BuildContext, String?)? emailTextControllerValidator;
+  String? _emailTextControllerValidator(BuildContext context, String? val) {
     if (val == null || val.isEmpty) {
       return 'Field is required';
     }
@@ -22,12 +23,12 @@ class LoginPageModel extends FlutterFlowModel<LoginPageWidget> {
     return null;
   }
 
-  // State field(s) for log_pass widget.
-  FocusNode? logPassFocusNode;
-  TextEditingController? logPassTextController;
-  late bool logPassVisibility;
-  String? Function(BuildContext, String?)? logPassTextControllerValidator;
-  String? _logPassTextControllerValidator(BuildContext context, String? val) {
+  // State field(s) for senha widget.
+  FocusNode? senhaFocusNode;
+  TextEditingController? senhaTextController;
+  late bool senhaVisibility;
+  String? Function(BuildContext, String?)? senhaTextControllerValidator;
+  String? _senhaTextControllerValidator(BuildContext context, String? val) {
     if (val == null || val.isEmpty) {
       return 'Field is required';
     }
@@ -39,19 +40,24 @@ class LoginPageModel extends FlutterFlowModel<LoginPageWidget> {
     return null;
   }
 
+  // Stores action output result for [Backend Call - API (login)] action in Button widget.
+  ApiCallResponse? apiResult;
+  // Stores action output result for [Backend Call - API (profile)] action in Button widget.
+  ApiCallResponse? apiResultProfile;
+
   @override
   void initState(BuildContext context) {
-    logEmailTextControllerValidator = _logEmailTextControllerValidator;
-    logPassVisibility = false;
-    logPassTextControllerValidator = _logPassTextControllerValidator;
+    emailTextControllerValidator = _emailTextControllerValidator;
+    senhaVisibility = false;
+    senhaTextControllerValidator = _senhaTextControllerValidator;
   }
 
   @override
   void dispose() {
-    logEmailFocusNode?.dispose();
-    logEmailTextController?.dispose();
+    emailFocusNode?.dispose();
+    emailTextController?.dispose();
 
-    logPassFocusNode?.dispose();
-    logPassTextController?.dispose();
+    senhaFocusNode?.dispose();
+    senhaTextController?.dispose();
   }
 }

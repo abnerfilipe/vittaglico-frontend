@@ -1,4 +1,4 @@
-import '/auth/firebase_auth/auth_util.dart';
+import '/auth/custom_auth/auth_util.dart';
 import '/components/deletepopup_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -94,7 +94,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                                 ),
                               ),
                               Text(
-                                'Settings',
+                                'Configurações',
                                 style: FlutterFlowTheme.of(context)
                                     .bodyMedium
                                     .override(
@@ -181,93 +181,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                                                 .secondaryBackground,
                                           ),
                                           child: Text(
-                                            'Notification',
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
-                                                .override(
-                                                  font: GoogleFonts.poppins(
-                                                    fontWeight:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .bodyMedium
-                                                            .fontWeight,
-                                                    fontStyle:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .bodyMedium
-                                                            .fontStyle,
-                                                  ),
-                                                  fontSize: 15.0,
-                                                  letterSpacing: 0.0,
-                                                  fontWeight:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .bodyMedium
-                                                          .fontWeight,
-                                                  fontStyle:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .bodyMedium
-                                                          .fontStyle,
-                                                ),
-                                          ),
-                                        ),
-                                      ].divide(SizedBox(width: 10.0)),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              InkWell(
-                                splashColor: Colors.transparent,
-                                focusColor: Colors.transparent,
-                                hoverColor: Colors.transparent,
-                                highlightColor: Colors.transparent,
-                                onTap: () async {
-                                  context.pushNamed(AboutUsWidget.routeName);
-                                },
-                                child: Container(
-                                  width: 340.0,
-                                  height: 43.0,
-                                  decoration: BoxDecoration(
-                                    color: FlutterFlowTheme.of(context)
-                                        .secondaryBackground,
-                                    borderRadius: BorderRadius.only(
-                                      bottomLeft: Radius.circular(8.0),
-                                      bottomRight: Radius.circular(8.0),
-                                      topLeft: Radius.circular(8.0),
-                                      topRight: Radius.circular(8.0),
-                                    ),
-                                    border: Border.all(
-                                      color: FlutterFlowTheme.of(context)
-                                          .borderColor,
-                                      width: 1.0,
-                                    ),
-                                  ),
-                                  child: Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        10.0, 0.0, 0.0, 0.0),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        Container(
-                                          decoration: BoxDecoration(
-                                            color: FlutterFlowTheme.of(context)
-                                                .secondaryBackground,
-                                          ),
-                                          child: Icon(
-                                            Icons.info_outline,
-                                            color: FlutterFlowTheme.of(context)
-                                                .iconColor,
-                                            size: 26.0,
-                                          ),
-                                        ),
-                                        Container(
-                                          decoration: BoxDecoration(
-                                            color: FlutterFlowTheme.of(context)
-                                                .secondaryBackground,
-                                          ),
-                                          child: Text(
-                                            'About Us',
+                                            'Notificação',
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
                                                 .override(
@@ -354,7 +268,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                                                 .secondaryBackground,
                                           ),
                                           child: Text(
-                                            'Privacy policy',
+                                            'Política de Privacidade',
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
                                                 .override(
@@ -441,7 +355,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                                                 .secondaryBackground,
                                           ),
                                           child: Text(
-                                            'Terms and Condition',
+                                            'Termos e Condições',
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
                                                 .override(
@@ -545,7 +459,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                                           .secondaryBackground,
                                     ),
                                     child: Text(
-                                      'Logout',
+                                      'Sair',
                                       style: FlutterFlowTheme.of(context)
                                           .bodyMedium
                                           .override(
@@ -646,7 +560,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                                             .secondaryBackground,
                                       ),
                                       child: Text(
-                                        'Delete Account',
+                                        'Excluir conta',
                                         style: FlutterFlowTheme.of(context)
                                             .bodyMedium
                                             .override(

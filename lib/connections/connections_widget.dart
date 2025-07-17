@@ -1,4 +1,5 @@
-import '/backend/backend.dart';
+import '/auth/custom_auth/auth_util.dart';
+import '/backend/api_requests/api_calls.dart';
 import '/components/navbar_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -67,7 +68,8 @@ class _ConnectionsWidgetState extends State<ConnectionsWidget> {
                     decoration: BoxDecoration(
                       color: FlutterFlowTheme.of(context).secondaryBackground,
                     ),
-                    child: Column(
+                    child: Flex(
+                      direction: Axis.vertical,
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Container(
@@ -103,7 +105,7 @@ class _ConnectionsWidgetState extends State<ConnectionsWidget> {
                                       size: 26.0,
                                     ),
                                     Text(
-                                      'Connections',
+                                      'Usuários Conectados',
                                       style: FlutterFlowTheme.of(context)
                                           .bodyMedium
                                           .override(
@@ -137,8 +139,12 @@ class _ConnectionsWidgetState extends State<ConnectionsWidget> {
                             ].divide(SizedBox(width: 60.0)),
                           ),
                         ),
-                        StreamBuilder<List<UserRecord>>(
-                          stream: queryUserRecord(),
+                        FutureBuilder<ApiCallResponse>(
+                          future: VittaglicoBackendaDevelopmentGroup
+                              .listarUsuariosCall
+                              .call(
+                            token: currentAuthenticationToken,
+                          ),
                           builder: (context, snapshot) {
                             // Customize what your widget looks like when it's loading.
                             if (!snapshot.hasData) {
@@ -154,197 +160,196 @@ class _ConnectionsWidgetState extends State<ConnectionsWidget> {
                                 ),
                               );
                             }
-                            List<UserRecord> listViewUserRecordList =
+                            final listViewListarUsuariosResponse =
                                 snapshot.data!;
 
-                            return ListView.separated(
-                              padding: EdgeInsets.zero,
-                              shrinkWrap: true,
-                              scrollDirection: Axis.vertical,
-                              itemCount: listViewUserRecordList.length,
-                              separatorBuilder: (_, __) =>
-                                  SizedBox(height: 15.0),
-                              itemBuilder: (context, listViewIndex) {
-                                final listViewUserRecord =
-                                    listViewUserRecordList[listViewIndex];
-                                return Container(
-                                  width: double.infinity,
-                                  height: 89.0,
-                                  decoration: BoxDecoration(
-                                    color: FlutterFlowTheme.of(context)
-                                        .secondaryBackground,
-                                    borderRadius: BorderRadius.circular(7.0),
-                                    border: Border.all(
-                                      color: FlutterFlowTheme.of(context)
-                                          .borderColor,
-                                    ),
-                                  ),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment: CrossAxisAlignment.end,
-                                    children: [
-                                      Align(
-                                        alignment:
-                                            AlignmentDirectional(0.0, 0.0),
-                                        child: Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  10.0, 0.0, 0.0, 0.0),
-                                          child: ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(40.0),
-                                            child: Image.network(
-                                              listViewUserRecord.photoUrl,
-                                              width: 42.0,
-                                              height: 42.0,
-                                              fit: BoxFit.cover,
-                                              errorBuilder: (context, error,
-                                                      stackTrace) =>
-                                                  Image.asset(
-                                                'assets/images/error_image.png',
-                                                width: 42.0,
-                                                height: 42.0,
-                                                fit: BoxFit.cover,
+                            return Builder(
+                              builder: (context) {
+                                final usuarios =
+                                    VittaglicoBackendaDevelopmentGroup
+                                            .listarUsuariosCall
+                                            .usuarios(
+                                              listViewListarUsuariosResponse
+                                                  .jsonBody,
+                                            )
+                                            ?.toList() ??
+                                        [];
+
+                                return ListView.separated(
+                                  padding: EdgeInsets.symmetric(vertical: 10.0),
+                                  shrinkWrap: true,
+                                  scrollDirection: Axis.vertical,
+                                  itemCount: usuarios.length,
+                                  separatorBuilder: (_, __) =>
+                                      SizedBox(height: 10.0),
+                                  itemBuilder: (context, usuariosIndex) {
+                                    final usuariosItem =
+                                        usuarios[usuariosIndex];
+                                    return Container(
+                                      width: double.infinity,
+                                      height: 89.0,
+                                      decoration: BoxDecoration(
+                                        color: FlutterFlowTheme.of(context)
+                                            .secondaryBackground,
+                                        borderRadius:
+                                            BorderRadius.circular(7.0),
+                                        border: Border.all(
+                                          color: FlutterFlowTheme.of(context)
+                                              .borderColor,
+                                        ),
+                                      ),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.end,
+                                        children: [
+                                          Align(
+                                            alignment:
+                                                AlignmentDirectional(0.0, 0.0),
+                                            child: Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(
+                                                      10.0, 0.0, 0.0, 0.0),
+                                              child: ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(40.0),
+                                                child: Image.network(
+                                                  'https://i.pinimg.com/564x/c7/ab/cd/c7abcd3ce378191a3dddfa4cdb2be46f.jpg',
+                                                  width: 42.0,
+                                                  height: 42.0,
+                                                  fit: BoxFit.cover,
+                                                  errorBuilder: (context, error,
+                                                          stackTrace) =>
+                                                      Image.asset(
+                                                    'assets/images/error_image.png',
+                                                    width: 42.0,
+                                                    height: 42.0,
+                                                    fit: BoxFit.cover,
+                                                  ),
+                                                ),
                                               ),
                                             ),
                                           ),
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  16.0, 0.0, 0.0, 0.0),
-                                          child: Column(
-                                            mainAxisSize: MainAxisSize.max,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                listViewUserRecord.displayName,
-                                                style: FlutterFlowTheme.of(
-                                                        context)
-                                                    .bodyLarge
-                                                    .override(
-                                                      font: GoogleFonts.poppins(
-                                                        fontWeight:
-                                                            FontWeight.normal,
-                                                        fontStyle:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyLarge
-                                                                .fontStyle,
-                                                      ),
-                                                      fontSize: 16.0,
-                                                      letterSpacing: 0.0,
-                                                      fontWeight:
-                                                          FontWeight.normal,
-                                                      fontStyle:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyLarge
-                                                              .fontStyle,
-                                                    ),
-                                              ),
-                                              Divider(
-                                                thickness: 1.0,
-                                                color: Color(0xDDDDDDDDD),
-                                              ),
-                                              Row(
+                                          Expanded(
+                                            child: Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(
+                                                      16.0, 0.0, 0.0, 0.0),
+                                              child: Column(
                                                 mainAxisSize: MainAxisSize.max,
                                                 mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
+                                                    MainAxisAlignment.center,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
                                                 children: [
                                                   Text(
-                                                    listViewUserRecord
-                                                        .phoneNumber,
+                                                    valueOrDefault<String>(
+                                                      VittaglicoBackendaDevelopmentGroup
+                                                          .listarUsuariosCall
+                                                          .usuariosNome(
+                                                        listViewListarUsuariosResponse
+                                                            .jsonBody,
+                                                      ),
+                                                      'Nome',
+                                                    ),
                                                     style: FlutterFlowTheme.of(
                                                             context)
-                                                        .bodyMedium
+                                                        .bodyLarge
                                                         .override(
                                                           font: GoogleFonts
                                                               .poppins(
                                                             fontWeight:
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyMedium
-                                                                    .fontWeight,
+                                                                FontWeight
+                                                                    .normal,
                                                             fontStyle:
                                                                 FlutterFlowTheme.of(
                                                                         context)
-                                                                    .bodyMedium
+                                                                    .bodyLarge
                                                                     .fontStyle,
                                                           ),
-                                                          color:
-                                                              Color(0xFF908F92),
-                                                          fontSize: 12.0,
+                                                          fontSize: 16.0,
                                                           letterSpacing: 0.0,
                                                           fontWeight:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .bodyMedium
-                                                                  .fontWeight,
+                                                              FontWeight.normal,
                                                           fontStyle:
                                                               FlutterFlowTheme.of(
                                                                       context)
-                                                                  .bodyMedium
+                                                                  .bodyLarge
                                                                   .fontStyle,
                                                         ),
                                                   ),
-                                                  Text(
-                                                    listViewUserRecord.email,
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyMedium
-                                                        .override(
-                                                          font: GoogleFonts
-                                                              .poppins(
-                                                            fontWeight:
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyMedium
-                                                                    .fontWeight,
-                                                            fontStyle:
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyMedium
-                                                                    .fontStyle,
+                                                  Divider(
+                                                    thickness: 1.0,
+                                                    color: Color(0xDDDDDDDDD),
+                                                  ),
+                                                  Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Text(
+                                                        valueOrDefault<String>(
+                                                          VittaglicoBackendaDevelopmentGroup
+                                                              .listarUsuariosCall
+                                                              .usuariosEmail(
+                                                            listViewListarUsuariosResponse
+                                                                .jsonBody,
                                                           ),
-                                                          color:
-                                                              Color(0xFF908F92),
-                                                          fontSize: 12.0,
-                                                          letterSpacing: 0.0,
-                                                          fontWeight:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .bodyMedium
-                                                                  .fontWeight,
-                                                          fontStyle:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .bodyMedium
-                                                                  .fontStyle,
+                                                          'Email',
                                                         ),
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  font: GoogleFonts
+                                                                      .poppins(
+                                                                    fontWeight: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .bodyMedium
+                                                                        .fontWeight,
+                                                                    fontStyle: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .bodyMedium
+                                                                        .fontStyle,
+                                                                  ),
+                                                                  color: Color(
+                                                                      0xFF908F92),
+                                                                  fontSize:
+                                                                      12.0,
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                  fontWeight: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyMedium
+                                                                      .fontWeight,
+                                                                  fontStyle: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyMedium
+                                                                      .fontStyle,
+                                                                ),
+                                                      ),
+                                                    ].addToEnd(
+                                                        SizedBox(width: 0.0)),
                                                   ),
-                                                ].addToEnd(
-                                                    SizedBox(width: 0.0)),
+                                                ],
                                               ),
-                                            ],
+                                            ),
                                           ),
-                                        ),
+                                        ],
                                       ),
-                                    ],
-                                  ),
+                                    );
+                                  },
                                 );
                               },
                             );
                           },
                         ),
-                      ].divide(SizedBox(height: 37.0)),
+                      ],
                     ),
                   ),
                   wrapWithModel(

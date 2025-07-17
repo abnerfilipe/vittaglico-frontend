@@ -83,7 +83,7 @@ class _AboutUsWidgetState extends State<AboutUsWidget> {
                           decoration: BoxDecoration(),
                           alignment: AlignmentDirectional(0.0, 0.0),
                           child: Text(
-                            'About Us',
+                            'Sobre nós',
                             style: FlutterFlowTheme.of(context)
                                 .bodyMedium
                                 .override(

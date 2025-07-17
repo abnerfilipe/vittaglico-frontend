@@ -1,10 +1,13 @@
-import '/auth/firebase_auth/auth_util.dart';
+import '/auth/custom_auth/auth_util.dart';
+import '/backend/api_requests/api_calls.dart';
+import '/backend/schema/structs/index.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/index.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'login_page_model.dart';
 export 'login_page_model.dart';
 
@@ -28,11 +31,11 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
     super.initState();
     _model = createModel(context, () => LoginPageModel());
 
-    _model.logEmailTextController ??= TextEditingController();
-    _model.logEmailFocusNode ??= FocusNode();
+    _model.emailTextController ??= TextEditingController();
+    _model.emailFocusNode ??= FocusNode();
 
-    _model.logPassTextController ??= TextEditingController();
-    _model.logPassFocusNode ??= FocusNode();
+    _model.senhaTextController ??= TextEditingController();
+    _model.senhaFocusNode ??= FocusNode();
 
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
@@ -46,6 +49,8 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -81,10 +86,10 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(8.0),
                         child: Image.asset(
-                          'assets/images/Group_1000004011.png',
-                          width: 144.0,
+                          'assets/images/1024Gemini_Generated_Image_wgec1gwgec1gwgec.png',
+                          width: 155.2,
                           height: 181.0,
-                          fit: BoxFit.cover,
+                          fit: BoxFit.contain,
                         ),
                       ),
                     ),
@@ -94,7 +99,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                     height: 54.0,
                     decoration: BoxDecoration(),
                     child: Text(
-                      'Welcome back! Sign in and let the event excitement continue',
+                      'Bem vindo ao VittaGlico, faça Login ou Crie sua conta',
                       textAlign: TextAlign.center,
                       style: FlutterFlowTheme.of(context).bodyMedium.override(
                             font: GoogleFonts.poppins(
@@ -139,7 +144,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                   .secondaryBackground,
                             ),
                             child: Text(
-                              'Sign In',
+                              'Fazer Login',
                               textAlign: TextAlign.center,
                               style: FlutterFlowTheme.of(context)
                                   .bodyMedium
@@ -219,12 +224,12 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                             AlignmentDirectional(0.0, 0.0),
                                         child: TextFormField(
                                           controller:
-                                              _model.logEmailTextController,
-                                          focusNode: _model.logEmailFocusNode,
+                                              _model.emailTextController,
+                                          focusNode: _model.emailFocusNode,
                                           autofocus: true,
                                           obscureText: false,
                                           decoration: InputDecoration(
-                                            hintText: 'Enter your email',
+                                            hintText: 'Digite seu username',
                                             hintStyle: GoogleFonts.poppins(
                                               color: Color(0xFF7D7D7D),
                                               fontSize: 14.0,
@@ -304,7 +309,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                               ),
                                           textAlign: TextAlign.start,
                                           validator: _model
-                                              .logEmailTextControllerValidator
+                                              .emailTextControllerValidator
                                               .asValidator(context),
                                         ),
                                       ),
@@ -328,7 +333,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                               .secondaryBackground,
                                         ),
                                         child: Text(
-                                          'Password',
+                                          'Senha',
                                           textAlign: TextAlign.start,
                                           style: FlutterFlowTheme.of(context)
                                               .bodyMedium
@@ -364,13 +369,12 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                             AlignmentDirectional(0.0, 0.0),
                                         child: TextFormField(
                                           controller:
-                                              _model.logPassTextController,
-                                          focusNode: _model.logPassFocusNode,
+                                              _model.senhaTextController,
+                                          focusNode: _model.senhaFocusNode,
                                           autofocus: true,
-                                          obscureText:
-                                              !_model.logPassVisibility,
+                                          obscureText: !_model.senhaVisibility,
                                           decoration: InputDecoration(
-                                            hintText: 'Enter your password',
+                                            hintText: 'Digite sua senha',
                                             hintStyle: GoogleFonts.poppins(
                                               color: Color(0xFF7D7D7D),
                                               fontSize: 14.0,
@@ -421,13 +425,13 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                                     10.0, 10.0, 0.0, 0.0),
                                             suffixIcon: InkWell(
                                               onTap: () => safeSetState(
-                                                () => _model.logPassVisibility =
-                                                    !_model.logPassVisibility,
+                                                () => _model.senhaVisibility =
+                                                    !_model.senhaVisibility,
                                               ),
                                               focusNode: FocusNode(
                                                   skipTraversal: true),
                                               child: Icon(
-                                                _model.logPassVisibility
+                                                _model.senhaVisibility
                                                     ? Icons.visibility_outlined
                                                     : Icons
                                                         .visibility_off_outlined,
@@ -465,7 +469,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                                         .fontStyle,
                                               ),
                                           validator: _model
-                                              .logPassTextControllerValidator
+                                              .senhaTextControllerValidator
                                               .asValidator(context),
                                         ),
                                       ),
@@ -488,66 +492,62 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                 color: FlutterFlowTheme.of(context)
                                     .secondaryBackground,
                               ),
-                              child: RichText(
-                                textScaler: MediaQuery.of(context).textScaler,
-                                text: TextSpan(
-                                  children: [
-                                    TextSpan(
-                                      text: 'Don’t have an account? ',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            font: GoogleFonts.poppins(
-                                              fontWeight: FontWeight.w500,
-                                              fontStyle:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMedium
-                                                      .fontStyle,
-                                            ),
-                                            color: FlutterFlowTheme.of(context)
-                                                .textColor,
-                                            fontSize: 12.0,
-                                            letterSpacing: 0.0,
-                                            fontWeight: FontWeight.w500,
-                                            fontStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .bodyMedium
-                                                    .fontStyle,
-                                          ),
-                                    ),
-                                    TextSpan(
-                                      text: 'Sign up',
-                                      style: GoogleFonts.poppins(
-                                        color: FlutterFlowTheme.of(context)
-                                            .primary,
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 12.0,
-                                      ),
-                                    )
-                                  ],
+                            ),
+                          ),
+                          RichText(
+                            textScaler: MediaQuery.of(context).textScaler,
+                            text: TextSpan(
+                              children: [
+                                TextSpan(
+                                  text: 'Não tem uma conta?',
                                   style: FlutterFlowTheme.of(context)
                                       .bodyMedium
                                       .override(
                                         font: GoogleFonts.poppins(
-                                          fontWeight:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .fontWeight,
+                                          fontWeight: FontWeight.w500,
                                           fontStyle:
                                               FlutterFlowTheme.of(context)
                                                   .bodyMedium
                                                   .fontStyle,
                                         ),
+                                        color: FlutterFlowTheme.of(context)
+                                            .textColor,
+                                        fontSize: 12.0,
                                         letterSpacing: 0.0,
-                                        fontWeight: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .fontWeight,
+                                        fontWeight: FontWeight.w500,
                                         fontStyle: FlutterFlowTheme.of(context)
                                             .bodyMedium
                                             .fontStyle,
                                       ),
                                 ),
-                              ),
+                                TextSpan(
+                                  text: 'Cadastra-se',
+                                  style: GoogleFonts.poppins(
+                                    color: FlutterFlowTheme.of(context).primary,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 12.0,
+                                  ),
+                                )
+                              ],
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    font: GoogleFonts.poppins(
+                                      fontWeight: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .fontWeight,
+                                      fontStyle: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .fontStyle,
+                                    ),
+                                    letterSpacing: 0.0,
+                                    fontWeight: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .fontWeight,
+                                    fontStyle: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .fontStyle,
+                                  ),
                             ),
                           ),
                           InkWell(
@@ -556,37 +556,12 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                             hoverColor: Colors.transparent,
                             highlightColor: Colors.transparent,
                             onTap: () async {
-                              context.pushNamed(FogetWidget.routeName);
+                              context.pushNamed(SignUpPageWidget.routeName);
                             },
                             child: Container(
                               decoration: BoxDecoration(
                                 color: FlutterFlowTheme.of(context)
                                     .secondaryBackground,
-                              ),
-                              child: Text(
-                                'Forgot Password',
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyMedium
-                                    .override(
-                                      font: GoogleFonts.poppins(
-                                        fontWeight: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .fontWeight,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .fontStyle,
-                                      ),
-                                      color:
-                                          FlutterFlowTheme.of(context).primary,
-                                      fontSize: 12.0,
-                                      letterSpacing: 0.0,
-                                      fontWeight: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .fontWeight,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .fontStyle,
-                                    ),
                               ),
                             ),
                           ),
@@ -606,21 +581,121 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                             !_model.formKey.currentState!.validate()) {
                           return;
                         }
-                        GoRouter.of(context).prepareAuthEvent();
-
-                        final user = await authManager.signInWithEmail(
-                          context,
-                          _model.logEmailTextController.text,
-                          _model.logPassTextController.text,
+                        _model.apiResult =
+                            await VittaglicoBackendaDevelopmentGroup.loginCall
+                                .call(
+                          email: _model.emailTextController.text,
+                          senha: _model.senhaTextController.text,
                         );
-                        if (user == null) {
-                          return;
+
+                        if ((_model.apiResult?.succeeded ?? true)) {
+                          GoRouter.of(context).prepareAuthEvent();
+                          await authManager.signIn(
+                            authenticationToken:
+                                VittaglicoBackendaDevelopmentGroup.loginCall
+                                    .accessToken(
+                              (_model.apiResult?.jsonBody ?? ''),
+                            ),
+                          );
+                          FFAppState().token = AuthStruct(
+                            token: VittaglicoBackendaDevelopmentGroup.loginCall
+                                .token(
+                              (_model.apiResult?.jsonBody ?? ''),
+                            ),
+                          );
+                          safeSetState(() {});
+                          _model.apiResultProfile =
+                              await VittaglicoBackendaDevelopmentGroup
+                                  .profileCall
+                                  .call(
+                            token: FFAppState().token.token,
+                          );
+
+                          if ((_model.apiResultProfile?.succeeded ?? true)) {
+                            FFAppState().usuario = UsuarioStruct(
+                              id: VittaglicoBackendaDevelopmentGroup.profileCall
+                                  .id(
+                                (_model.apiResultProfile?.jsonBody ?? ''),
+                              ),
+                              nome: VittaglicoBackendaDevelopmentGroup
+                                  .profileCall
+                                  .nome(
+                                (_model.apiResultProfile?.jsonBody ?? ''),
+                              ),
+                              email: VittaglicoBackendaDevelopmentGroup
+                                  .profileCall
+                                  .email(
+                                (_model.apiResultProfile?.jsonBody ?? ''),
+                              ),
+                              telefone: VittaglicoBackendaDevelopmentGroup
+                                  .profileCall
+                                  .telefone(
+                                (_model.apiResultProfile?.jsonBody ?? ''),
+                              ),
+                              dataDeNascimento:
+                                  VittaglicoBackendaDevelopmentGroup.profileCall
+                                      .dataDeNascimento(
+                                        (_model.apiResultProfile?.jsonBody ??
+                                            ''),
+                                      )
+                                      .toString(),
+                              aceiteTermosCondicoes:
+                                  VittaglicoBackendaDevelopmentGroup.profileCall
+                                      .aceiteTermosCondicoes(
+                                (_model.apiResultProfile?.jsonBody ?? ''),
+                              ),
+                              aceitePoliticaDePrivacidade:
+                                  VittaglicoBackendaDevelopmentGroup.profileCall
+                                      .aceitePoliticaDePrivacidade(
+                                (_model.apiResultProfile?.jsonBody ?? ''),
+                              ),
+                            );
+                            FFAppState().update(() {});
+
+                            context.pushNamedAuth(
+                                DashboardWidget.routeName, context.mounted);
+                          } else {
+                            context.pushNamedAuth(
+                                LoginPageWidget.routeName, context.mounted);
+
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  'Erro ao carregar o perfil.',
+                                  style: TextStyle(
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryText,
+                                  ),
+                                ),
+                                duration: Duration(milliseconds: 4000),
+                                backgroundColor:
+                                    FlutterFlowTheme.of(context).secondary,
+                              ),
+                            );
+                          }
+                        } else {
+                          context.pushNamedAuth(
+                              LoginPageWidget.routeName, context.mounted);
+
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                '\tCredenciais inválidas.',
+                                style: TextStyle(
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryText,
+                                ),
+                              ),
+                              duration: Duration(milliseconds: 4000),
+                              backgroundColor:
+                                  FlutterFlowTheme.of(context).secondary,
+                            ),
+                          );
                         }
 
-                        context.goNamedAuth(
-                            DashboardWidget.routeName, context.mounted);
+                        safeSetState(() {});
                       },
-                      text: 'Sign In',
+                      text: 'Entrar',
                       options: FFButtonOptions(
                         height: 40.0,
                         padding: EdgeInsetsDirectional.fromSTEB(
@@ -659,26 +734,12 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                     child: FFButtonWidget(
                       onPressed: () async {
                         GoRouter.of(context).prepareAuthEvent();
-
-                        final user = await authManager.signInWithEmail(
-                          context,
-                          valueOrDefault<String>(
-                            _model.logEmailTextController.text,
-                            'demo@tnc.com',
-                          ),
-                          valueOrDefault<String>(
-                            _model.logPassTextController.text,
-                            '123456789',
-                          ),
-                        );
-                        if (user == null) {
-                          return;
-                        }
+                        await authManager.signIn();
 
                         context.goNamedAuth(
                             DashboardWidget.routeName, context.mounted);
                       },
-                      text: 'Demo Sign In',
+                      text: 'Entrar na Demo ',
                       options: FFButtonOptions(
                         height: 40.0,
                         padding: EdgeInsetsDirectional.fromSTEB(

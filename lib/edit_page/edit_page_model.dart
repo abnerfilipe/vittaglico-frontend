@@ -1,3 +1,4 @@
+import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/index.dart';
 import 'edit_page_widget.dart' show EditPageWidget;
@@ -7,11 +8,7 @@ import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 class EditPageModel extends FlutterFlowModel<EditPageWidget> {
   ///  State fields for stateful widgets in this page.
 
-  bool isDataUploading_profilePicAgain = false;
-  FFUploadedFile uploadedLocalFile_profilePicAgain =
-      FFUploadedFile(bytes: Uint8List.fromList([]));
-  String uploadedFileUrl_profilePicAgain = '';
-
+  final formKey = GlobalKey<FormState>();
   // State field(s) for TextField widget.
   FocusNode? textFieldFocusNode1;
   TextEditingController? textController1;
@@ -19,8 +16,19 @@ class EditPageModel extends FlutterFlowModel<EditPageWidget> {
   // State field(s) for TextField widget.
   FocusNode? textFieldFocusNode2;
   TextEditingController? textController2;
-  late MaskTextInputFormatter textFieldMask2;
   String? Function(BuildContext, String?)? textController2Validator;
+  // State field(s) for TextField widget.
+  FocusNode? textFieldFocusNode3;
+  TextEditingController? textController3;
+  late MaskTextInputFormatter textFieldMask3;
+  String? Function(BuildContext, String?)? textController3Validator;
+  // State field(s) for TextField widget.
+  FocusNode? textFieldFocusNode4;
+  TextEditingController? textController4;
+  late MaskTextInputFormatter textFieldMask4;
+  String? Function(BuildContext, String?)? textController4Validator;
+  // Stores action output result for [Backend Call - API (atualizarUsuario)] action in Button widget.
+  ApiCallResponse? apiResponse;
 
   @override
   void initState(BuildContext context) {}
@@ -32,5 +40,11 @@ class EditPageModel extends FlutterFlowModel<EditPageWidget> {
 
     textFieldFocusNode2?.dispose();
     textController2?.dispose();
+
+    textFieldFocusNode3?.dispose();
+    textController3?.dispose();
+
+    textFieldFocusNode4?.dispose();
+    textController4?.dispose();
   }
 }

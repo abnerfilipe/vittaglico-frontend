@@ -1,10 +1,7 @@
-import '/auth/firebase_auth/auth_util.dart';
-import '/backend/backend.dart';
-import '/backend/firebase_storage/storage.dart';
+import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import '/flutter_flow/upload_data.dart';
 import '/index.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -91,7 +88,7 @@ class _ProfilePicWidgetState extends State<ProfilePicWidget> {
                         Container(
                           decoration: BoxDecoration(),
                           child: Text(
-                            'RU-In',
+                            'Vittaglico',
                             style: FlutterFlowTheme.of(context)
                                 .bodyMedium
                                 .override(
@@ -155,13 +152,6 @@ class _ProfilePicWidgetState extends State<ProfilePicWidget> {
                           width: 154.0,
                           height: 175.0,
                           decoration: BoxDecoration(),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(8.0),
-                            child: Image.asset(
-                              'assets/images/Group_1000004071.png',
-                              fit: BoxFit.cover,
-                            ),
-                          ),
                         ),
                       ],
                     ),
@@ -198,113 +188,28 @@ class _ProfilePicWidgetState extends State<ProfilePicWidget> {
                                     shape: BoxShape.circle,
                                   ),
                                   alignment: AlignmentDirectional(0.0, 0.0),
-                                  child: AuthUserStreamWidget(
-                                    builder: (context) => InkWell(
-                                      splashColor: Colors.transparent,
-                                      focusColor: Colors.transparent,
-                                      hoverColor: Colors.transparent,
-                                      highlightColor: Colors.transparent,
-                                      onTap: () async {
-                                        final selectedMedia =
-                                            await selectMediaWithSourceBottomSheet(
-                                          context: context,
-                                          maxWidth: 137.00,
-                                          maxHeight: 137.00,
-                                          allowPhoto: true,
-                                          backgroundColor:
-                                              FlutterFlowTheme.of(context)
-                                                  .secondary,
-                                          textColor:
-                                              FlutterFlowTheme.of(context)
-                                                  .alternate,
-                                        );
-                                        if (selectedMedia != null &&
-                                            selectedMedia.every((m) =>
-                                                validateFileFormat(
-                                                    m.storagePath, context))) {
-                                          safeSetState(() => _model
-                                                  .isDataUploading_profilePic =
-                                              true);
-                                          var selectedUploadedFiles =
-                                              <FFUploadedFile>[];
+                                  child: InkWell(
+                                    splashColor: Colors.transparent,
+                                    focusColor: Colors.transparent,
+                                    hoverColor: Colors.transparent,
+                                    highlightColor: Colors.transparent,
+                                    onTap: () async {
+                                      await VittaglicoBackendaDevelopmentGroup
+                                          .substituirCall
+                                          .call();
 
-                                          var downloadUrls = <String>[];
-                                          try {
-                                            showUploadMessage(
-                                              context,
-                                              'Uploading file...',
-                                              showLoading: true,
-                                            );
-                                            selectedUploadedFiles =
-                                                selectedMedia
-                                                    .map((m) => FFUploadedFile(
-                                                          name: m.storagePath
-                                                              .split('/')
-                                                              .last,
-                                                          bytes: m.bytes,
-                                                          height: m.dimensions
-                                                              ?.height,
-                                                          width: m.dimensions
-                                                              ?.width,
-                                                          blurHash: m.blurHash,
-                                                        ))
-                                                    .toList();
-
-                                            downloadUrls = (await Future.wait(
-                                              selectedMedia.map(
-                                                (m) async => await uploadData(
-                                                    m.storagePath, m.bytes),
-                                              ),
-                                            ))
-                                                .where((u) => u != null)
-                                                .map((u) => u!)
-                                                .toList();
-                                          } finally {
-                                            ScaffoldMessenger.of(context)
-                                                .hideCurrentSnackBar();
-                                            _model.isDataUploading_profilePic =
-                                                false;
-                                          }
-                                          if (selectedUploadedFiles.length ==
-                                                  selectedMedia.length &&
-                                              downloadUrls.length ==
-                                                  selectedMedia.length) {
-                                            safeSetState(() {
-                                              _model.uploadedLocalFile_profilePic =
-                                                  selectedUploadedFiles.first;
-                                              _model.uploadedFileUrl_profilePic =
-                                                  downloadUrls.first;
-                                            });
-                                            showUploadMessage(
-                                                context, 'Success!');
-                                          } else {
-                                            safeSetState(() {});
-                                            showUploadMessage(context,
-                                                'Failed to upload data');
-                                            return;
-                                          }
-                                        }
-
-                                        await currentUserReference!
-                                            .update(createUserRecordData(
-                                          photoUrl:
-                                              _model.uploadedFileUrl_profilePic,
-                                        ));
-                                      },
-                                      child: Container(
-                                        width: 141.0,
-                                        height: 141.0,
-                                        clipBehavior: Clip.antiAlias,
-                                        decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                        ),
-                                        child: Image.network(
-                                          valueOrDefault<String>(
-                                            currentUserPhoto,
-                                            'https://w1.pngwing.com/pngs/743/500/png-transparent-circle-silhouette-logo-user-user-profile-green-facial-expression-nose-cartoon.png',
-                                          ),
-                                          fit: BoxFit.cover,
-                                        ),
+                                      safeSetState(() {});
+                                    },
+                                    child: Container(
+                                      width: 141.0,
+                                      height: 141.0,
+                                      clipBehavior: Clip.antiAlias,
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                      ),
+                                      child: Image.network(
+                                        'https://i.pinimg.com/564x/c7/ab/cd/c7abcd3ce378191a3dddfa4cdb2be46f.jpg',
+                                        fit: BoxFit.cover,
                                       ),
                                     ),
                                   ),

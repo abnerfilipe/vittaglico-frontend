@@ -7,11 +7,11 @@ class SignUpPageModel extends FlutterFlowModel<SignUpPageWidget> {
   ///  State fields for stateful widgets in this page.
 
   final formKey = GlobalKey<FormState>();
-  // State field(s) for name widget.
-  FocusNode? nameFocusNode;
-  TextEditingController? nameTextController;
-  String? Function(BuildContext, String?)? nameTextControllerValidator;
-  String? _nameTextControllerValidator(BuildContext context, String? val) {
+  // State field(s) for nome widget.
+  FocusNode? nomeFocusNode;
+  TextEditingController? nomeTextController;
+  String? Function(BuildContext, String?)? nomeTextControllerValidator;
+  String? _nomeTextControllerValidator(BuildContext context, String? val) {
     if (val == null || val.isEmpty) {
       return 'Field is required';
     }
@@ -34,43 +34,30 @@ class SignUpPageModel extends FlutterFlowModel<SignUpPageWidget> {
     return null;
   }
 
-  // State field(s) for pass widget.
-  FocusNode? passFocusNode;
-  TextEditingController? passTextController;
-  late bool passVisibility;
-  String? Function(BuildContext, String?)? passTextControllerValidator;
-  String? _passTextControllerValidator(BuildContext context, String? val) {
-    if (val == null || val.isEmpty) {
-      return 'Field is required';
-    }
-
-    if (val.length < 8) {
-      return 'Password should be 8 characters';
-    }
-
-    return null;
-  }
-
-  // State field(s) for sign_checkbox widget.
-  bool? signCheckboxValue;
+  // State field(s) for senha widget.
+  FocusNode? senhaFocusNode;
+  TextEditingController? senhaTextController;
+  late bool senhaVisibility;
+  String? Function(BuildContext, String?)? senhaTextControllerValidator;
+  // State field(s) for aceiteTermosEhPolitica widget.
+  bool? aceiteTermosEhPoliticaValue;
 
   @override
   void initState(BuildContext context) {
-    nameTextControllerValidator = _nameTextControllerValidator;
+    nomeTextControllerValidator = _nomeTextControllerValidator;
     emailTextControllerValidator = _emailTextControllerValidator;
-    passVisibility = false;
-    passTextControllerValidator = _passTextControllerValidator;
+    senhaVisibility = false;
   }
 
   @override
   void dispose() {
-    nameFocusNode?.dispose();
-    nameTextController?.dispose();
+    nomeFocusNode?.dispose();
+    nomeTextController?.dispose();
 
     emailFocusNode?.dispose();
     emailTextController?.dispose();
 
-    passFocusNode?.dispose();
-    passTextController?.dispose();
+    senhaFocusNode?.dispose();
+    senhaTextController?.dispose();
   }
 }

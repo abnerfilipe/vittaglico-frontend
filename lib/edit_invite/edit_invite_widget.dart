@@ -1,4 +1,3 @@
-import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -9,12 +8,7 @@ import 'edit_invite_model.dart';
 export 'edit_invite_model.dart';
 
 class EditInviteWidget extends StatefulWidget {
-  const EditInviteWidget({
-    super.key,
-    required this.editEvent,
-  });
-
-  final UserEventsRecord? editEvent;
+  const EditInviteWidget({super.key});
 
   static String routeName = 'Edit_invite';
   static String routePath = '/editInvite';
@@ -33,20 +27,16 @@ class _EditInviteWidgetState extends State<EditInviteWidget> {
     super.initState();
     _model = createModel(context, () => EditInviteModel());
 
-    _model.eventNameTextController ??=
-        TextEditingController(text: widget.editEvent?.eventName);
+    _model.eventNameTextController ??= TextEditingController();
     _model.eventNameFocusNode ??= FocusNode();
 
-    _model.eventAboutTextController ??=
-        TextEditingController(text: widget.editEvent?.aboutEvent);
+    _model.eventAboutTextController ??= TextEditingController();
     _model.eventAboutFocusNode ??= FocusNode();
 
-    _model.eventLocationTextController ??=
-        TextEditingController(text: widget.editEvent?.eventLocation);
+    _model.eventLocationTextController ??= TextEditingController();
     _model.eventLocationFocusNode ??= FocusNode();
 
-    _model.eventEmailTextController ??=
-        TextEditingController(text: widget.editEvent?.eventEmail);
+    _model.eventEmailTextController ??= TextEditingController();
     _model.eventEmailFocusNode ??= FocusNode();
 
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
@@ -437,8 +427,7 @@ class _EditInviteWidgetState extends State<EditInviteWidget> {
                                           Container(
                                             decoration: BoxDecoration(),
                                             child: Text(
-                                              dateTimeFormat(
-                                                  "yMMMd", _model.datePicked1),
+                                              '',
                                               textAlign: TextAlign.start,
                                               style: FlutterFlowTheme.of(
                                                       context)
@@ -616,8 +605,7 @@ class _EditInviteWidgetState extends State<EditInviteWidget> {
                                           ),
                                         ),
                                         Text(
-                                          dateTimeFormat(
-                                              "jm", _model.datePicked2),
+                                          '00:00 AM',
                                           style: FlutterFlowTheme.of(context)
                                               .bodyMedium
                                               .override(
@@ -1151,38 +1139,8 @@ class _EditInviteWidgetState extends State<EditInviteWidget> {
                       ),
                     ),
                     child: FFButtonWidget(
-                      onPressed: () async {
-                        if (_model.formKey.currentState == null ||
-                            !_model.formKey.currentState!.validate()) {
-                          return;
-                        }
-
-                        await widget.editEvent!.reference
-                            .update(createUserEventsRecordData(
-                          eventName: _model.eventNameTextController.text,
-                          eventDate: _model.datePicked1,
-                          eventTime: _model.datePicked2,
-                          aboutEvent: _model.eventAboutTextController.text,
-                          eventLocation:
-                              _model.eventLocationTextController.text,
-                          eventEmail: _model.eventEmailTextController.text,
-                        ));
-
-                        context.pushNamed(DashboardWidget.routeName);
-
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(
-                              'Event update successfully',
-                              style: TextStyle(
-                                color: FlutterFlowTheme.of(context).alternate,
-                              ),
-                            ),
-                            duration: Duration(milliseconds: 4000),
-                            backgroundColor:
-                                FlutterFlowTheme.of(context).secondary,
-                          ),
-                        );
+                      onPressed: () {
+                        print('Button pressed ...');
                       },
                       text: 'Update Event',
                       options: FFButtonOptions(

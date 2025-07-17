@@ -1,9 +1,9 @@
 import '/flutter_flow/flutter_flow_util.dart';
-import '/index.dart';
-import 'profile_pic_widget.dart' show ProfilePicWidget;
+import 'card_minha_conta_info_widget.dart' show CardMinhaContaInfoWidget;
 import 'package:flutter/material.dart';
 
-class ProfilePicModel extends FlutterFlowModel<ProfilePicWidget> {
+class CardMinhaContaInfoModel
+    extends FlutterFlowModel<CardMinhaContaInfoWidget> {
   @override
   void initState(BuildContext context) {}
 

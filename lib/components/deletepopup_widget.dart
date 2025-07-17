@@ -1,4 +1,4 @@
-import '/auth/firebase_auth/auth_util.dart';
+import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -63,7 +63,7 @@ class _DeletepopupWidgetState extends State<DeletepopupWidget> {
               color: FlutterFlowTheme.of(context).secondaryBackground,
             ),
             child: Text(
-              'Are you sure? \nYou want to delete your account',
+              'Tem certeza?\nVocê quer excluir sua conta',
               textAlign: TextAlign.center,
               style: FlutterFlowTheme.of(context).bodyMedium.override(
                     font: GoogleFonts.poppins(
@@ -96,7 +96,7 @@ class _DeletepopupWidgetState extends State<DeletepopupWidget> {
                     onPressed: () async {
                       Navigator.pop(context);
                     },
-                    text: 'Cancel',
+                    text: 'Cancelar',
                     options: FFButtonOptions(
                       padding:
                           EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
@@ -136,12 +136,23 @@ class _DeletepopupWidgetState extends State<DeletepopupWidget> {
                   ),
                   child: FFButtonWidget(
                     onPressed: () async {
-                      await authManager.deleteUser(context);
+                      var _shouldSetState = false;
+                      _model.apiResulte0j =
+                          await VittaglicoBackendaDevelopmentGroup
+                              .substituirCall
+                              .call();
 
-                      context.goNamedAuth(
-                          DashboardWidget.routeName, context.mounted);
+                      _shouldSetState = true;
+                      if ((_model.apiResulte0j?.succeeded ?? true)) {
+                        context.pushNamed(LoginPageWidget.routeName);
+                      } else {
+                        if (_shouldSetState) safeSetState(() {});
+                        return;
+                      }
+
+                      if (_shouldSetState) safeSetState(() {});
                     },
-                    text: 'Yes',
+                    text: 'Sim',
                     options: FFButtonOptions(
                       padding:
                           EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
