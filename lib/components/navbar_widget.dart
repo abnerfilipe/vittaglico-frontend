@@ -2,6 +2,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/index.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'navbar_model.dart';
 export 'navbar_model.dart';
@@ -45,7 +46,7 @@ class _NavbarWidgetState extends State<NavbarWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 375.0,
+      width: MediaQuery.sizeOf(context).width * 1.0,
       height: 75.0,
       decoration: BoxDecoration(
         color: FlutterFlowTheme.of(context).secondaryBackground,
@@ -126,14 +127,13 @@ class _NavbarWidgetState extends State<NavbarWidget> {
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Image.asset(
-                    'assets/images/adicionar-medicao-icon.png',
-                    width: 18.0,
-                    height: 18.0,
-                    fit: BoxFit.contain,
+                  FaIcon(
+                    FontAwesomeIcons.bookMedical,
+                    color: FlutterFlowTheme.of(context).alternate,
+                    size: 22.0,
                   ),
                   Text(
-                    'Glicemia',
+                    'Glicemias',
                     textAlign: TextAlign.center,
                     style: FlutterFlowTheme.of(context).bodyMedium.override(
                           font: GoogleFonts.poppins(
@@ -178,14 +178,13 @@ class _NavbarWidgetState extends State<NavbarWidget> {
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Image.asset(
-                    'assets/images/users-icon.png',
-                    width: 18.0,
-                    height: 18.0,
-                    fit: BoxFit.contain,
+                  FaIcon(
+                    FontAwesomeIcons.syringe,
+                    color: FlutterFlowTheme.of(context).alternate,
+                    size: 22.0,
                   ),
                   Text(
-                    'Conexões',
+                    'Insulina',
                     textAlign: TextAlign.center,
                     style: FlutterFlowTheme.of(context).bodyMedium.override(
                           font: GoogleFonts.poppins(
@@ -230,17 +229,10 @@ class _NavbarWidgetState extends State<NavbarWidget> {
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Container(
-                    width: 18.0,
-                    height: 18.0,
-                    clipBehavior: Clip.antiAlias,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                    ),
-                    child: Image.asset(
-                      'assets/images/user.jpg',
-                      fit: BoxFit.cover,
-                    ),
+                  FaIcon(
+                    FontAwesomeIcons.userCircle,
+                    color: FlutterFlowTheme.of(context).alternate,
+                    size: 22.0,
                   ),
                   Text(
                     'Perfil',

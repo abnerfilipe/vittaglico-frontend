@@ -5,28 +5,28 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import '/index.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'create_event_model.dart';
-export 'create_event_model.dart';
+import 'create_event_copy_model.dart';
+export 'create_event_copy_model.dart';
 
-class CreateEventWidget extends StatefulWidget {
-  const CreateEventWidget({super.key});
+class CreateEventCopyWidget extends StatefulWidget {
+  const CreateEventCopyWidget({super.key});
 
-  static String routeName = 'CreateEvent';
-  static String routePath = '/createEvent';
+  static String routeName = 'CreateEventCopy';
+  static String routePath = '/createEventCopy';
 
   @override
-  State<CreateEventWidget> createState() => _CreateEventWidgetState();
+  State<CreateEventCopyWidget> createState() => _CreateEventCopyWidgetState();
 }
 
-class _CreateEventWidgetState extends State<CreateEventWidget> {
-  late CreateEventModel _model;
+class _CreateEventCopyWidgetState extends State<CreateEventCopyWidget> {
+  late CreateEventCopyModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => CreateEventModel());
+    _model = createModel(context, () => CreateEventCopyModel());
 
     _model.eventNameTextController ??= TextEditingController();
     _model.eventNameFocusNode ??= FocusNode();

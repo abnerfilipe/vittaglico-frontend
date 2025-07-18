@@ -1,5 +1,5 @@
-import '/auth/custom_auth/auth_util.dart';
 import '/components/deletepopup_widget.dart';
+import '/components/logoutpopup_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/index.dart';
@@ -405,65 +405,94 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       children: [
-                        InkWell(
-                          splashColor: Colors.transparent,
-                          focusColor: Colors.transparent,
-                          hoverColor: Colors.transparent,
-                          highlightColor: Colors.transparent,
-                          onTap: () async {
-                            GoRouter.of(context).prepareAuthEvent();
-                            await authManager.signOut();
-                            GoRouter.of(context).clearRedirectLocation();
-
-                            context.goNamedAuth(
-                                SignUpPageWidget.routeName, context.mounted);
-                          },
-                          child: Container(
-                            width: 340.0,
-                            height: 43.0,
-                            decoration: BoxDecoration(
-                              color: FlutterFlowTheme.of(context)
-                                  .secondaryBackground,
-                              borderRadius: BorderRadius.only(
-                                bottomLeft: Radius.circular(8.0),
-                                bottomRight: Radius.circular(8.0),
-                                topLeft: Radius.circular(8.0),
-                                topRight: Radius.circular(8.0),
-                              ),
-                              border: Border.all(
-                                color: FlutterFlowTheme.of(context).borderColor,
-                                width: 1.0,
-                              ),
+                        Container(
+                          width: 340.0,
+                          height: 43.0,
+                          decoration: BoxDecoration(
+                            color: FlutterFlowTheme.of(context)
+                                .secondaryBackground,
+                            borderRadius: BorderRadius.only(
+                              bottomLeft: Radius.circular(8.0),
+                              bottomRight: Radius.circular(8.0),
+                              topLeft: Radius.circular(8.0),
+                              topRight: Radius.circular(8.0),
                             ),
-                            child: Padding(
+                            border: Border.all(
+                              color: FlutterFlowTheme.of(context).borderColor,
+                              width: 1.0,
+                            ),
+                          ),
+                          child: Builder(
+                            builder: (context) => Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
                                   10.0, 0.0, 0.0, 0.0),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      color: FlutterFlowTheme.of(context)
-                                          .secondaryBackground,
+                              child: InkWell(
+                                splashColor: Colors.transparent,
+                                focusColor: Colors.transparent,
+                                hoverColor: Colors.transparent,
+                                highlightColor: Colors.transparent,
+                                onTap: () async {
+                                  await showDialog(
+                                    context: context,
+                                    builder: (dialogContext) {
+                                      return Dialog(
+                                        elevation: 0,
+                                        insetPadding: EdgeInsets.zero,
+                                        backgroundColor: Colors.transparent,
+                                        alignment:
+                                            AlignmentDirectional(0.0, 0.0)
+                                                .resolve(
+                                                    Directionality.of(context)),
+                                        child: GestureDetector(
+                                          onTap: () {
+                                            FocusScope.of(dialogContext)
+                                                .unfocus();
+                                            FocusManager.instance.primaryFocus
+                                                ?.unfocus();
+                                          },
+                                          child: LogoutpopupWidget(),
+                                        ),
+                                      );
+                                    },
+                                  );
+                                },
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    Container(
+                                      decoration: BoxDecoration(
+                                        color: FlutterFlowTheme.of(context)
+                                            .secondaryBackground,
+                                      ),
+                                      child: Icon(
+                                        Icons.logout_rounded,
+                                        color: FlutterFlowTheme.of(context)
+                                            .iconColor,
+                                        size: 26.0,
+                                      ),
                                     ),
-                                    child: Icon(
-                                      Icons.logout_rounded,
-                                      color: FlutterFlowTheme.of(context)
-                                          .iconColor,
-                                      size: 26.0,
-                                    ),
-                                  ),
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      color: FlutterFlowTheme.of(context)
-                                          .secondaryBackground,
-                                    ),
-                                    child: Text(
-                                      'Sair',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            font: GoogleFonts.poppins(
+                                    Container(
+                                      decoration: BoxDecoration(
+                                        color: FlutterFlowTheme.of(context)
+                                            .secondaryBackground,
+                                      ),
+                                      child: Text(
+                                        'Sair',
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              font: GoogleFonts.poppins(
+                                                fontWeight:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .fontWeight,
+                                                fontStyle:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .fontStyle,
+                                              ),
+                                              fontSize: 15.0,
+                                              letterSpacing: 0.0,
                                               fontWeight:
                                                   FlutterFlowTheme.of(context)
                                                       .bodyMedium
@@ -473,20 +502,10 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                                                       .bodyMedium
                                                       .fontStyle,
                                             ),
-                                            fontSize: 15.0,
-                                            letterSpacing: 0.0,
-                                            fontWeight:
-                                                FlutterFlowTheme.of(context)
-                                                    .bodyMedium
-                                                    .fontWeight,
-                                            fontStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .bodyMedium
-                                                    .fontStyle,
-                                          ),
+                                      ),
                                     ),
-                                  ),
-                                ].divide(SizedBox(width: 10.0)),
+                                  ].divide(SizedBox(width: 10.0)),
+                                ),
                               ),
                             ),
                           ),

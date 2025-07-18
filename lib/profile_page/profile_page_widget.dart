@@ -98,8 +98,7 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                                 ),
                                 child: Column(
                                   mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
+                                  mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
                                     Container(
                                       width: MediaQuery.sizeOf(context).width *
@@ -784,8 +783,8 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget> {
                                       ),
                                     ),
                                   ]
-                                      .divide(SizedBox(height: 2.0))
-                                      .addToStart(SizedBox(height: 6.0)),
+                                      .divide(SizedBox(height: 15.0))
+                                      .around(SizedBox(height: 15.0)),
                                 ),
                               );
                             },

@@ -1,7 +1,8 @@
 // Export pages
 export '/sign_up_page/sign_up_page_widget.dart' show SignUpPageWidget;
 export '/dashboard/dashboard_widget.dart' show DashboardWidget;
-export '/create_event/create_event_widget.dart' show CreateEventWidget;
+export '/adicionar_glicemia/adicionar_glicemia_widget.dart'
+    show AdicionarGlicemiaWidget;
 export '/profile_page/profile_page_widget.dart' show ProfilePageWidget;
 export '/login_page/login_page_widget.dart' show LoginPageWidget;
 export '/edit_page/edit_page_widget.dart' show EditPageWidget;
@@ -20,3 +21,5 @@ export '/listar_glicemia/listar_glicemia_widget.dart' show ListarGlicemiaWidget;
 export '/terms_and_conditions_sign/terms_and_conditions_sign_widget.dart'
     show TermsAndConditionsSignWidget;
 export '/upload_phone/upload_phone_widget.dart' show UploadPhoneWidget;
+export '/create_event_copy/create_event_copy_widget.dart'
+    show CreateEventCopyWidget;

@@ -66,8 +66,12 @@ class _SignUpPageWidgetState extends State<SignUpPageWidget> {
         body: SafeArea(
           top: true,
           child: Container(
-            width: double.infinity,
-            height: double.infinity,
+            width: MediaQuery.sizeOf(context).width * 1.0,
+            height: MediaQuery.sizeOf(context).height * 1.0,
+            constraints: BoxConstraints(
+              maxWidth: MediaQuery.sizeOf(context).width * 1.0,
+              maxHeight: MediaQuery.sizeOf(context).height * 1.0,
+            ),
             decoration: BoxDecoration(
               image: DecorationImage(
                 fit: BoxFit.cover,
@@ -899,26 +903,42 @@ class _SignUpPageWidgetState extends State<SignUpPageWidget> {
                               ),
                               child: Align(
                                 alignment: AlignmentDirectional(0.0, 0.0),
-                                child: InkWell(
-                                  splashColor: Colors.transparent,
-                                  focusColor: Colors.transparent,
-                                  hoverColor: Colors.transparent,
-                                  highlightColor: Colors.transparent,
-                                  onTap: () async {
-                                    context
-                                        .pushNamed(LoginPageWidget.routeName);
-                                  },
-                                  child: RichText(
-                                    textScaler:
-                                        MediaQuery.of(context).textScaler,
-                                    text: TextSpan(
-                                      children: [
-                                        TextSpan(
-                                          text: 'Já tem uma conta?',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyMedium
-                                              .override(
-                                                font: GoogleFonts.poppins(
+                                child: Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 0.0, 0.0, 20.0),
+                                  child: InkWell(
+                                    splashColor: Colors.transparent,
+                                    focusColor: Colors.transparent,
+                                    hoverColor: Colors.transparent,
+                                    highlightColor: Colors.transparent,
+                                    onTap: () async {
+                                      context
+                                          .pushNamed(LoginPageWidget.routeName);
+                                    },
+                                    child: RichText(
+                                      textScaler:
+                                          MediaQuery.of(context).textScaler,
+                                      text: TextSpan(
+                                        children: [
+                                          TextSpan(
+                                            text: 'Já tem uma conta?',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  font: GoogleFonts.poppins(
+                                                    fontWeight:
+                                                        FontWeight.normal,
+                                                    fontStyle:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .bodyMedium
+                                                            .fontStyle,
+                                                  ),
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .primaryText,
+                                                  fontSize: 12.0,
+                                                  letterSpacing: 0.0,
                                                   fontWeight: FontWeight.normal,
                                                   fontStyle:
                                                       FlutterFlowTheme.of(
@@ -926,156 +946,175 @@ class _SignUpPageWidgetState extends State<SignUpPageWidget> {
                                                           .bodyMedium
                                                           .fontStyle,
                                                 ),
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primaryText,
-                                                fontSize: 12.0,
-                                                letterSpacing: 0.0,
-                                                fontWeight: FontWeight.normal,
-                                                fontStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyMedium
-                                                        .fontStyle,
-                                              ),
-                                        ),
-                                        TextSpan(
-                                          text: 'Entrar',
-                                          style: GoogleFonts.poppins(
-                                            color: FlutterFlowTheme.of(context)
-                                                .primary,
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 12.0,
                                           ),
-                                        )
-                                      ],
-                                      style: TextStyle(
-                                        fontSize: 10.0,
+                                          TextSpan(
+                                            text: 'Entrar',
+                                            style: GoogleFonts.poppins(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primary,
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 12.0,
+                                            ),
+                                          )
+                                        ],
+                                        style: TextStyle(
+                                          fontSize: 10.0,
+                                        ),
                                       ),
+                                      textAlign: TextAlign.end,
                                     ),
-                                    textAlign: TextAlign.end,
                                   ),
                                 ),
                               ),
                             ),
                           ),
-                          FFButtonWidget(
-                            onPressed: () async {
-                              if (_model.formKey.currentState == null ||
-                                  !_model.formKey.currentState!.validate()) {
-                                return;
-                              }
-                              if (FFAppState().signIschecked == true) {
-                                await VittaglicoBackendaDevelopmentGroup
-                                    .cadastroUsuarioCall
-                                    .call(
-                                  nome: _model.nomeTextController.text,
-                                  email: _model.emailTextController.text,
-                                  senha: _model.senhaTextController.text,
-                                  aceiteTermosCondicoes:
-                                      _model.aceiteTermosEhPoliticaValue,
-                                  aceitePoliticaDePrivacidade:
-                                      _model.aceiteTermosEhPoliticaValue,
-                                );
-
-                                _model.apiResult =
-                                    await VittaglicoBackendaDevelopmentGroup
-                                        .loginCall
-                                        .call(
-                                  email: _model.emailTextController.text,
-                                  senha: _model.senhaTextController.text,
-                                );
-
-                                if ((_model.apiResult?.succeeded ?? true)) {
-                                  FFAppState().token = AuthStruct(
-                                    token: VittaglicoBackendaDevelopmentGroup
-                                        .loginCall
-                                        .token(
-                                      (_model.apiResult?.jsonBody ?? ''),
-                                    ),
+                          Container(
+                            width: 200.0,
+                            decoration: BoxDecoration(),
+                            child: FFButtonWidget(
+                              onPressed: () async {
+                                if (_model.formKey.currentState == null ||
+                                    !_model.formKey.currentState!.validate()) {
+                                  return;
+                                }
+                                if (FFAppState().signIschecked == true) {
+                                  await VittaglicoBackendaDevelopmentGroup
+                                      .cadastroUsuarioCall
+                                      .call(
+                                    nome: _model.nomeTextController.text,
+                                    email: _model.emailTextController.text,
+                                    senha: _model.senhaTextController.text,
+                                    aceiteTermosCondicoes:
+                                        _model.aceiteTermosEhPoliticaValue,
+                                    aceitePoliticaDePrivacidade:
+                                        _model.aceiteTermosEhPoliticaValue,
                                   );
-                                  safeSetState(() {});
-                                  GoRouter.of(context).prepareAuthEvent();
-                                  await authManager.signIn(
-                                    authenticationToken:
-                                        VittaglicoBackendaDevelopmentGroup
-                                            .loginCall
-                                            .token(
-                                      (_model.apiResult?.jsonBody ?? ''),
-                                    ),
-                                  );
-                                  _model.apiResultProfile =
+
+                                  _model.apiResult =
                                       await VittaglicoBackendaDevelopmentGroup
-                                          .profileCall
+                                          .loginCall
                                           .call(
-                                    token: FFAppState().token.token,
+                                    email: _model.emailTextController.text,
+                                    senha: _model.senhaTextController.text,
                                   );
 
-                                  if ((_model.apiResultProfile?.succeeded ??
-                                      true)) {
-                                    FFAppState().usuario = UsuarioStruct(
-                                      id: VittaglicoBackendaDevelopmentGroup
-                                          .profileCall
-                                          .id(
-                                        (_model.apiResultProfile?.jsonBody ??
-                                            ''),
-                                      ),
-                                      nome: VittaglicoBackendaDevelopmentGroup
-                                          .profileCall
-                                          .nome(
-                                        (_model.apiResultProfile?.jsonBody ??
-                                            ''),
-                                      ),
-                                      email: VittaglicoBackendaDevelopmentGroup
-                                          .profileCall
-                                          .email(
-                                        (_model.apiResultProfile?.jsonBody ??
-                                            ''),
-                                      ),
-                                      telefone:
-                                          VittaglicoBackendaDevelopmentGroup
-                                              .profileCall
-                                              .telefone(
-                                        (_model.apiResultProfile?.jsonBody ??
-                                            ''),
-                                      ),
-                                      dataDeNascimento:
-                                          VittaglicoBackendaDevelopmentGroup
-                                              .profileCall
-                                              .dataDeNascimento(
-                                                (_model.apiResultProfile
-                                                        ?.jsonBody ??
-                                                    ''),
-                                              )
-                                              .toString(),
-                                      aceiteTermosCondicoes:
-                                          VittaglicoBackendaDevelopmentGroup
-                                              .profileCall
-                                              .aceiteTermosCondicoes(
-                                        (_model.apiResultProfile?.jsonBody ??
-                                            ''),
-                                      ),
-                                      aceitePoliticaDePrivacidade:
-                                          VittaglicoBackendaDevelopmentGroup
-                                              .profileCall
-                                              .aceitePoliticaDePrivacidade(
-                                        (_model.apiResultProfile?.jsonBody ??
-                                            ''),
+                                  if ((_model.apiResult?.succeeded ?? true)) {
+                                    FFAppState().token = AuthStruct(
+                                      token: VittaglicoBackendaDevelopmentGroup
+                                          .loginCall
+                                          .token(
+                                        (_model.apiResult?.jsonBody ?? ''),
                                       ),
                                     );
-                                    FFAppState().update(() {});
+                                    safeSetState(() {});
+                                    GoRouter.of(context).prepareAuthEvent();
+                                    await authManager.signIn(
+                                      authenticationToken:
+                                          VittaglicoBackendaDevelopmentGroup
+                                              .loginCall
+                                              .token(
+                                        (_model.apiResult?.jsonBody ?? ''),
+                                      ),
+                                    );
+                                    _model.apiResultProfile =
+                                        await VittaglicoBackendaDevelopmentGroup
+                                            .profileCall
+                                            .call(
+                                      token: FFAppState().token.token,
+                                    );
 
-                                    context.pushNamedAuth(
-                                        UploadPhoneWidget.routeName,
-                                        context.mounted);
+                                    if ((_model.apiResultProfile?.succeeded ??
+                                        true)) {
+                                      FFAppState().usuario = UsuarioStruct(
+                                        id: VittaglicoBackendaDevelopmentGroup
+                                            .profileCall
+                                            .id(
+                                          (_model.apiResultProfile?.jsonBody ??
+                                              ''),
+                                        ),
+                                        nome: VittaglicoBackendaDevelopmentGroup
+                                            .profileCall
+                                            .nome(
+                                          (_model.apiResultProfile?.jsonBody ??
+                                              ''),
+                                        ),
+                                        email:
+                                            VittaglicoBackendaDevelopmentGroup
+                                                .profileCall
+                                                .email(
+                                          (_model.apiResultProfile?.jsonBody ??
+                                              ''),
+                                        ),
+                                        telefone:
+                                            VittaglicoBackendaDevelopmentGroup
+                                                .profileCall
+                                                .telefone(
+                                          (_model.apiResultProfile?.jsonBody ??
+                                              ''),
+                                        ),
+                                        dataDeNascimento:
+                                            VittaglicoBackendaDevelopmentGroup
+                                                .profileCall
+                                                .dataDeNascimento(
+                                                  (_model.apiResultProfile
+                                                          ?.jsonBody ??
+                                                      ''),
+                                                )
+                                                .toString(),
+                                        aceiteTermosCondicoes:
+                                            VittaglicoBackendaDevelopmentGroup
+                                                .profileCall
+                                                .aceiteTermosCondicoes(
+                                          (_model.apiResultProfile?.jsonBody ??
+                                              ''),
+                                        ),
+                                        aceitePoliticaDePrivacidade:
+                                            VittaglicoBackendaDevelopmentGroup
+                                                .profileCall
+                                                .aceitePoliticaDePrivacidade(
+                                          (_model.apiResultProfile?.jsonBody ??
+                                              ''),
+                                        ),
+                                      );
+                                      FFAppState().update(() {});
+
+                                      context.pushNamedAuth(
+                                          UploadPhoneWidget.routeName,
+                                          context.mounted);
+                                    } else {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        SnackBar(
+                                          content: Text(
+                                            getJsonField(
+                                              (_model.apiResultProfile
+                                                      ?.jsonBody ??
+                                                  ''),
+                                              r'''$.message''',
+                                            ).toString(),
+                                            style: TextStyle(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryText,
+                                            ),
+                                          ),
+                                          duration:
+                                              Duration(milliseconds: 4000),
+                                          backgroundColor:
+                                              FlutterFlowTheme.of(context)
+                                                  .secondary,
+                                        ),
+                                      );
+                                    }
                                   } else {
-                                    context.pushNamedAuth(
-                                        LoginPageWidget.routeName,
-                                        context.mounted);
-
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(
                                         content: Text(
-                                          'Erro ao carregar o perfil.',
+                                          getJsonField(
+                                            (_model.apiResult?.jsonBody ?? ''),
+                                            r'''$.message''',
+                                          ).toString(),
                                           style: TextStyle(
                                             color: FlutterFlowTheme.of(context)
                                                 .primaryText,
@@ -1089,14 +1128,10 @@ class _SignUpPageWidgetState extends State<SignUpPageWidget> {
                                     );
                                   }
                                 } else {
-                                  context.pushNamedAuth(
-                                      LoginPageWidget.routeName,
-                                      context.mounted);
-
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
                                       content: Text(
-                                        '\tCredenciais inválidas.',
+                                        'Check Terms & Conditions',
                                         style: TextStyle(
                                           color: FlutterFlowTheme.of(context)
                                               .primaryText,
@@ -1109,56 +1144,41 @@ class _SignUpPageWidgetState extends State<SignUpPageWidget> {
                                     ),
                                   );
                                 }
-                              } else {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: Text(
-                                      'Check Terms & Conditions',
-                                      style: TextStyle(
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryText,
-                                      ),
-                                    ),
-                                    duration: Duration(milliseconds: 4000),
-                                    backgroundColor:
-                                        FlutterFlowTheme.of(context).secondary,
-                                  ),
-                                );
-                              }
 
-                              safeSetState(() {});
-                            },
-                            text: 'Cadastrar',
-                            options: FFButtonOptions(
-                              height: 40.0,
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  24.0, 0.0, 24.0, 0.0),
-                              iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 0.0, 0.0),
-                              color: Color(0xFFF5D0E2),
-                              textStyle: FlutterFlowTheme.of(context)
-                                  .titleSmall
-                                  .override(
-                                    font: GoogleFonts.poppins(
+                                safeSetState(() {});
+                              },
+                              text: 'Cadastrar',
+                              options: FFButtonOptions(
+                                height: 40.0,
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    24.0, 0.0, 24.0, 0.0),
+                                iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 0.0, 0.0, 0.0),
+                                color: Color(0xFFF5D0E2),
+                                textStyle: FlutterFlowTheme.of(context)
+                                    .titleSmall
+                                    .override(
+                                      font: GoogleFonts.poppins(
+                                        fontWeight: FontWeight.w600,
+                                        fontStyle: FlutterFlowTheme.of(context)
+                                            .titleSmall
+                                            .fontStyle,
+                                      ),
+                                      color: FlutterFlowTheme.of(context)
+                                          .textColor,
+                                      letterSpacing: 0.0,
                                       fontWeight: FontWeight.w600,
                                       fontStyle: FlutterFlowTheme.of(context)
                                           .titleSmall
                                           .fontStyle,
                                     ),
-                                    color:
-                                        FlutterFlowTheme.of(context).textColor,
-                                    letterSpacing: 0.0,
-                                    fontWeight: FontWeight.w600,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .titleSmall
-                                        .fontStyle,
-                                  ),
-                              elevation: 3.0,
-                              borderSide: BorderSide(
-                                color: Colors.transparent,
-                                width: 1.0,
+                                elevation: 3.0,
+                                borderSide: BorderSide(
+                                  color: Colors.transparent,
+                                  width: 1.0,
+                                ),
+                                borderRadius: BorderRadius.circular(4.0),
                               ),
-                              borderRadius: BorderRadius.circular(4.0),
                             ),
                           ),
                         ]

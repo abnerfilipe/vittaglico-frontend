@@ -600,82 +600,88 @@ class _UploadPhoneWidgetState extends State<UploadPhoneWidget> {
                               ],
                             ),
                           ),
-                          FFButtonWidget(
-                            onPressed: () async {
-                              if (_model.formKey.currentState == null ||
-                                  !_model.formKey.currentState!.validate()) {
-                                return;
-                              }
-                              _model.apiResult =
-                                  await VittaglicoBackendaDevelopmentGroup
-                                      .atualizarUsuarioTelefoneDataDeNascimentoCall
-                                      .call(
-                                token: FFAppState().token.token,
-                                telefone: _model.textController1.text,
-                                dataDeNascimento: _model.textController2.text,
-                              );
-
-                              if ((_model.apiResult?.succeeded ?? true)) {
-                                FFAppState().usuario = UsuarioStruct(
+                          Container(
+                            decoration: BoxDecoration(),
+                            child: FFButtonWidget(
+                              onPressed: () async {
+                                if (_model.formKey.currentState == null ||
+                                    !_model.formKey.currentState!.validate()) {
+                                  return;
+                                }
+                                _model.apiResult =
+                                    await VittaglicoBackendaDevelopmentGroup
+                                        .atualizarUsuarioTelefoneDataDeNascimentoCall
+                                        .call(
+                                  token: FFAppState().token.token,
                                   telefone: _model.textController1.text,
                                   dataDeNascimento: _model.textController2.text,
                                 );
-                                safeSetState(() {});
 
-                                context.pushNamed(DashboardWidget.routeName);
-                              } else {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: Text(
-                                      'Houve um erro ao enviar os dados',
-                                      style: TextStyle(
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryText,
+                                if ((_model.apiResult?.succeeded ?? true)) {
+                                  FFAppState().usuario = UsuarioStruct(
+                                    telefone: _model.textController1.text,
+                                    dataDeNascimento:
+                                        _model.textController2.text,
+                                  );
+                                  safeSetState(() {});
+
+                                  context.pushNamed(DashboardWidget.routeName);
+                                } else {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text(
+                                        getJsonField(
+                                          (_model.apiResult?.jsonBody ?? ''),
+                                          r'''$.message''',
+                                        ).toString(),
+                                        style: TextStyle(
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryText,
+                                        ),
                                       ),
+                                      duration: Duration(milliseconds: 4000),
+                                      backgroundColor:
+                                          FlutterFlowTheme.of(context)
+                                              .secondary,
                                     ),
-                                    duration: Duration(milliseconds: 4000),
-                                    backgroundColor:
-                                        FlutterFlowTheme.of(context).secondary,
-                                  ),
-                                );
+                                  );
+                                }
 
-                                context.pushNamed(LoginPageWidget.routeName);
-                              }
-
-                              safeSetState(() {});
-                            },
-                            text: 'Continuar',
-                            options: FFButtonOptions(
-                              width: 350.0,
-                              height: 48.0,
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  24.0, 0.0, 24.0, 0.0),
-                              iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 0.0, 0.0),
-                              color: FlutterFlowTheme.of(context).secondary,
-                              textStyle: FlutterFlowTheme.of(context)
-                                  .titleSmall
-                                  .override(
-                                    font: GoogleFonts.readexPro(
+                                safeSetState(() {});
+                              },
+                              text: 'Continuar',
+                              options: FFButtonOptions(
+                                width: 350.0,
+                                height: 48.0,
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    24.0, 0.0, 24.0, 0.0),
+                                iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 0.0, 0.0, 0.0),
+                                color: FlutterFlowTheme.of(context).secondary,
+                                textStyle: FlutterFlowTheme.of(context)
+                                    .titleSmall
+                                    .override(
+                                      font: GoogleFonts.readexPro(
+                                        fontWeight: FontWeight.w600,
+                                        fontStyle: FlutterFlowTheme.of(context)
+                                            .titleSmall
+                                            .fontStyle,
+                                      ),
+                                      color: FlutterFlowTheme.of(context)
+                                          .alternate,
+                                      letterSpacing: 0.0,
                                       fontWeight: FontWeight.w600,
                                       fontStyle: FlutterFlowTheme.of(context)
                                           .titleSmall
                                           .fontStyle,
                                     ),
-                                    color:
-                                        FlutterFlowTheme.of(context).alternate,
-                                    letterSpacing: 0.0,
-                                    fontWeight: FontWeight.w600,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .titleSmall
-                                        .fontStyle,
-                                  ),
-                              elevation: 3.0,
-                              borderSide: BorderSide(
-                                color: Colors.transparent,
-                                width: 1.0,
+                                elevation: 3.0,
+                                borderSide: BorderSide(
+                                  color: Colors.transparent,
+                                  width: 1.0,
+                                ),
+                                borderRadius: BorderRadius.circular(8.0),
                               ),
-                              borderRadius: BorderRadius.circular(8.0),
                             ),
                           ),
                         ].divide(SizedBox(height: 24.0)),

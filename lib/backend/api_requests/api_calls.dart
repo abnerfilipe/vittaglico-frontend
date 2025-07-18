@@ -28,6 +28,10 @@ class VittaglicoBackendaDevelopmentGroup {
       AtualizarUsuarioTelefoneDataDeNascimentoCall();
   static ValidateAuthorizationCall validateAuthorizationCall =
       ValidateAuthorizationCall();
+  static ListarGlicemiasDoUsuarioCall listarGlicemiasDoUsuarioCall =
+      ListarGlicemiasDoUsuarioCall();
+  static AdicionarGlicemiaUsuarioCall adicionarGlicemiaUsuarioCall =
+      AdicionarGlicemiaUsuarioCall();
 }
 
 class LoginCall {
@@ -389,6 +393,152 @@ class ValidateAuthorizationCall {
         response,
         r'''$.valid''',
       ));
+}
+
+class ListarGlicemiasDoUsuarioCall {
+  Future<ApiCallResponse> call({
+    String? token = '',
+    String? usuarioId = '',
+  }) async {
+    final baseUrl = VittaglicoBackendaDevelopmentGroup.getBaseUrl();
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'listarGlicemiasDoUsuario',
+      apiUrl: '${baseUrl}/glicemia/usuario/${usuarioId}',
+      callType: ApiCallType.GET,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${token}',
+      },
+      params: {},
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  String? id(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$[:].id''',
+      ));
+  int? valor(dynamic response) => castToType<int>(getJsonField(
+        response,
+        r'''$[:].valor''',
+      ));
+  String? medida(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$[:].medida''',
+      ));
+  String? periodo(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$[:].periodo''',
+      ));
+  String? dataHoraDeRegistro(dynamic response) =>
+      castToType<String>(getJsonField(
+        response,
+        r'''$[:].dataHoraDeRegistro''',
+      ));
+  String? createdAt(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$[:].createdAt''',
+      ));
+  String? updatedAt(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$[:].updatedAt''',
+      ));
+  dynamic glicemias(dynamic response) => getJsonField(
+        response,
+        r'''$''',
+      );
+}
+
+class AdicionarGlicemiaUsuarioCall {
+  Future<ApiCallResponse> call({
+    String? token = '',
+    String? usuarioId = '',
+    int? valor,
+    String? medida = 'mg/dL',
+    String? periodo = '',
+    String? dataHoraDeRegistro = '',
+  }) async {
+    final baseUrl = VittaglicoBackendaDevelopmentGroup.getBaseUrl();
+
+    final ffApiRequestBody = '''
+{
+  "usuarioId": "${escapeStringForJson(usuarioId)}",
+  "valor": ${valor},
+  "medida": "${escapeStringForJson(medida)}",
+  "periodo": "${escapeStringForJson(periodo)}",
+  "dataHoraDeRegistro": "${escapeStringForJson(dataHoraDeRegistro)}"
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'adicionarGlicemiaUsuario',
+      apiUrl: '${baseUrl}/glicemia',
+      callType: ApiCallType.POST,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${token}',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  String? messagem(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.messagem''',
+      ));
+  String? id(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.glicemia.id''',
+      ));
+  dynamic usuarioJSON(dynamic response) => getJsonField(
+        response,
+        r'''$.glicemia.usuario''',
+      );
+  String? usuarioId(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.glicemia.usuario.id''',
+      ));
+  int? valor(dynamic response) => castToType<int>(getJsonField(
+        response,
+        r'''$.glicemia.valor''',
+      ));
+  String? updatedAt(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.glicemia.updatedAt''',
+      ));
+  String? createdAt(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.glicemia.createdAt''',
+      ));
+  String? dataHoraDeRegistro(dynamic response) =>
+      castToType<String>(getJsonField(
+        response,
+        r'''$.glicemia.dataHoraDeRegistro''',
+      ));
+  String? periodo(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.glicemia.periodo''',
+      ));
+  String? medida(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.glicemia.medida''',
+      ));
+  dynamic glicemiaJSON(dynamic response) => getJsonField(
+        response,
+        r'''$.glicemia''',
+      );
 }
 
 /// End VittaglicoBackendaDevelopment Group Code

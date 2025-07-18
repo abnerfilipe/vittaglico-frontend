@@ -1,10 +1,13 @@
 import '/backend/api_requests/api_calls.dart';
+import '/backend/schema/structs/index.dart';
 import '/components/navbar_widget.dart';
+import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/index.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'listar_glicemia_model.dart';
 export 'listar_glicemia_model.dart';
 
@@ -40,6 +43,8 @@ class _ListarGlicemiaWidgetState extends State<ListarGlicemiaWidget> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -76,6 +81,7 @@ class _ListarGlicemiaWidgetState extends State<ListarGlicemiaWidget> {
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               InkWell(
                                 splashColor: Colors.transparent,
@@ -91,60 +97,84 @@ class _ListarGlicemiaWidgetState extends State<ListarGlicemiaWidget> {
                                   size: 30.0,
                                 ),
                               ),
-                              Container(
-                                decoration: BoxDecoration(),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    ClipRRect(
-                                      borderRadius: BorderRadius.circular(0.0),
-                                      child: Image.asset(
-                                        'assets/images/Group_1000003983.png',
-                                        width: 24.0,
-                                        height: 24.0,
-                                        fit: BoxFit.contain,
-                                      ),
+                              Flex(
+                                direction: Axis.vertical,
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  Container(
+                                    decoration: BoxDecoration(),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Image.asset(
+                                          'assets/images/adicionar-medicao-icon.png',
+                                          width: 24.0,
+                                          height: 24.0,
+                                          fit: BoxFit.contain,
+                                        ),
+                                        Text(
+                                          'Glicemias',
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                font: GoogleFonts.poppins(
+                                                  fontWeight:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodyMedium
+                                                          .fontWeight,
+                                                  fontStyle:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodyMedium
+                                                          .fontStyle,
+                                                ),
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .textColor,
+                                                fontSize: 20.0,
+                                                letterSpacing: 0.0,
+                                                fontWeight:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .fontWeight,
+                                                fontStyle:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .fontStyle,
+                                              ),
+                                        ),
+                                      ].divide(SizedBox(width: 10.0)),
                                     ),
-                                    Text(
-                                      'Invites',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            font: GoogleFonts.poppins(
-                                              fontWeight:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMedium
-                                                      .fontWeight,
-                                              fontStyle:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMedium
-                                                      .fontStyle,
-                                            ),
-                                            color: FlutterFlowTheme.of(context)
-                                                .textColor,
-                                            fontSize: 20.0,
-                                            letterSpacing: 0.0,
-                                            fontWeight:
-                                                FlutterFlowTheme.of(context)
-                                                    .bodyMedium
-                                                    .fontWeight,
-                                            fontStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .bodyMedium
-                                                    .fontStyle,
-                                          ),
-                                    ),
-                                  ].divide(SizedBox(width: 10.0)),
-                                ),
+                                  ),
+                                ],
                               ),
-                            ].divide(SizedBox(width: 90.0)),
+                              FlutterFlowIconButton(
+                                borderRadius: 8.0,
+                                buttonSize: 40.0,
+                                fillColor: FlutterFlowTheme.of(context).primary,
+                                icon: Icon(
+                                  Icons.add,
+                                  color: FlutterFlowTheme.of(context).info,
+                                  size: 24.0,
+                                ),
+                                onPressed: () async {
+                                  context.pushNamed(
+                                      AdicionarGlicemiaWidget.routeName);
+                                },
+                              ),
+                            ].divide(SizedBox(width: 67.0)),
                           ),
                         ),
                         FutureBuilder<ApiCallResponse>(
                           future: VittaglicoBackendaDevelopmentGroup
-                              .substituirCall
-                              .call(),
+                              .listarGlicemiasDoUsuarioCall
+                              .call(
+                            token: FFAppState().token.token,
+                            usuarioId: FFAppState().usuario.id,
+                          ),
                           builder: (context, snapshot) {
                             // Customize what your widget looks like when it's loading.
                             if (!snapshot.hasData) {
@@ -160,7 +190,8 @@ class _ListarGlicemiaWidgetState extends State<ListarGlicemiaWidget> {
                                 ),
                               );
                             }
-                            final containerSubstituirResponse = snapshot.data!;
+                            final containerListarGlicemiasDoUsuarioResponse =
+                                snapshot.data!;
 
                             return Container(
                               width: 327.0,
@@ -168,31 +199,27 @@ class _ListarGlicemiaWidgetState extends State<ListarGlicemiaWidget> {
                               decoration: BoxDecoration(),
                               child: Stack(
                                 children: [
-                                  FutureBuilder<ApiCallResponse>(
-                                    future: VittaglicoBackendaDevelopmentGroup
-                                        .substituirCall
-                                        .call(),
-                                    builder: (context, snapshot) {
-                                      // Customize what your widget looks like when it's loading.
-                                      if (!snapshot.hasData) {
-                                        return Center(
-                                          child: SizedBox(
-                                            width: 50.0,
-                                            height: 50.0,
-                                            child: CircularProgressIndicator(
-                                              valueColor:
-                                                  AlwaysStoppedAnimation<Color>(
-                                                FlutterFlowTheme.of(context)
-                                                    .primary,
-                                              ),
-                                            ),
-                                          ),
-                                        );
-                                      }
-                                      final listViewSubstituirResponse =
-                                          snapshot.data!;
+                                  Builder(
+                                    builder: (context) {
+                                      final glicemias =
+                                          (VittaglicoBackendaDevelopmentGroup
+                                                          .listarGlicemiasDoUsuarioCall
+                                                          .glicemias(
+                                                            containerListarGlicemiasDoUsuarioResponse
+                                                                .jsonBody,
+                                                          )
+                                                          ?.toList()
+                                                          .map<GlicemiaStruct?>(
+                                                              GlicemiaStruct
+                                                                  .maybeFromMap)
+                                                          .toList()
+                                                      as Iterable<
+                                                          GlicemiaStruct?>)
+                                                  .withoutNulls
+                                                  .toList() ??
+                                              [];
 
-                                      return ListView(
+                                      return ListView.separated(
                                         padding: EdgeInsets.fromLTRB(
                                           0,
                                           5.0,
@@ -200,8 +227,13 @@ class _ListarGlicemiaWidgetState extends State<ListarGlicemiaWidget> {
                                           0,
                                         ),
                                         scrollDirection: Axis.vertical,
-                                        children: [
-                                          Stack(
+                                        itemCount: glicemias.length,
+                                        separatorBuilder: (_, __) =>
+                                            SizedBox(height: 15.0),
+                                        itemBuilder: (context, glicemiasIndex) {
+                                          final glicemiasItem =
+                                              glicemias[glicemiasIndex];
+                                          return Stack(
                                             children: [
                                               Container(
                                                 width: double.infinity,
@@ -277,30 +309,73 @@ class _ListarGlicemiaWidgetState extends State<ListarGlicemiaWidget> {
                                                                   CrossAxisAlignment
                                                                       .start,
                                                               children: [
-                                                                Text(
-                                                                  'Friday Movie Night',
-                                                                  style: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyMedium
-                                                                      .override(
-                                                                        font: GoogleFonts
-                                                                            .poppins(
-                                                                          fontWeight:
-                                                                              FontWeight.w500,
-                                                                          fontStyle: FlutterFlowTheme.of(context)
-                                                                              .bodyMedium
-                                                                              .fontStyle,
-                                                                        ),
-                                                                        fontSize:
-                                                                            16.0,
-                                                                        letterSpacing:
-                                                                            0.0,
-                                                                        fontWeight:
-                                                                            FontWeight.w500,
-                                                                        fontStyle: FlutterFlowTheme.of(context)
-                                                                            .bodyMedium
-                                                                            .fontStyle,
+                                                                Row(
+                                                                  mainAxisSize:
+                                                                      MainAxisSize
+                                                                          .max,
+                                                                  children: [
+                                                                    Text(
+                                                                      valueOrDefault<
+                                                                          String>(
+                                                                        VittaglicoBackendaDevelopmentGroup
+                                                                            .listarGlicemiasDoUsuarioCall
+                                                                            .valor(
+                                                                              containerListarGlicemiasDoUsuarioResponse.jsonBody,
+                                                                            )
+                                                                            ?.toString(),
+                                                                        'valor',
                                                                       ),
+                                                                      style: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .bodyMedium
+                                                                          .override(
+                                                                            font:
+                                                                                GoogleFonts.poppins(
+                                                                              fontWeight: FontWeight.w500,
+                                                                              fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                            ),
+                                                                            fontSize:
+                                                                                16.0,
+                                                                            letterSpacing:
+                                                                                0.0,
+                                                                            fontWeight:
+                                                                                FontWeight.w500,
+                                                                            fontStyle:
+                                                                                FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                          ),
+                                                                    ),
+                                                                    Padding(
+                                                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                                                          5.0,
+                                                                          0.0,
+                                                                          0.0,
+                                                                          0.0),
+                                                                      child:
+                                                                          Text(
+                                                                        valueOrDefault<
+                                                                            String>(
+                                                                          VittaglicoBackendaDevelopmentGroup
+                                                                              .listarGlicemiasDoUsuarioCall
+                                                                              .medida(
+                                                                            containerListarGlicemiasDoUsuarioResponse.jsonBody,
+                                                                          ),
+                                                                          'medida',
+                                                                        ),
+                                                                        style: FlutterFlowTheme.of(context)
+                                                                            .bodyMedium
+                                                                            .override(
+                                                                              font: GoogleFonts.poppins(
+                                                                                fontWeight: FontWeight.w500,
+                                                                                fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                              ),
+                                                                              fontSize: 16.0,
+                                                                              letterSpacing: 0.0,
+                                                                              fontWeight: FontWeight.w500,
+                                                                              fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                                                                            ),
+                                                                      ),
+                                                                    ),
+                                                                  ],
                                                                 ),
                                                                 Container(
                                                                   decoration:
@@ -319,14 +394,22 @@ class _ListarGlicemiaWidgetState extends State<ListarGlicemiaWidget> {
                                                                     children: [
                                                                       Icon(
                                                                         Icons
-                                                                            .location_on_outlined,
+                                                                            .calendar_today,
                                                                         color: FlutterFlowTheme.of(context)
                                                                             .secondaryText,
                                                                         size:
                                                                             15.0,
                                                                       ),
                                                                       Text(
-                                                                        'Address line 1 dd st. clairs 1121JKO',
+                                                                        valueOrDefault<
+                                                                            String>(
+                                                                          VittaglicoBackendaDevelopmentGroup
+                                                                              .listarGlicemiasDoUsuarioCall
+                                                                              .periodo(
+                                                                            containerListarGlicemiasDoUsuarioResponse.jsonBody,
+                                                                          ),
+                                                                          'periodo',
+                                                                        ),
                                                                         style: FlutterFlowTheme.of(context)
                                                                             .bodyMedium
                                                                             .override(
@@ -360,18 +443,28 @@ class _ListarGlicemiaWidgetState extends State<ListarGlicemiaWidget> {
                                                                           15.0,
                                                                     ),
                                                                     Text(
-                                                                      '5:00-10:00',
+                                                                      valueOrDefault<
+                                                                          String>(
+                                                                        VittaglicoBackendaDevelopmentGroup
+                                                                            .listarGlicemiasDoUsuarioCall
+                                                                            .dataHoraDeRegistro(
+                                                                          containerListarGlicemiasDoUsuarioResponse
+                                                                              .jsonBody,
+                                                                        ),
+                                                                        'dataHoraDeRegistro',
+                                                                      ),
+                                                                      textAlign:
+                                                                          TextAlign
+                                                                              .start,
                                                                       style: FlutterFlowTheme.of(
                                                                               context)
                                                                           .bodyMedium
                                                                           .override(
                                                                             font:
-                                                                                GoogleFonts.lexendDeca(
+                                                                                GoogleFonts.poppins(
                                                                               fontWeight: FlutterFlowTheme.of(context).bodyMedium.fontWeight,
                                                                               fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
                                                                             ),
-                                                                            fontSize:
-                                                                                10.0,
                                                                             letterSpacing:
                                                                                 0.0,
                                                                             fontWeight:
@@ -395,124 +488,11 @@ class _ListarGlicemiaWidgetState extends State<ListarGlicemiaWidget> {
                                                       SizedBox(height: 10.0)),
                                                 ),
                                               ),
-                                              Align(
-                                                alignment: AlignmentDirectional(
-                                                    0.96, -1.44),
-                                                child: Container(
-                                                  width: 44.0,
-                                                  height: 48.0,
-                                                  decoration: BoxDecoration(
-                                                    color: Color(0xFF7165D0),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            9.0),
-                                                  ),
-                                                  alignment:
-                                                      AlignmentDirectional(
-                                                          0.0, 0.0),
-                                                  child: Column(
-                                                    mainAxisSize:
-                                                        MainAxisSize.max,
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .center,
-                                                    children: [
-                                                      Container(
-                                                        decoration:
-                                                            BoxDecoration(),
-                                                        child: Text(
-                                                          '25',
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .bodyMedium
-                                                              .override(
-                                                                font: GoogleFonts
-                                                                    .poppins(
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                  fontStyle: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyMedium
-                                                                      .fontStyle,
-                                                                ),
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .primaryBackground,
-                                                                fontSize: 20.0,
-                                                                letterSpacing:
-                                                                    0.0,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                fontStyle: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyMedium
-                                                                    .fontStyle,
-                                                              ),
-                                                        ),
-                                                      ),
-                                                      Container(
-                                                        decoration:
-                                                            BoxDecoration(),
-                                                        child: Text(
-                                                          'Jul',
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .bodyMedium
-                                                              .override(
-                                                                font: GoogleFonts
-                                                                    .poppins(
-                                                                  fontWeight: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyMedium
-                                                                      .fontWeight,
-                                                                  fontStyle: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyMedium
-                                                                      .fontStyle,
-                                                                ),
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .primaryBackground,
-                                                                fontSize: 12.0,
-                                                                letterSpacing:
-                                                                    0.0,
-                                                                fontWeight: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyMedium
-                                                                    .fontWeight,
-                                                                fontStyle: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyMedium
-                                                                    .fontStyle,
-                                                              ),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
                                             ],
-                                          ),
-                                        ].divide(SizedBox(height: 15.0)),
+                                          );
+                                        },
                                       );
                                     },
-                                  ),
-                                  Align(
-                                    alignment: AlignmentDirectional(0.0, 0.0),
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(8.0),
-                                      child: Image.asset(
-                                        'assets/images/a-well-designed-flat-icon-of-no-event-vector.jpg',
-                                        width: 300.0,
-                                        height: 300.0,
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
                                   ),
                                 ],
                               ),

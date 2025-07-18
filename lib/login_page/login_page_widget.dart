@@ -62,8 +62,12 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
         body: SafeArea(
           top: true,
           child: Container(
-            width: double.infinity,
-            height: double.infinity,
+            width: MediaQuery.sizeOf(context).width * 1.0,
+            height: MediaQuery.sizeOf(context).height * 1.0,
+            constraints: BoxConstraints(
+              maxWidth: MediaQuery.sizeOf(context).width * 1.0,
+              maxHeight: MediaQuery.sizeOf(context).height * 1.0,
+            ),
             decoration: BoxDecoration(
               image: DecorationImage(
                 fit: BoxFit.cover,
@@ -672,7 +676,10 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 content: Text(
-                                  'Erro ao carregar o perfil.',
+                                  getJsonField(
+                                    (_model.apiResultProfile?.jsonBody ?? ''),
+                                    r'''$.message''',
+                                  ).toString(),
                                   style: TextStyle(
                                     color: FlutterFlowTheme.of(context)
                                         .primaryText,
@@ -691,7 +698,10 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               content: Text(
-                                '\tCredenciais inválidas.',
+                                getJsonField(
+                                  (_model.apiResult?.jsonBody ?? ''),
+                                  r'''$.message''',
+                                ).toString(),
                                 style: TextStyle(
                                   color:
                                       FlutterFlowTheme.of(context).primaryText,
@@ -707,50 +717,6 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                         safeSetState(() {});
                       },
                       text: 'Entrar',
-                      options: FFButtonOptions(
-                        height: 40.0,
-                        padding: EdgeInsetsDirectional.fromSTEB(
-                            24.0, 0.0, 24.0, 0.0),
-                        iconPadding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                        color: FlutterFlowTheme.of(context).secondary,
-                        textStyle:
-                            FlutterFlowTheme.of(context).titleSmall.override(
-                                  font: GoogleFonts.poppins(
-                                    fontWeight: FontWeight.w600,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .titleSmall
-                                        .fontStyle,
-                                  ),
-                                  color: FlutterFlowTheme.of(context).textColor,
-                                  letterSpacing: 0.0,
-                                  fontWeight: FontWeight.w600,
-                                  fontStyle: FlutterFlowTheme.of(context)
-                                      .titleSmall
-                                      .fontStyle,
-                                ),
-                        elevation: 3.0,
-                        borderSide: BorderSide(
-                          color: Colors.transparent,
-                          width: 1.0,
-                        ),
-                        borderRadius: BorderRadius.circular(4.0),
-                      ),
-                    ),
-                  ),
-                  Container(
-                    width: 302.0,
-                    height: 40.0,
-                    decoration: BoxDecoration(),
-                    child: FFButtonWidget(
-                      onPressed: () async {
-                        GoRouter.of(context).prepareAuthEvent();
-                        await authManager.signIn();
-
-                        context.goNamedAuth(
-                            DashboardWidget.routeName, context.mounted);
-                      },
-                      text: 'Entrar na Demo ',
                       options: FFButtonOptions(
                         height: 40.0,
                         padding: EdgeInsetsDirectional.fromSTEB(

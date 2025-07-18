@@ -1,9 +1,9 @@
 import '/flutter_flow/flutter_flow_util.dart';
 import '/index.dart';
-import 'create_event_widget.dart' show CreateEventWidget;
+import 'create_event_copy_widget.dart' show CreateEventCopyWidget;
 import 'package:flutter/material.dart';
 
-class CreateEventModel extends FlutterFlowModel<CreateEventWidget> {
+class CreateEventCopyModel extends FlutterFlowModel<CreateEventCopyWidget> {
   ///  State fields for stateful widgets in this page.
 
   final formKey = GlobalKey<FormState>();

@@ -97,9 +97,9 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => DashboardWidget(),
         ),
         FFRoute(
-          name: CreateEventWidget.routeName,
-          path: CreateEventWidget.routePath,
-          builder: (context, params) => CreateEventWidget(),
+          name: AdicionarGlicemiaWidget.routeName,
+          path: AdicionarGlicemiaWidget.routePath,
+          builder: (context, params) => AdicionarGlicemiaWidget(),
         ),
         FFRoute(
           name: ProfilePageWidget.routeName,
@@ -180,6 +180,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: UploadPhoneWidget.routeName,
           path: UploadPhoneWidget.routePath,
           builder: (context, params) => UploadPhoneWidget(),
+        ),
+        FFRoute(
+          name: CreateEventCopyWidget.routeName,
+          path: CreateEventCopyWidget.routePath,
+          builder: (context, params) => CreateEventCopyWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
@@ -364,13 +369,15 @@ class FFRoute {
                 )
               : builder(context, ffParams);
           final child = appStateNotifier.loading
-              ? Container(
-                  color: Colors.transparent,
-                  child: Image.asset(
-                    'assets/images/Group_4-1.png',
-                    fit: BoxFit.cover,
-                  ),
-                )
+              ? isWeb
+                  ? Container()
+                  : Container(
+                      color: Colors.transparent,
+                      child: Image.asset(
+                        'assets/images/splashscreen-vittaglico-2.jpg',
+                        fit: BoxFit.cover,
+                      ),
+                    )
               : page;
 
           final transitionInfo = state.transitionInfo;
