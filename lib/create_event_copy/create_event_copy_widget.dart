@@ -1,4 +1,3 @@
-import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -66,7 +65,7 @@ class _CreateEventCopyWidgetState extends State<CreateEventCopyWidget> {
             width: double.infinity,
             height: double.infinity,
             decoration: BoxDecoration(
-              color: Color(0xFFF9F1F2),
+              color: FlutterFlowTheme.of(context).secondaryBackground,
             ),
             child: SingleChildScrollView(
               child: Column(
@@ -1174,35 +1173,8 @@ class _CreateEventCopyWidgetState extends State<CreateEventCopyWidget> {
                       ),
                     ),
                     child: FFButtonWidget(
-                      onPressed: () async {
-                        if (_model.formKey.currentState == null ||
-                            !_model.formKey.currentState!.validate()) {
-                          return;
-                        }
-                        if (_model.datePicked1 == null) {
-                          return;
-                        }
-                        if (_model.datePicked2 == null) {
-                          return;
-                        }
-                        await VittaglicoBackendaDevelopmentGroup.substituirCall
-                            .call();
-
-                        context.pushNamed(DashboardWidget.routeName);
-
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(
-                              'Event created successfully',
-                              style: TextStyle(
-                                color: FlutterFlowTheme.of(context).alternate,
-                              ),
-                            ),
-                            duration: Duration(milliseconds: 4000),
-                            backgroundColor:
-                                FlutterFlowTheme.of(context).secondary,
-                          ),
-                        );
+                      onPressed: () {
+                        print('Button pressed ...');
                       },
                       text: 'Create Event',
                       options: FFButtonOptions(

@@ -1,4 +1,3 @@
-import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -188,29 +187,16 @@ class _ProfilePicWidgetState extends State<ProfilePicWidget> {
                                     shape: BoxShape.circle,
                                   ),
                                   alignment: AlignmentDirectional(0.0, 0.0),
-                                  child: InkWell(
-                                    splashColor: Colors.transparent,
-                                    focusColor: Colors.transparent,
-                                    hoverColor: Colors.transparent,
-                                    highlightColor: Colors.transparent,
-                                    onTap: () async {
-                                      await VittaglicoBackendaDevelopmentGroup
-                                          .substituirCall
-                                          .call();
-
-                                      safeSetState(() {});
-                                    },
-                                    child: Container(
-                                      width: 141.0,
-                                      height: 141.0,
-                                      clipBehavior: Clip.antiAlias,
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                      ),
-                                      child: Image.network(
-                                        'https://i.pinimg.com/564x/c7/ab/cd/c7abcd3ce378191a3dddfa4cdb2be46f.jpg',
-                                        fit: BoxFit.cover,
-                                      ),
+                                  child: Container(
+                                    width: 141.0,
+                                    height: 141.0,
+                                    clipBehavior: Clip.antiAlias,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                    ),
+                                    child: Image.network(
+                                      'https://i.pinimg.com/564x/c7/ab/cd/c7abcd3ce378191a3dddfa4cdb2be46f.jpg',
+                                      fit: BoxFit.cover,
                                     ),
                                   ),
                                 ),
@@ -220,7 +206,8 @@ class _ProfilePicWidgetState extends State<ProfilePicWidget> {
                         ),
                         FFButtonWidget(
                           onPressed: () async {
-                            context.pushNamed(UploadPhoneWidget.routeName);
+                            context
+                                .pushNamed(SignUpPageContinueWidget.routeName);
                           },
                           text: 'Proceed',
                           options: FFButtonOptions(

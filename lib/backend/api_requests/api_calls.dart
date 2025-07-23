@@ -19,7 +19,6 @@ class VittaglicoBackendaDevelopmentGroup {
   static LoginCall loginCall = LoginCall();
   static LogoutCall logoutCall = LogoutCall();
   static CadastroUsuarioCall cadastroUsuarioCall = CadastroUsuarioCall();
-  static SubstituirCall substituirCall = SubstituirCall();
   static ProfileCall profileCall = ProfileCall();
   static ListarUsuariosCall listarUsuariosCall = ListarUsuariosCall();
   static AtualizarUsuarioCall atualizarUsuarioCall = AtualizarUsuarioCall();
@@ -32,6 +31,15 @@ class VittaglicoBackendaDevelopmentGroup {
       ListarGlicemiasDoUsuarioCall();
   static AdicionarGlicemiaUsuarioCall adicionarGlicemiaUsuarioCall =
       AdicionarGlicemiaUsuarioCall();
+  static ListarInsulinaUsuarioCall listarInsulinaUsuarioCall =
+      ListarInsulinaUsuarioCall();
+  static ListarAplicacaoInsulinaUsuarioCall listarAplicacaoInsulinaUsuarioCall =
+      ListarAplicacaoInsulinaUsuarioCall();
+  static CriarAplicacaoInsulinaCall criarAplicacaoInsulinaCall =
+      CriarAplicacaoInsulinaCall();
+  static CalcularBolusDeCorrecaoCall calcularBolusDeCorrecaoCall =
+      CalcularBolusDeCorrecaoCall();
+  static CriarInsulinaCall criarInsulinaCall = CriarInsulinaCall();
 }
 
 class LoginCall {
@@ -143,28 +151,6 @@ class CadastroUsuarioCall {
   }
 }
 
-class SubstituirCall {
-  Future<ApiCallResponse> call() async {
-    final baseUrl = VittaglicoBackendaDevelopmentGroup.getBaseUrl();
-
-    return ApiManager.instance.makeApiCall(
-      callName: 'substituir',
-      apiUrl: '${baseUrl}/substituir',
-      callType: ApiCallType.GET,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      params: {},
-      returnBody: true,
-      encodeBodyUtf8: false,
-      decodeUtf8: false,
-      cache: false,
-      isStreamingApi: false,
-      alwaysAllowBody: false,
-    );
-  }
-}
-
 class ProfileCall {
   Future<ApiCallResponse> call({
     String? token = '',
@@ -209,10 +195,10 @@ class ProfileCall {
         response,
         r'''$.telefone''',
       ));
-  dynamic dataDeNascimento(dynamic response) => getJsonField(
+  String? dataDeNascimento(dynamic response) => castToType<String>(getJsonField(
         response,
         r'''$.dataDeNascimento''',
-      );
+      ));
   bool? aceiteTermosCondicoes(dynamic response) =>
       castToType<bool>(getJsonField(
         response,
@@ -222,6 +208,19 @@ class ProfileCall {
       castToType<bool>(getJsonField(
         response,
         r'''$.aceitePoliticaDePrivacidade''',
+      ));
+  dynamic configuracoesInsulina(dynamic response) => getJsonField(
+        response,
+        r'''$.configuracoesInsulina''',
+      );
+  String? glicoseAlvo(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.configuracoesInsulina.glicoseAlvo''',
+      ));
+  String? fatorSensibilidadeInsulina(dynamic response) =>
+      castToType<String>(getJsonField(
+        response,
+        r'''$.configuracoesInsulina.fatorSensibilidadeInsulina''',
       ));
 }
 
@@ -301,6 +300,8 @@ class AtualizarUsuarioCall {
     String? senha = '',
     String? telefone = '',
     String? dataDeNascimento = '',
+    String? fatorSensibilidadeInsulina = '',
+    String? glicoseAlvo = '',
   }) async {
     final baseUrl = VittaglicoBackendaDevelopmentGroup.getBaseUrl();
 
@@ -308,7 +309,11 @@ class AtualizarUsuarioCall {
 {
   "nome": "${escapeStringForJson(nome)}",
   "telefone": "${escapeStringForJson(telefone)}",
-  "dataDeNascimento": "${escapeStringForJson(dataDeNascimento)}"
+  "dataDeNascimento": "${escapeStringForJson(dataDeNascimento)}",
+  "configuracoesInsulina": {
+    "glicoseAlvo": "${escapeStringForJson(glicoseAlvo)}",
+    "fatorSensibilidadeInsulina": "${escapeStringForJson(fatorSensibilidadeInsulina)}"
+  }
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'atualizarUsuario',
@@ -329,6 +334,60 @@ class AtualizarUsuarioCall {
       alwaysAllowBody: false,
     );
   }
+
+  String? message(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.message''',
+      ));
+  dynamic usuario(dynamic response) => getJsonField(
+        response,
+        r'''$.usuario''',
+      );
+  String? messagem(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.messagem''',
+      ));
+  String? id(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.usuario.id''',
+      ));
+  String? nome(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.usuario.nome''',
+      ));
+  String? email(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.usuario.email''',
+      ));
+  String? dataDeNascimento(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.usuario.dataDeNascimento''',
+      ));
+  String? telefone(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.usuario.telefone''',
+      ));
+  String? createdAt(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.usuario.createdAt''',
+      ));
+  String? updatedAt(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.usuario.updatedAt''',
+      ));
+  dynamic configuracoesInsulina(dynamic response) => getJsonField(
+        response,
+        r'''$.usuario.configuracoesInsulina''',
+      );
+  String? glicoseAlvo(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.usuario.configuracoesInsulina.glicoseAlvo''',
+      ));
+  String? fatorSensibilidadeInsulina(dynamic response) =>
+      castToType<String>(getJsonField(
+        response,
+        r'''$.usuario.configuracoesInsulina.fatorSensibilidadeInsulina''',
+      ));
 }
 
 class AtualizarUsuarioTelefoneDataDeNascimentoCall {
@@ -336,13 +395,19 @@ class AtualizarUsuarioTelefoneDataDeNascimentoCall {
     String? token = '',
     String? telefone = '',
     String? dataDeNascimento = '',
+    int? glicoseAlvo,
+    int? fatorSensibilidadeInsulina,
   }) async {
     final baseUrl = VittaglicoBackendaDevelopmentGroup.getBaseUrl();
 
     final ffApiRequestBody = '''
 {
   "telefone": "${escapeStringForJson(telefone)}",
-  "dataDeNascimento": "${escapeStringForJson(dataDeNascimento)}"
+  "dataDeNascimento": "${escapeStringForJson(dataDeNascimento)}",
+  "configuracoesInsulina": {
+    "glicoseAlvo": ${glicoseAlvo},
+    "fatorSensibilidadeInsulina": ${fatorSensibilidadeInsulina}
+  }
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'atualizarUsuarioTelefoneDataDeNascimento',
@@ -539,6 +604,359 @@ class AdicionarGlicemiaUsuarioCall {
         response,
         r'''$.glicemia''',
       );
+}
+
+class ListarInsulinaUsuarioCall {
+  Future<ApiCallResponse> call({
+    String? token = '',
+    String? usuarioId = '',
+  }) async {
+    final baseUrl = VittaglicoBackendaDevelopmentGroup.getBaseUrl();
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'listarInsulinaUsuario',
+      apiUrl: '${baseUrl}/insulina/usuario/${usuarioId}',
+      callType: ApiCallType.GET,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${token}',
+      },
+      params: {},
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  String? id(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$[:].id''',
+      ));
+  String? nome(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$[:].nome''',
+      ));
+  String? tipoBasalBolus(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$[:].tipoBasalCorrecao''',
+      ));
+  int? duracaoAcaoHoras(dynamic response) => castToType<int>(getJsonField(
+        response,
+        r'''$[:].duracaoAcaoHoras''',
+      ));
+  double? picoAcaoHoras(dynamic response) => castToType<double>(getJsonField(
+        response,
+        r'''$[:].picoAcaoHoras''',
+      ));
+  String? usuarioId(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$[:].usuarioId''',
+      ));
+  String? message(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.message''',
+      ));
+  List? insulinas(dynamic response) => getJsonField(
+        response,
+        r'''$''',
+        true,
+      ) as List?;
+}
+
+class ListarAplicacaoInsulinaUsuarioCall {
+  Future<ApiCallResponse> call({
+    String? token = '',
+    String? usuarioId = '',
+  }) async {
+    final baseUrl = VittaglicoBackendaDevelopmentGroup.getBaseUrl();
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'listarAplicacaoInsulinaUsuario',
+      apiUrl: '${baseUrl}/aplicacao-insulina/usuario/${usuarioId}',
+      callType: ApiCallType.GET,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${token}',
+      },
+      params: {},
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  List? aplicacoesInsulinas(dynamic response) => getJsonField(
+        response,
+        r'''$''',
+        true,
+      ) as List?;
+  dynamic message(dynamic response) => getJsonField(
+        response,
+        r'''$.message''',
+      );
+  String? id(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$[:].id''',
+      ));
+  int? quantidadeUnidades(dynamic response) => castToType<int>(getJsonField(
+        response,
+        r'''$[:].quantidadeUnidades''',
+      ));
+  String? dataHoraAplicacao(dynamic response) =>
+      castToType<String>(getJsonField(
+        response,
+        r'''$[:].dataHoraAplicacao''',
+      ));
+  String? usuarioId(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$[:].usuarioId''',
+      ));
+  String? insulinaId(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$[:].insulinaId''',
+      ));
+  String? nome(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$[:].nome''',
+      ));
+  String? tipoBasalBolus(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$[:].tipoBasalBolus''',
+      ));
+  int? duracaoAcaoHoras(dynamic response) => castToType<int>(getJsonField(
+        response,
+        r'''$[:].duracaoAcaoHoras''',
+      ));
+  double? picoAcaoHoras(dynamic response) => castToType<double>(getJsonField(
+        response,
+        r'''$[:].picoAcaoHoras''',
+      ));
+  List? aplicacoesInsulina(dynamic response) => getJsonField(
+        response,
+        r'''$''',
+        true,
+      ) as List?;
+}
+
+class CriarAplicacaoInsulinaCall {
+  Future<ApiCallResponse> call({
+    String? token = '',
+    int? quantidadeUnidades,
+    String? usuarioId = '',
+    String? insulinaId = '',
+    String? dataHoraAplicacao = '',
+  }) async {
+    final baseUrl = VittaglicoBackendaDevelopmentGroup.getBaseUrl();
+
+    final ffApiRequestBody = '''
+{
+  "quantidadeUnidades": ${quantidadeUnidades},
+  "usuarioId": "${escapeStringForJson(usuarioId)}",
+  "insulinaId": "${escapeStringForJson(insulinaId)}",
+  "dataHoraAplicacao": "${escapeStringForJson(dataHoraAplicacao)}"
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'criarAplicacaoInsulina',
+      apiUrl: '${baseUrl}/aplicacao-insulina',
+      callType: ApiCallType.POST,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${token}',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  int? statusCode(dynamic response) => castToType<int>(getJsonField(
+        response,
+        r'''$.statusCode''',
+      ));
+  String? id(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.id''',
+      ));
+  int? quantidadeUnidades(dynamic response) => castToType<int>(getJsonField(
+        response,
+        r'''$.quantidadeUnidades''',
+      ));
+  String? dataHoraAplicacao(dynamic response) =>
+      castToType<String>(getJsonField(
+        response,
+        r'''$.dataHoraAplicacao''',
+      ));
+  String? usuarioId(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.usuarioId''',
+      ));
+  String? insulinaId(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.insulinaId''',
+      ));
+  String? nome(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.nome''',
+      ));
+  String? tipoBasalBolus(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.tipoBasalBolus''',
+      ));
+  int? duracaoAcaoHoras(dynamic response) => castToType<int>(getJsonField(
+        response,
+        r'''$.duracaoAcaoHoras''',
+      ));
+  double? picoAcaoHoras(dynamic response) => castToType<double>(getJsonField(
+        response,
+        r'''$.picoAcaoHoras''',
+      ));
+  dynamic message(dynamic response) => getJsonField(
+        response,
+        r'''$.message''',
+      );
+}
+
+class CalcularBolusDeCorrecaoCall {
+  Future<ApiCallResponse> call({
+    String? token = '',
+    String? usuarioId = '',
+    String? glicemiaId = 'null',
+    int? glicoseAtual = 0,
+  }) async {
+    final baseUrl = VittaglicoBackendaDevelopmentGroup.getBaseUrl();
+
+    final ffApiRequestBody = '''
+{
+  "usuarioId": "${escapeStringForJson(usuarioId)}",
+  "glicoseAtual": ${glicoseAtual},
+  "glicemiaId": "${escapeStringForJson(glicemiaId)}"
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'calcularBolusDeCorrecao',
+      apiUrl: '${baseUrl}/aplicacao-insulina/calcular-bolus',
+      callType: ApiCallType.POST,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${token}',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  int? bolusCorrecao(dynamic response) => castToType<int>(getJsonField(
+        response,
+        r'''$.bolusCorrecao''',
+      ));
+  double? bolus(dynamic response) => castToType<double>(getJsonField(
+        response,
+        r'''$.bolusCorrecao.bolus''',
+      ));
+  String? message(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.bolusCorrecao.message''',
+      ));
+}
+
+class CriarInsulinaCall {
+  Future<ApiCallResponse> call({
+    String? token = '',
+    String? usuarioId = '',
+    String? nome = '',
+    String? tipoBasalCorrecao = '',
+    int? duracaoAcaoHoras,
+    double? picoAcaoHoras,
+  }) async {
+    final baseUrl = VittaglicoBackendaDevelopmentGroup.getBaseUrl();
+
+    final ffApiRequestBody = '''
+{
+  "nome": "${escapeStringForJson(nome)}",
+  "tipoBasalCorrecao": "${escapeStringForJson(tipoBasalCorrecao)}",
+  "duracaoAcaoHoras": ${duracaoAcaoHoras},
+  "picoAcaoHoras": ${picoAcaoHoras},
+  "usuarioId": "${escapeStringForJson(usuarioId)}"
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'criarInsulina',
+      apiUrl: '${baseUrl}/insulina',
+      callType: ApiCallType.POST,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${token}',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  List<String>? message(dynamic response) => (getJsonField(
+        response,
+        r'''$.message''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<String>(x))
+          .withoutNulls
+          .toList();
+  int? statusCode(dynamic response) => castToType<int>(getJsonField(
+        response,
+        r'''$.statusCode''',
+      ));
+  String? error(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.error''',
+      ));
+  String? id(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.id''',
+      ));
+  String? nome(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.nome''',
+      ));
+  String? tipoBasalBolus(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.tipoBasalBolus''',
+      ));
+  int? duracaoAcaoHoras(dynamic response) => castToType<int>(getJsonField(
+        response,
+        r'''$.duracaoAcaoHoras''',
+      ));
+  double? picoAcaoHoras(dynamic response) => castToType<double>(getJsonField(
+        response,
+        r'''$.picoAcaoHoras''',
+      ));
+  String? usuarioId(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.usuarioId''',
+      ));
 }
 
 /// End VittaglicoBackendaDevelopment Group Code

@@ -152,37 +152,6 @@ class _SignUpPageWidgetState extends State<SignUpPageWidget> {
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 0.0, 0.0, 26.0),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: FlutterFlowTheme.of(context)
-                                    .secondaryBackground,
-                              ),
-                              child: Text(
-                                'Inscrever-se',
-                                textAlign: TextAlign.center,
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyMedium
-                                    .override(
-                                      font: GoogleFonts.poppins(
-                                        fontWeight: FontWeight.w500,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .fontStyle,
-                                      ),
-                                      color: Colors.black,
-                                      fontSize: 20.0,
-                                      letterSpacing: 0.0,
-                                      fontWeight: FontWeight.w500,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .fontStyle,
-                                    ),
-                              ),
-                            ),
-                          ),
                           Container(
                             width: 267.0,
                             decoration: BoxDecoration(),
@@ -403,7 +372,7 @@ class _SignUpPageWidgetState extends State<SignUpPageWidget> {
                                               ],
                                               obscureText: false,
                                               decoration: InputDecoration(
-                                                hintText: 'Enter your email',
+                                                hintText: 'Digite seu email',
                                                 hintStyle: GoogleFonts.poppins(
                                                   color: Color(0xFF7D7D7D),
                                                   fontSize: 14.0,
@@ -701,192 +670,6 @@ class _SignUpPageWidgetState extends State<SignUpPageWidget> {
                                             .asValidator(context),
                                       ),
                                     ),
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 15.0, 0.0, 0.0),
-                                      child: Container(
-                                        width: 267.0,
-                                        decoration: BoxDecoration(
-                                          color: FlutterFlowTheme.of(context)
-                                              .secondaryBackground,
-                                        ),
-                                        child: Row(
-                                          mainAxisSize: MainAxisSize.max,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: [
-                                            Container(
-                                              width: 18.0,
-                                              height: 18.0,
-                                              decoration: BoxDecoration(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryBackground,
-                                                borderRadius:
-                                                    BorderRadius.circular(24.0),
-                                                border: Border.all(
-                                                  color: Color(0xFFE5E5E5),
-                                                  width: 1.0,
-                                                ),
-                                              ),
-                                              child: Theme(
-                                                data: ThemeData(
-                                                  checkboxTheme:
-                                                      CheckboxThemeData(
-                                                    visualDensity:
-                                                        VisualDensity.compact,
-                                                    materialTapTargetSize:
-                                                        MaterialTapTargetSize
-                                                            .shrinkWrap,
-                                                    shape:
-                                                        RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              24.0),
-                                                    ),
-                                                  ),
-                                                  unselectedWidgetColor:
-                                                      Color(0xFFE5E5E5),
-                                                ),
-                                                child: Checkbox(
-                                                  value: _model
-                                                          .aceiteTermosEhPoliticaValue ??=
-                                                      false,
-                                                  onChanged: (newValue) async {
-                                                    safeSetState(() => _model
-                                                            .aceiteTermosEhPoliticaValue =
-                                                        newValue!);
-                                                    if (newValue!) {
-                                                      FFAppState()
-                                                          .signIschecked = true;
-                                                      safeSetState(() {});
-                                                    } else {
-                                                      FFAppState()
-                                                              .signIschecked =
-                                                          false;
-                                                      safeSetState(() {});
-                                                    }
-                                                  },
-                                                  side: (Color(0xFFE5E5E5) !=
-                                                          null)
-                                                      ? BorderSide(
-                                                          width: 2,
-                                                          color: Color(
-                                                              0xFFE5E5E5),
-                                                        )
-                                                      : null,
-                                                  activeColor:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .primary,
-                                                ),
-                                              ),
-                                            ),
-                                            Container(
-                                              decoration: BoxDecoration(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryBackground,
-                                              ),
-                                              child: RichText(
-                                                textScaler:
-                                                    MediaQuery.of(context)
-                                                        .textScaler,
-                                                text: TextSpan(
-                                                  children: [
-                                                    TextSpan(
-                                                      text: 'Eu concordo com o',
-                                                      style:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyMedium
-                                                              .override(
-                                                                font: GoogleFonts
-                                                                    .poppins(
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .normal,
-                                                                  fontStyle: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyMedium
-                                                                      .fontStyle,
-                                                                ),
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .primaryText,
-                                                                fontSize: 12.0,
-                                                                letterSpacing:
-                                                                    0.0,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .normal,
-                                                                fontStyle: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyMedium
-                                                                    .fontStyle,
-                                                              ),
-                                                    ),
-                                                    TextSpan(
-                                                      text:
-                                                          'Termos e Condições.',
-                                                      style:
-                                                          GoogleFonts.poppins(
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primary,
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                        fontSize: 12.0,
-                                                      ),
-                                                      mouseCursor:
-                                                          SystemMouseCursors
-                                                              .click,
-                                                      recognizer:
-                                                          TapGestureRecognizer()
-                                                            ..onTap = () async {
-                                                              context.pushNamed(
-                                                                  TermsAndConditionsSignWidget
-                                                                      .routeName);
-                                                            },
-                                                    )
-                                                  ],
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        font:
-                                                            GoogleFonts.poppins(
-                                                          fontWeight:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .bodyMedium
-                                                                  .fontWeight,
-                                                          fontStyle:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .bodyMedium
-                                                                  .fontStyle,
-                                                        ),
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyMedium
-                                                                .fontWeight,
-                                                        fontStyle:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyMedium
-                                                                .fontStyle,
-                                                      ),
-                                                ),
-                                              ),
-                                            ),
-                                          ].divide(SizedBox(width: 8.0)),
-                                        ),
-                                      ),
-                                    ),
                                   ].divide(SizedBox(height: 10.0)),
                                 ),
                               ].divide(SizedBox(height: 17.0)),
@@ -894,38 +677,103 @@ class _SignUpPageWidgetState extends State<SignUpPageWidget> {
                           ),
                           Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 25.0, 0.0, 0.0),
+                                0.0, 0.0, 0.0, 10.0),
                             child: Container(
-                              width: 267.0,
+                              width: 257.0,
                               decoration: BoxDecoration(
                                 color: FlutterFlowTheme.of(context)
                                     .secondaryBackground,
                               ),
-                              child: Align(
-                                alignment: AlignmentDirectional(0.0, 0.0),
-                                child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 0.0, 0.0, 20.0),
-                                  child: InkWell(
-                                    splashColor: Colors.transparent,
-                                    focusColor: Colors.transparent,
-                                    hoverColor: Colors.transparent,
-                                    highlightColor: Colors.transparent,
-                                    onTap: () async {
-                                      context
-                                          .pushNamed(LoginPageWidget.routeName);
-                                    },
-                                    child: RichText(
-                                      textScaler:
-                                          MediaQuery.of(context).textScaler,
-                                      text: TextSpan(
-                                        children: [
-                                          TextSpan(
-                                            text: 'Já tem uma conta?',
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
-                                                .override(
-                                                  font: GoogleFonts.poppins(
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  Container(
+                                    width: 18.0,
+                                    height: 18.0,
+                                    decoration: BoxDecoration(
+                                      color: FlutterFlowTheme.of(context)
+                                          .secondaryBackground,
+                                      borderRadius: BorderRadius.circular(24.0),
+                                      border: Border.all(
+                                        color: Color(0xFFE5E5E5),
+                                        width: 1.0,
+                                      ),
+                                    ),
+                                    child: Theme(
+                                      data: ThemeData(
+                                        checkboxTheme: CheckboxThemeData(
+                                          visualDensity: VisualDensity.compact,
+                                          materialTapTargetSize:
+                                              MaterialTapTargetSize.shrinkWrap,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(24.0),
+                                          ),
+                                        ),
+                                        unselectedWidgetColor:
+                                            Color(0xFFE5E5E5),
+                                      ),
+                                      child: Checkbox(
+                                        value: _model
+                                                .aceiteTermosEhPoliticaValue ??=
+                                            false,
+                                        onChanged: (newValue) async {
+                                          safeSetState(() => _model
+                                                  .aceiteTermosEhPoliticaValue =
+                                              newValue!);
+                                          if (newValue!) {
+                                            FFAppState().signIschecked = true;
+                                            safeSetState(() {});
+                                          } else {
+                                            FFAppState().signIschecked = false;
+                                            safeSetState(() {});
+                                          }
+                                        },
+                                        side: (Color(0xFFE5E5E5) != null)
+                                            ? BorderSide(
+                                                width: 2,
+                                                color: Color(0xFFE5E5E5),
+                                              )
+                                            : null,
+                                        activeColor:
+                                            FlutterFlowTheme.of(context)
+                                                .primary,
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      color: FlutterFlowTheme.of(context)
+                                          .secondaryBackground,
+                                    ),
+                                    child: Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0.0, 10.0, 0.0, 10.0),
+                                      child: RichText(
+                                        textScaler:
+                                            MediaQuery.of(context).textScaler,
+                                        text: TextSpan(
+                                          children: [
+                                            TextSpan(
+                                              text: ' Concordo com os ',
+                                              style: FlutterFlowTheme.of(
+                                                      context)
+                                                  .bodyMedium
+                                                  .override(
+                                                    font: GoogleFonts.poppins(
+                                                      fontWeight:
+                                                          FontWeight.normal,
+                                                      fontStyle:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyMedium
+                                                              .fontStyle,
+                                                    ),
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .primaryText,
+                                                    fontSize: 12.0,
+                                                    letterSpacing: 0.0,
                                                     fontWeight:
                                                         FontWeight.normal,
                                                     fontStyle:
@@ -934,38 +782,56 @@ class _SignUpPageWidgetState extends State<SignUpPageWidget> {
                                                             .bodyMedium
                                                             .fontStyle,
                                                   ),
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .primaryText,
-                                                  fontSize: 12.0,
-                                                  letterSpacing: 0.0,
-                                                  fontWeight: FontWeight.normal,
+                                            ),
+                                            TextSpan(
+                                              text: 'Termos e Condições',
+                                              style: GoogleFonts.poppins(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primary,
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 12.0,
+                                              ),
+                                              mouseCursor:
+                                                  SystemMouseCursors.click,
+                                              recognizer: TapGestureRecognizer()
+                                                ..onTap = () async {
+                                                  context.pushNamed(
+                                                      TermsAndConditionsSignWidget
+                                                          .routeName);
+                                                },
+                                            )
+                                          ],
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                font: GoogleFonts.poppins(
+                                                  fontWeight:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodyMedium
+                                                          .fontWeight,
                                                   fontStyle:
                                                       FlutterFlowTheme.of(
                                                               context)
                                                           .bodyMedium
                                                           .fontStyle,
                                                 ),
-                                          ),
-                                          TextSpan(
-                                            text: 'Entrar',
-                                            style: GoogleFonts.poppins(
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primary,
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 12.0,
-                                            ),
-                                          )
-                                        ],
-                                        style: TextStyle(
-                                          fontSize: 10.0,
+                                                letterSpacing: 0.0,
+                                                fontWeight:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .fontWeight,
+                                                fontStyle:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .fontStyle,
+                                              ),
                                         ),
                                       ),
-                                      textAlign: TextAlign.end,
                                     ),
                                   ),
-                                ),
+                                ],
                               ),
                             ),
                           ),
@@ -1057,11 +923,9 @@ class _SignUpPageWidgetState extends State<SignUpPageWidget> {
                                             VittaglicoBackendaDevelopmentGroup
                                                 .profileCall
                                                 .dataDeNascimento(
-                                                  (_model.apiResultProfile
-                                                          ?.jsonBody ??
-                                                      ''),
-                                                )
-                                                .toString(),
+                                          (_model.apiResultProfile?.jsonBody ??
+                                              ''),
+                                        ),
                                         aceiteTermosCondicoes:
                                             VittaglicoBackendaDevelopmentGroup
                                                 .profileCall
@@ -1080,7 +944,7 @@ class _SignUpPageWidgetState extends State<SignUpPageWidget> {
                                       FFAppState().update(() {});
 
                                       context.pushNamedAuth(
-                                          UploadPhoneWidget.routeName,
+                                          SignUpPageContinueWidget.routeName,
                                           context.mounted);
                                     } else {
                                       ScaffoldMessenger.of(context)
@@ -1178,6 +1042,83 @@ class _SignUpPageWidgetState extends State<SignUpPageWidget> {
                                   width: 1.0,
                                 ),
                                 borderRadius: BorderRadius.circular(4.0),
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 10.0, 0.0, 0.0),
+                            child: Container(
+                              width: 267.0,
+                              decoration: BoxDecoration(
+                                color: FlutterFlowTheme.of(context)
+                                    .secondaryBackground,
+                              ),
+                              child: Align(
+                                alignment: AlignmentDirectional(0.0, 0.0),
+                                child: Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 0.0, 0.0, 20.0),
+                                  child: InkWell(
+                                    splashColor: Colors.transparent,
+                                    focusColor: Colors.transparent,
+                                    hoverColor: Colors.transparent,
+                                    highlightColor: Colors.transparent,
+                                    onTap: () async {
+                                      context
+                                          .pushNamed(LoginPageWidget.routeName);
+                                    },
+                                    child: RichText(
+                                      textScaler:
+                                          MediaQuery.of(context).textScaler,
+                                      text: TextSpan(
+                                        children: [
+                                          TextSpan(
+                                            text: 'Já tem uma conta? ',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  font: GoogleFonts.poppins(
+                                                    fontWeight:
+                                                        FontWeight.normal,
+                                                    fontStyle:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .bodyMedium
+                                                            .fontStyle,
+                                                  ),
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .primaryText,
+                                                  fontSize: 12.0,
+                                                  letterSpacing: 0.0,
+                                                  fontWeight: FontWeight.normal,
+                                                  fontStyle:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodyMedium
+                                                          .fontStyle,
+                                                ),
+                                          ),
+                                          TextSpan(
+                                            text: 'Entrar',
+                                            style: GoogleFonts.poppins(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primary,
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 12.0,
+                                            ),
+                                          )
+                                        ],
+                                        style: TextStyle(
+                                          fontSize: 10.0,
+                                        ),
+                                      ),
+                                      textAlign: TextAlign.end,
+                                    ),
+                                  ),
+                                ),
                               ),
                             ),
                           ),

@@ -13,6 +13,11 @@ enum Periodo {
   EXTRA,
 }
 
+enum TipoInsulinaEnum {
+  Correcao,
+  Basal,
+}
+
 extension FFEnumExtensions<T extends Enum> on T {
   String serialize() => name;
 }
@@ -26,6 +31,8 @@ T? deserializeEnum<T>(String? value) {
   switch (T) {
     case (Periodo):
       return Periodo.values.deserialize(value) as T?;
+    case (TipoInsulinaEnum):
+      return TipoInsulinaEnum.values.deserialize(value) as T?;
     default:
       return null;
   }

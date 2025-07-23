@@ -1,9 +1,7 @@
-import '/backend/api_requests/api_calls.dart';
 import '/backend/schema/structs/index.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/index.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'invite_user_list_model.dart';
@@ -359,58 +357,24 @@ class _InviteUserListWidgetState extends State<InviteUserListWidget> {
                             ),
                             Stack(
                               children: [
-                                InkWell(
-                                  splashColor: Colors.transparent,
-                                  focusColor: Colors.transparent,
-                                  hoverColor: Colors.transparent,
-                                  highlightColor: Colors.transparent,
-                                  onTap: () async {
-                                    await VittaglicoBackendaDevelopmentGroup
-                                        .substituirCall
-                                        .call();
-
-                                    await VittaglicoBackendaDevelopmentGroup
-                                        .substituirCall
-                                        .call();
-
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                        content: Text(
-                                          'Invitation Sent',
-                                          style: TextStyle(
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryText,
-                                          ),
-                                        ),
-                                        duration: Duration(milliseconds: 4000),
-                                        backgroundColor:
-                                            FlutterFlowTheme.of(context)
-                                                .secondary,
-                                      ),
-                                    );
-
-                                    context
-                                        .pushNamed(DashboardWidget.routeName);
-                                  },
-                                  child: Container(
-                                    width: 45.0,
-                                    height: 45.0,
-                                    decoration: BoxDecoration(),
-                                    child: FlutterFlowIconButton(
-                                      borderColor: Colors.transparent,
-                                      borderRadius: 30.0,
-                                      buttonSize: 46.0,
-                                      icon: Icon(
-                                        Icons.send_sharp,
-                                        color: FlutterFlowTheme.of(context)
-                                            .primary,
-                                        size: 28.0,
-                                      ),
-                                      showLoadingIndicator: true,
-                                      onPressed: () {
-                                        print('IconButton pressed ...');
-                                      },
+                                Container(
+                                  width: 45.0,
+                                  height: 45.0,
+                                  decoration: BoxDecoration(),
+                                  child: FlutterFlowIconButton(
+                                    borderColor: Colors.transparent,
+                                    borderRadius: 30.0,
+                                    buttonSize: 46.0,
+                                    icon: Icon(
+                                      Icons.send_sharp,
+                                      color:
+                                          FlutterFlowTheme.of(context).primary,
+                                      size: 28.0,
                                     ),
+                                    showLoadingIndicator: true,
+                                    onPressed: () {
+                                      print('IconButton pressed ...');
+                                    },
                                   ),
                                 ),
                                 Container(

@@ -1,6 +1,5 @@
 // ignore_for_file: unnecessary_getters_setters
 
-import '/backend/schema/util/schema_util.dart';
 
 import 'index.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -16,6 +15,10 @@ class UsuarioStruct extends BaseStruct {
     bool? aceiteTermosCondicoes,
     bool? aceitePoliticaDePrivacidade,
     UsuarioStruct? userJSON,
+    ConfiguracoesInsulinaStruct? configuracoesInsulina,
+    List<GlicemiaStruct>? glicemias,
+    String? glicoseAlvo,
+    String? fatorSensibilidadeInsulina,
   })  : _id = id,
         _nome = nome,
         _email = email,
@@ -24,7 +27,11 @@ class UsuarioStruct extends BaseStruct {
         _dataDeNascimento = dataDeNascimento,
         _aceiteTermosCondicoes = aceiteTermosCondicoes,
         _aceitePoliticaDePrivacidade = aceitePoliticaDePrivacidade,
-        _userJSON = userJSON;
+        _userJSON = userJSON,
+        _configuracoesInsulina = configuracoesInsulina,
+        _glicemias = glicemias,
+        _glicoseAlvo = glicoseAlvo,
+        _fatorSensibilidadeInsulina = fatorSensibilidadeInsulina;
 
   // "id" field.
   String? _id;
@@ -94,6 +101,46 @@ class UsuarioStruct extends BaseStruct {
 
   bool hasUserJSON() => _userJSON != null;
 
+  // "configuracoesInsulina" field.
+  ConfiguracoesInsulinaStruct? _configuracoesInsulina;
+  ConfiguracoesInsulinaStruct get configuracoesInsulina =>
+      _configuracoesInsulina ?? ConfiguracoesInsulinaStruct();
+  set configuracoesInsulina(ConfiguracoesInsulinaStruct? val) =>
+      _configuracoesInsulina = val;
+
+  void updateConfiguracoesInsulina(
+      Function(ConfiguracoesInsulinaStruct) updateFn) {
+    updateFn(_configuracoesInsulina ??= ConfiguracoesInsulinaStruct());
+  }
+
+  bool hasConfiguracoesInsulina() => _configuracoesInsulina != null;
+
+  // "glicemias" field.
+  List<GlicemiaStruct>? _glicemias;
+  List<GlicemiaStruct> get glicemias => _glicemias ?? const [];
+  set glicemias(List<GlicemiaStruct>? val) => _glicemias = val;
+
+  void updateGlicemias(Function(List<GlicemiaStruct>) updateFn) {
+    updateFn(_glicemias ??= []);
+  }
+
+  bool hasGlicemias() => _glicemias != null;
+
+  // "glicoseAlvo" field.
+  String? _glicoseAlvo;
+  String get glicoseAlvo => _glicoseAlvo ?? '';
+  set glicoseAlvo(String? val) => _glicoseAlvo = val;
+
+  bool hasGlicoseAlvo() => _glicoseAlvo != null;
+
+  // "fatorSensibilidadeInsulina" field.
+  String? _fatorSensibilidadeInsulina;
+  String get fatorSensibilidadeInsulina => _fatorSensibilidadeInsulina ?? '';
+  set fatorSensibilidadeInsulina(String? val) =>
+      _fatorSensibilidadeInsulina = val;
+
+  bool hasFatorSensibilidadeInsulina() => _fatorSensibilidadeInsulina != null;
+
   static UsuarioStruct fromMap(Map<String, dynamic> data) => UsuarioStruct(
         id: data['id'] as String?,
         nome: data['nome'] as String?,
@@ -107,6 +154,18 @@ class UsuarioStruct extends BaseStruct {
         userJSON: data['userJSON'] is UsuarioStruct
             ? data['userJSON']
             : UsuarioStruct.maybeFromMap(data['userJSON']),
+        configuracoesInsulina:
+            data['configuracoesInsulina'] is ConfiguracoesInsulinaStruct
+                ? data['configuracoesInsulina']
+                : ConfiguracoesInsulinaStruct.maybeFromMap(
+                    data['configuracoesInsulina']),
+        glicemias: getStructList(
+          data['glicemias'],
+          GlicemiaStruct.fromMap,
+        ),
+        glicoseAlvo: data['glicoseAlvo'] as String?,
+        fatorSensibilidadeInsulina:
+            data['fatorSensibilidadeInsulina'] as String?,
       );
 
   static UsuarioStruct? maybeFromMap(dynamic data) =>
@@ -122,6 +181,10 @@ class UsuarioStruct extends BaseStruct {
         'aceiteTermosCondicoes': _aceiteTermosCondicoes,
         'aceitePoliticaDePrivacidade': _aceitePoliticaDePrivacidade,
         'userJSON': _userJSON?.toMap(),
+        'configuracoesInsulina': _configuracoesInsulina?.toMap(),
+        'glicemias': _glicemias?.map((e) => e.toMap()).toList(),
+        'glicoseAlvo': _glicoseAlvo,
+        'fatorSensibilidadeInsulina': _fatorSensibilidadeInsulina,
       }.withoutNulls;
 
   @override
@@ -161,6 +224,23 @@ class UsuarioStruct extends BaseStruct {
         'userJSON': serializeParam(
           _userJSON,
           ParamType.DataStruct,
+        ),
+        'configuracoesInsulina': serializeParam(
+          _configuracoesInsulina,
+          ParamType.DataStruct,
+        ),
+        'glicemias': serializeParam(
+          _glicemias,
+          ParamType.DataStruct,
+          isList: true,
+        ),
+        'glicoseAlvo': serializeParam(
+          _glicoseAlvo,
+          ParamType.String,
+        ),
+        'fatorSensibilidadeInsulina': serializeParam(
+          _fatorSensibilidadeInsulina,
+          ParamType.String,
         ),
       }.withoutNulls;
 
@@ -212,6 +292,28 @@ class UsuarioStruct extends BaseStruct {
           false,
           structBuilder: UsuarioStruct.fromSerializableMap,
         ),
+        configuracoesInsulina: deserializeStructParam(
+          data['configuracoesInsulina'],
+          ParamType.DataStruct,
+          false,
+          structBuilder: ConfiguracoesInsulinaStruct.fromSerializableMap,
+        ),
+        glicemias: deserializeStructParam<GlicemiaStruct>(
+          data['glicemias'],
+          ParamType.DataStruct,
+          true,
+          structBuilder: GlicemiaStruct.fromSerializableMap,
+        ),
+        glicoseAlvo: deserializeParam(
+          data['glicoseAlvo'],
+          ParamType.String,
+          false,
+        ),
+        fatorSensibilidadeInsulina: deserializeParam(
+          data['fatorSensibilidadeInsulina'],
+          ParamType.String,
+          false,
+        ),
       );
 
   @override
@@ -219,6 +321,7 @@ class UsuarioStruct extends BaseStruct {
 
   @override
   bool operator ==(Object other) {
+    const listEquality = ListEquality();
     return other is UsuarioStruct &&
         id == other.id &&
         nome == other.nome &&
@@ -228,7 +331,11 @@ class UsuarioStruct extends BaseStruct {
         dataDeNascimento == other.dataDeNascimento &&
         aceiteTermosCondicoes == other.aceiteTermosCondicoes &&
         aceitePoliticaDePrivacidade == other.aceitePoliticaDePrivacidade &&
-        userJSON == other.userJSON;
+        userJSON == other.userJSON &&
+        configuracoesInsulina == other.configuracoesInsulina &&
+        listEquality.equals(glicemias, other.glicemias) &&
+        glicoseAlvo == other.glicoseAlvo &&
+        fatorSensibilidadeInsulina == other.fatorSensibilidadeInsulina;
   }
 
   @override
@@ -241,7 +348,11 @@ class UsuarioStruct extends BaseStruct {
         dataDeNascimento,
         aceiteTermosCondicoes,
         aceitePoliticaDePrivacidade,
-        userJSON
+        userJSON,
+        configuracoesInsulina,
+        glicemias,
+        glicoseAlvo,
+        fatorSensibilidadeInsulina
       ]);
 }
 
@@ -255,6 +366,9 @@ UsuarioStruct createUsuarioStruct({
   bool? aceiteTermosCondicoes,
   bool? aceitePoliticaDePrivacidade,
   UsuarioStruct? userJSON,
+  ConfiguracoesInsulinaStruct? configuracoesInsulina,
+  String? glicoseAlvo,
+  String? fatorSensibilidadeInsulina,
 }) =>
     UsuarioStruct(
       id: id,
@@ -266,4 +380,8 @@ UsuarioStruct createUsuarioStruct({
       aceiteTermosCondicoes: aceiteTermosCondicoes,
       aceitePoliticaDePrivacidade: aceitePoliticaDePrivacidade,
       userJSON: userJSON ?? UsuarioStruct(),
+      configuracoesInsulina:
+          configuracoesInsulina ?? ConfiguracoesInsulinaStruct(),
+      glicoseAlvo: glicoseAlvo,
+      fatorSensibilidadeInsulina: fatorSensibilidadeInsulina,
     );

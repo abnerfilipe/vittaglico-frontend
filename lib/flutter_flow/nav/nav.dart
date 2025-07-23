@@ -112,9 +112,9 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => LoginPageWidget(),
         ),
         FFRoute(
-          name: EditPageWidget.routeName,
-          path: EditPageWidget.routePath,
-          builder: (context, params) => EditPageWidget(),
+          name: EditarProfileWidget.routeName,
+          path: EditarProfileWidget.routePath,
+          builder: (context, params) => EditarProfileWidget(),
         ),
         FFRoute(
           name: SettingsWidget.routeName,
@@ -177,14 +177,56 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => TermsAndConditionsSignWidget(),
         ),
         FFRoute(
-          name: UploadPhoneWidget.routeName,
-          path: UploadPhoneWidget.routePath,
-          builder: (context, params) => UploadPhoneWidget(),
+          name: SignUpPageContinueWidget.routeName,
+          path: SignUpPageContinueWidget.routePath,
+          builder: (context, params) => SignUpPageContinueWidget(),
         ),
         FFRoute(
           name: CreateEventCopyWidget.routeName,
           path: CreateEventCopyWidget.routePath,
           builder: (context, params) => CreateEventCopyWidget(),
+        ),
+        FFRoute(
+          name: ListarInsulinaWidget.routeName,
+          path: ListarInsulinaWidget.routePath,
+          builder: (context, params) => ListarInsulinaWidget(),
+        ),
+        FFRoute(
+          name: AdicionarInsulinaWidget.routeName,
+          path: AdicionarInsulinaWidget.routePath,
+          builder: (context, params) => AdicionarInsulinaWidget(),
+        ),
+        FFRoute(
+          name: AdicionarAplicacaoDeInsulinaWidget.routeName,
+          path: AdicionarAplicacaoDeInsulinaWidget.routePath,
+          builder: (context, params) => AdicionarAplicacaoDeInsulinaWidget(),
+        ),
+        FFRoute(
+          name: ListarAplicacaoInsulinaWidget.routeName,
+          path: ListarAplicacaoInsulinaWidget.routePath,
+          builder: (context, params) => ListarAplicacaoInsulinaWidget(),
+        ),
+        FFRoute(
+          name: CalcularCorrecaoWidget.routeName,
+          path: CalcularCorrecaoWidget.routePath,
+          builder: (context, params) => CalcularCorrecaoWidget(),
+        ),
+        FFRoute(
+          name: ExibirCorrecaoWidget.routeName,
+          path: ExibirCorrecaoWidget.routePath,
+          builder: (context, params) => ExibirCorrecaoWidget(
+            correcao: params.getParam(
+              'correcao',
+              ParamType.DataStruct,
+              isList: false,
+              structBuilder: CorrecaoStruct.fromSerializableMap,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: CalcularCorrecaoGlicemiaWidget.routeName,
+          path: CalcularCorrecaoGlicemiaWidget.routePath,
+          builder: (context, params) => CalcularCorrecaoGlicemiaWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

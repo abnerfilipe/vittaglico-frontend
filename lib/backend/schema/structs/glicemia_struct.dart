@@ -1,7 +1,6 @@
 // ignore_for_file: unnecessary_getters_setters
 
 import '/backend/schema/util/schema_util.dart';
-import '/backend/schema/enums/enums.dart';
 
 import 'index.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -14,7 +13,7 @@ class GlicemiaStruct extends BaseStruct {
     String? medida,
     String? dataHoraDeRegistro,
     String? createdAt,
-    Periodo? periodo,
+    String? periodo,
     List<GlicemiaStruct>? glicemias,
   })  : _id = id,
         _usuarioId = usuarioId,
@@ -70,9 +69,9 @@ class GlicemiaStruct extends BaseStruct {
   bool hasCreatedAt() => _createdAt != null;
 
   // "periodo" field.
-  Periodo? _periodo;
-  Periodo? get periodo => _periodo;
-  set periodo(Periodo? val) => _periodo = val;
+  String? _periodo;
+  String get periodo => _periodo ?? '';
+  set periodo(String? val) => _periodo = val;
 
   bool hasPeriodo() => _periodo != null;
 
@@ -94,9 +93,7 @@ class GlicemiaStruct extends BaseStruct {
         medida: data['medida'] as String?,
         dataHoraDeRegistro: data['dataHoraDeRegistro'] as String?,
         createdAt: data['createdAt'] as String?,
-        periodo: data['periodo'] is Periodo
-            ? data['periodo']
-            : deserializeEnum<Periodo>(data['periodo']),
+        periodo: data['periodo'] as String?,
         glicemias: getStructList(
           data['glicemias'],
           GlicemiaStruct.fromMap,
@@ -113,7 +110,7 @@ class GlicemiaStruct extends BaseStruct {
         'medida': _medida,
         'dataHoraDeRegistro': _dataHoraDeRegistro,
         'createdAt': _createdAt,
-        'periodo': _periodo?.serialize(),
+        'periodo': _periodo,
         'glicemias': _glicemias?.map((e) => e.toMap()).toList(),
       }.withoutNulls;
 
@@ -145,7 +142,7 @@ class GlicemiaStruct extends BaseStruct {
         ),
         'periodo': serializeParam(
           _periodo,
-          ParamType.Enum,
+          ParamType.String,
         ),
         'glicemias': serializeParam(
           _glicemias,
@@ -186,9 +183,9 @@ class GlicemiaStruct extends BaseStruct {
           ParamType.String,
           false,
         ),
-        periodo: deserializeParam<Periodo>(
+        periodo: deserializeParam(
           data['periodo'],
-          ParamType.Enum,
+          ParamType.String,
           false,
         ),
         glicemias: deserializeStructParam<GlicemiaStruct>(
@@ -236,7 +233,7 @@ GlicemiaStruct createGlicemiaStruct({
   String? medida,
   String? dataHoraDeRegistro,
   String? createdAt,
-  Periodo? periodo,
+  String? periodo,
 }) =>
     GlicemiaStruct(
       id: id,

@@ -154,7 +154,8 @@ class _ListarGlicemiaWidgetState extends State<ListarGlicemiaWidget> {
                               FlutterFlowIconButton(
                                 borderRadius: 8.0,
                                 buttonSize: 40.0,
-                                fillColor: FlutterFlowTheme.of(context).primary,
+                                fillColor:
+                                    FlutterFlowTheme.of(context).alternate,
                                 icon: Icon(
                                   Icons.add,
                                   color: FlutterFlowTheme.of(context).info,
@@ -202,22 +203,13 @@ class _ListarGlicemiaWidgetState extends State<ListarGlicemiaWidget> {
                                   Builder(
                                     builder: (context) {
                                       final glicemias =
-                                          (VittaglicoBackendaDevelopmentGroup
-                                                          .listarGlicemiasDoUsuarioCall
-                                                          .glicemias(
-                                                            containerListarGlicemiasDoUsuarioResponse
-                                                                .jsonBody,
-                                                          )
-                                                          ?.toList()
-                                                          .map<GlicemiaStruct?>(
-                                                              GlicemiaStruct
-                                                                  .maybeFromMap)
-                                                          .toList()
-                                                      as Iterable<
-                                                          GlicemiaStruct?>)
-                                                  .withoutNulls
-                                                  .toList() ??
-                                              [];
+                                          VittaglicoBackendaDevelopmentGroup
+                                              .listarGlicemiasDoUsuarioCall
+                                              .glicemias(
+                                                containerListarGlicemiasDoUsuarioResponse
+                                                    .jsonBody,
+                                              )
+                                              .toList();
 
                                       return ListView.separated(
                                         padding: EdgeInsets.fromLTRB(
@@ -317,12 +309,9 @@ class _ListarGlicemiaWidgetState extends State<ListarGlicemiaWidget> {
                                                                     Text(
                                                                       valueOrDefault<
                                                                           String>(
-                                                                        VittaglicoBackendaDevelopmentGroup
-                                                                            .listarGlicemiasDoUsuarioCall
-                                                                            .valor(
-                                                                              containerListarGlicemiasDoUsuarioResponse.jsonBody,
-                                                                            )
-                                                                            ?.toString(),
+                                                                        GlicemiaStruct.maybeFromMap(glicemiasItem)
+                                                                            ?.valor
+                                                                            .toString(),
                                                                         'valor',
                                                                       ),
                                                                       style: FlutterFlowTheme.of(
@@ -354,11 +343,8 @@ class _ListarGlicemiaWidgetState extends State<ListarGlicemiaWidget> {
                                                                           Text(
                                                                         valueOrDefault<
                                                                             String>(
-                                                                          VittaglicoBackendaDevelopmentGroup
-                                                                              .listarGlicemiasDoUsuarioCall
-                                                                              .medida(
-                                                                            containerListarGlicemiasDoUsuarioResponse.jsonBody,
-                                                                          ),
+                                                                          GlicemiaStruct.maybeFromMap(glicemiasItem)
+                                                                              ?.medida,
                                                                           'medida',
                                                                         ),
                                                                         style: FlutterFlowTheme.of(context)
@@ -403,21 +389,19 @@ class _ListarGlicemiaWidgetState extends State<ListarGlicemiaWidget> {
                                                                       Text(
                                                                         valueOrDefault<
                                                                             String>(
-                                                                          VittaglicoBackendaDevelopmentGroup
-                                                                              .listarGlicemiasDoUsuarioCall
-                                                                              .periodo(
-                                                                            containerListarGlicemiasDoUsuarioResponse.jsonBody,
-                                                                          ),
+                                                                          GlicemiaStruct.maybeFromMap(glicemiasItem)
+                                                                              ?.periodo,
                                                                           'periodo',
                                                                         ),
+                                                                        textAlign:
+                                                                            TextAlign.start,
                                                                         style: FlutterFlowTheme.of(context)
                                                                             .bodyMedium
                                                                             .override(
-                                                                              font: GoogleFonts.lexendDeca(
+                                                                              font: GoogleFonts.poppins(
                                                                                 fontWeight: FlutterFlowTheme.of(context).bodyMedium.fontWeight,
                                                                                 fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
                                                                               ),
-                                                                              fontSize: 10.0,
                                                                               letterSpacing: 0.0,
                                                                               fontWeight: FlutterFlowTheme.of(context).bodyMedium.fontWeight,
                                                                               fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
@@ -445,12 +429,8 @@ class _ListarGlicemiaWidgetState extends State<ListarGlicemiaWidget> {
                                                                     Text(
                                                                       valueOrDefault<
                                                                           String>(
-                                                                        VittaglicoBackendaDevelopmentGroup
-                                                                            .listarGlicemiasDoUsuarioCall
-                                                                            .dataHoraDeRegistro(
-                                                                          containerListarGlicemiasDoUsuarioResponse
-                                                                              .jsonBody,
-                                                                        ),
+                                                                        GlicemiaStruct.maybeFromMap(glicemiasItem)
+                                                                            ?.dataHoraDeRegistro,
                                                                         'dataHoraDeRegistro',
                                                                       ),
                                                                       textAlign:
@@ -478,6 +458,131 @@ class _ListarGlicemiaWidgetState extends State<ListarGlicemiaWidget> {
                                                                           5.0)),
                                                                 ),
                                                               ],
+                                                            ),
+                                                          ),
+                                                          Flexible(
+                                                            child: Align(
+                                                              alignment:
+                                                                  AlignmentDirectional(
+                                                                      0.0, 0.0),
+                                                              child: InkWell(
+                                                                splashColor: Colors
+                                                                    .transparent,
+                                                                focusColor: Colors
+                                                                    .transparent,
+                                                                hoverColor: Colors
+                                                                    .transparent,
+                                                                highlightColor:
+                                                                    Colors
+                                                                        .transparent,
+                                                                onTap:
+                                                                    () async {
+                                                                  ScaffoldMessenger.of(
+                                                                          context)
+                                                                      .showSnackBar(
+                                                                    SnackBar(
+                                                                      content:
+                                                                          Text(
+                                                                        'Fazendo o cálculo de correção aguarde...',
+                                                                        style:
+                                                                            TextStyle(
+                                                                          color:
+                                                                              FlutterFlowTheme.of(context).primaryText,
+                                                                        ),
+                                                                      ),
+                                                                      duration: Duration(
+                                                                          milliseconds:
+                                                                              4000),
+                                                                      backgroundColor:
+                                                                          FlutterFlowTheme.of(context)
+                                                                              .secondary,
+                                                                    ),
+                                                                  );
+                                                                  _model.apiResult7hl =
+                                                                      await VittaglicoBackendaDevelopmentGroup
+                                                                          .calcularBolusDeCorrecaoCall
+                                                                          .call(
+                                                                    token: FFAppState()
+                                                                        .token
+                                                                        .token,
+                                                                    usuarioId:
+                                                                        FFAppState()
+                                                                            .usuario
+                                                                            .id,
+                                                                    glicemiaId:
+                                                                        GlicemiaStruct.maybeFromMap(glicemiasItem)
+                                                                            ?.id,
+                                                                  );
+
+                                                                  if ((_model
+                                                                          .apiResult7hl
+                                                                          ?.succeeded ??
+                                                                      true)) {
+                                                                    context
+                                                                        .pushNamed(
+                                                                      ExibirCorrecaoWidget
+                                                                          .routeName,
+                                                                      queryParameters:
+                                                                          {
+                                                                        'correcao':
+                                                                            serializeParam(
+                                                                          CorrecaoStruct(
+                                                                            message:
+                                                                                VittaglicoBackendaDevelopmentGroup.calcularBolusDeCorrecaoCall.message(
+                                                                              (_model.apiResult7hl?.jsonBody ?? ''),
+                                                                            ),
+                                                                            bolus: VittaglicoBackendaDevelopmentGroup.calcularBolusDeCorrecaoCall
+                                                                                .bolus(
+                                                                                  (_model.apiResult7hl?.jsonBody ?? ''),
+                                                                                )
+                                                                                ?.round(),
+                                                                          ),
+                                                                          ParamType
+                                                                              .DataStruct,
+                                                                        ),
+                                                                      }.withoutNulls,
+                                                                    );
+                                                                  } else {
+                                                                    ScaffoldMessenger.of(
+                                                                            context)
+                                                                        .showSnackBar(
+                                                                      SnackBar(
+                                                                        content:
+                                                                            Text(
+                                                                          getJsonField(
+                                                                            containerListarGlicemiasDoUsuarioResponse.jsonBody,
+                                                                            r'''$.message''',
+                                                                          ).toString(),
+                                                                          style:
+                                                                              TextStyle(
+                                                                            color:
+                                                                                FlutterFlowTheme.of(context).primaryText,
+                                                                          ),
+                                                                        ),
+                                                                        duration:
+                                                                            Duration(milliseconds: 4000),
+                                                                        backgroundColor:
+                                                                            FlutterFlowTheme.of(context).secondary,
+                                                                      ),
+                                                                    );
+                                                                  }
+
+                                                                  safeSetState(
+                                                                      () {});
+                                                                },
+                                                                child:
+                                                                    Image.asset(
+                                                                  'assets/images/vaccine-color.png',
+                                                                  width: 30.0,
+                                                                  height: 30.0,
+                                                                  fit: BoxFit
+                                                                      .fill,
+                                                                  alignment:
+                                                                      Alignment(
+                                                                          0.0,
+                                                                          0.0),
+                                                                ),
+                                                              ),
                                                             ),
                                                           ),
                                                         ].addToStart(SizedBox(

@@ -99,7 +99,7 @@ class _NavbarWidgetState extends State<NavbarWidget> {
                       borderRadius: BorderRadius.circular(8.0),
                       child: Image.asset(
                         'assets/images/Group_1000004067_(1).png',
-                        width: 30.0,
+                        width: 36.0,
                         height: 36.0,
                         fit: BoxFit.contain,
                       ),
@@ -127,10 +127,17 @@ class _NavbarWidgetState extends State<NavbarWidget> {
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  FaIcon(
-                    FontAwesomeIcons.bookMedical,
-                    color: FlutterFlowTheme.of(context).alternate,
-                    size: 22.0,
+                  Flexible(
+                    flex: 1,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(0.0),
+                      child: Image.asset(
+                        'assets/images/diabetes-color.png',
+                        width: 19.0,
+                        height: 20.0,
+                        fit: BoxFit.scaleDown,
+                      ),
+                    ),
                   ),
                   Text(
                     'Glicemias',
@@ -166,7 +173,7 @@ class _NavbarWidgetState extends State<NavbarWidget> {
             hoverColor: Colors.transparent,
             highlightColor: Colors.transparent,
             onTap: () async {
-              context.pushNamed(ConnectionsWidget.routeName);
+              context.pushNamed(ListarAplicacaoInsulinaWidget.routeName);
             },
             child: Container(
               width: 67.8,
@@ -178,13 +185,78 @@ class _NavbarWidgetState extends State<NavbarWidget> {
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  FaIcon(
-                    FontAwesomeIcons.syringe,
-                    color: FlutterFlowTheme.of(context).alternate,
-                    size: 22.0,
+                  Flexible(
+                    flex: 1,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(0.0),
+                      child: Image.asset(
+                        'assets/images/vaccine-color.png',
+                        width: 20.0,
+                        height: 20.0,
+                        fit: BoxFit.fill,
+                      ),
+                    ),
                   ),
                   Text(
-                    'Insulina',
+                    'Aplicações',
+                    textAlign: TextAlign.center,
+                    style: FlutterFlowTheme.of(context).bodyMedium.override(
+                          font: GoogleFonts.poppins(
+                            fontWeight: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .fontWeight,
+                            fontStyle: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .fontStyle,
+                          ),
+                          color: widget.navBar == 4
+                              ? Color(0xFFB74E82)
+                              : Color(0xFF888888),
+                          fontSize: 10.0,
+                          letterSpacing: 0.0,
+                          fontWeight: FlutterFlowTheme.of(context)
+                              .bodyMedium
+                              .fontWeight,
+                          fontStyle:
+                              FlutterFlowTheme.of(context).bodyMedium.fontStyle,
+                        ),
+                  ),
+                ].divide(SizedBox(height: 4.0)),
+              ),
+            ),
+          ),
+          InkWell(
+            splashColor: Colors.transparent,
+            focusColor: Colors.transparent,
+            hoverColor: Colors.transparent,
+            highlightColor: Colors.transparent,
+            onTap: () async {
+              context.pushNamed(ListarInsulinaWidget.routeName);
+            },
+            child: Container(
+              width: 67.8,
+              decoration: BoxDecoration(
+                color: FlutterFlowTheme.of(context).secondaryBackground,
+                shape: BoxShape.rectangle,
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Flexible(
+                    flex: 1,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(0.0),
+                      child: Image.asset(
+                        'assets/images/vaccines-color.png',
+                        width: 20.0,
+                        height: 20.0,
+                        fit: BoxFit.fill,
+                      ),
+                    ),
+                  ),
+                  Text(
+                    'Insulinas',
                     textAlign: TextAlign.center,
                     style: FlutterFlowTheme.of(context).bodyMedium.override(
                           font: GoogleFonts.poppins(

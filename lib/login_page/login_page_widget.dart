@@ -511,7 +511,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                               text: TextSpan(
                                 children: [
                                   TextSpan(
-                                    text: 'Não tem uma conta?',
+                                    text: 'Não tem uma conta? ',
                                     style: FlutterFlowTheme.of(context)
                                         .bodyMedium
                                         .override(
@@ -650,10 +650,8 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                               dataDeNascimento:
                                   VittaglicoBackendaDevelopmentGroup.profileCall
                                       .dataDeNascimento(
-                                        (_model.apiResultProfile?.jsonBody ??
-                                            ''),
-                                      )
-                                      .toString(),
+                                (_model.apiResultProfile?.jsonBody ?? ''),
+                              ),
                               aceiteTermosCondicoes:
                                   VittaglicoBackendaDevelopmentGroup.profileCall
                                       .aceiteTermosCondicoes(
@@ -664,15 +662,34 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                       .aceitePoliticaDePrivacidade(
                                 (_model.apiResultProfile?.jsonBody ?? ''),
                               ),
+                              configuracoesInsulina:
+                                  ConfiguracoesInsulinaStruct(
+                                glicoseAlvo: UsuarioStruct.maybeFromMap(
+                                        (_model.apiResultProfile?.jsonBody ??
+                                            ''))
+                                    ?.configuracoesInsulina
+                                    .glicoseAlvo,
+                                fatorSensibilidadeInsulina:
+                                    UsuarioStruct.maybeFromMap((_model
+                                                .apiResultProfile?.jsonBody ??
+                                            ''))
+                                        ?.configuracoesInsulina
+                                        .fatorSensibilidadeInsulina,
+                              ),
+                              glicoseAlvo: UsuarioStruct.maybeFromMap(
+                                      (_model.apiResultProfile?.jsonBody ?? ''))
+                                  ?.glicoseAlvo,
+                              fatorSensibilidadeInsulina:
+                                  UsuarioStruct.maybeFromMap(
+                                          (_model.apiResultProfile?.jsonBody ??
+                                              ''))
+                                      ?.fatorSensibilidadeInsulina,
                             );
                             FFAppState().update(() {});
 
                             context.pushNamedAuth(
                                 DashboardWidget.routeName, context.mounted);
                           } else {
-                            context.pushNamedAuth(
-                                LoginPageWidget.routeName, context.mounted);
-
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 content: Text(
@@ -692,9 +709,6 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                             );
                           }
                         } else {
-                          context.pushNamedAuth(
-                              LoginPageWidget.routeName, context.mounted);
-
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               content: Text(

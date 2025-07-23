@@ -1,8 +1,8 @@
 import '/flutter_flow/flutter_flow_util.dart';
-import 'deletepopup_widget.dart' show DeletepopupWidget;
+import 'exibir_correcao_widget.dart' show ExibirCorrecaoWidget;
 import 'package:flutter/material.dart';
 
-class DeletepopupModel extends FlutterFlowModel<DeletepopupWidget> {
+class ExibirCorrecaoModel extends FlutterFlowModel<ExibirCorrecaoWidget> {
   @override
   void initState(BuildContext context) {}
 

@@ -1,11 +1,11 @@
 import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/index.dart';
-import 'edit_page_widget.dart' show EditPageWidget;
+import 'editar_profile_widget.dart' show EditarProfileWidget;
 import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
-class EditPageModel extends FlutterFlowModel<EditPageWidget> {
+class EditarProfileModel extends FlutterFlowModel<EditarProfileWidget> {
   ///  State fields for stateful widgets in this page.
 
   final formKey = GlobalKey<FormState>();
@@ -23,6 +23,14 @@ class EditPageModel extends FlutterFlowModel<EditPageWidget> {
   TextEditingController? textController3;
   late MaskTextInputFormatter textFieldMask3;
   String? Function(BuildContext, String?)? textController3Validator;
+  // State field(s) for TextField widget.
+  FocusNode? textFieldFocusNode4;
+  TextEditingController? textController4;
+  String? Function(BuildContext, String?)? textController4Validator;
+  // State field(s) for TextField widget.
+  FocusNode? textFieldFocusNode5;
+  TextEditingController? textController5;
+  String? Function(BuildContext, String?)? textController5Validator;
   // Stores action output result for [Backend Call - API (atualizarUsuario)] action in Button widget.
   ApiCallResponse? apiResponse;
 
@@ -39,5 +47,11 @@ class EditPageModel extends FlutterFlowModel<EditPageWidget> {
 
     textFieldFocusNode3?.dispose();
     textController3?.dispose();
+
+    textFieldFocusNode4?.dispose();
+    textController4?.dispose();
+
+    textFieldFocusNode5?.dispose();
+    textController5?.dispose();
   }
 }
