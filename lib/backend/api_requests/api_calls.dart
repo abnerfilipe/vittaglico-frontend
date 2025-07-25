@@ -40,6 +40,8 @@ class VittaglicoBackendaDevelopmentGroup {
   static CalcularBolusDeCorrecaoCall calcularBolusDeCorrecaoCall =
       CalcularBolusDeCorrecaoCall();
   static CriarInsulinaCall criarInsulinaCall = CriarInsulinaCall();
+  static ObterLocaisRodizioDisponiveisCall obterLocaisRodizioDisponiveisCall =
+      ObterLocaisRodizioDisponiveisCall();
 }
 
 class LoginCall {
@@ -696,10 +698,10 @@ class ListarAplicacaoInsulinaUsuarioCall {
         r'''$''',
         true,
       ) as List?;
-  dynamic message(dynamic response) => getJsonField(
+  String? message(dynamic response) => castToType<String>(getJsonField(
         response,
         r'''$.message''',
-      );
+      ));
   String? id(dynamic response) => castToType<String>(getJsonField(
         response,
         r'''$[:].id''',
@@ -742,6 +744,11 @@ class ListarAplicacaoInsulinaUsuarioCall {
         r'''$''',
         true,
       ) as List?;
+  String? descricaoCompleta(dynamic response) =>
+      castToType<String>(getJsonField(
+        response,
+        r'''$[:].descricaoCompleta''',
+      ));
 }
 
 class CriarAplicacaoInsulinaCall {
@@ -751,6 +758,7 @@ class CriarAplicacaoInsulinaCall {
     String? usuarioId = '',
     String? insulinaId = '',
     String? dataHoraAplicacao = '',
+    String? descricaoCompleta = '',
   }) async {
     final baseUrl = VittaglicoBackendaDevelopmentGroup.getBaseUrl();
 
@@ -759,7 +767,10 @@ class CriarAplicacaoInsulinaCall {
   "quantidadeUnidades": ${quantidadeUnidades},
   "usuarioId": "${escapeStringForJson(usuarioId)}",
   "insulinaId": "${escapeStringForJson(insulinaId)}",
-  "dataHoraAplicacao": "${escapeStringForJson(dataHoraAplicacao)}"
+  "dataHoraAplicacao": "${escapeStringForJson(dataHoraAplicacao)}",
+  "localAplicacao": "${escapeStringForJson(descricaoCompleta)}",
+  "ladoAplicacao": "${escapeStringForJson(descricaoCompleta)}",
+  "quadranteAplicacao": "${escapeStringForJson(descricaoCompleta)}"
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'criarAplicacaoInsulina',
@@ -956,6 +967,57 @@ class CriarInsulinaCall {
   String? usuarioId(dynamic response) => castToType<String>(getJsonField(
         response,
         r'''$.usuarioId''',
+      ));
+}
+
+class ObterLocaisRodizioDisponiveisCall {
+  Future<ApiCallResponse> call({
+    String? token = '',
+  }) async {
+    final baseUrl = VittaglicoBackendaDevelopmentGroup.getBaseUrl();
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'obterLocaisRodizioDisponiveis',
+      apiUrl: '${baseUrl}/aplicacao-insulina/rodizio/sugestoes',
+      callType: ApiCallType.GET,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${token}',
+      },
+      params: {},
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  String? local(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$[:].local''',
+      ));
+  String? lado(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$[:].lado''',
+      ));
+  String? quadrante(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$[:].quadrante''',
+      ));
+  dynamic sugestoesLocalRodizio(dynamic response) => getJsonField(
+        response,
+        r'''$''',
+      );
+  String? descricaoCompleta(dynamic response) =>
+      castToType<String>(getJsonField(
+        response,
+        r'''$[:].descricaoCompleta''',
+      ));
+  String? message(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.message''',
       ));
 }
 

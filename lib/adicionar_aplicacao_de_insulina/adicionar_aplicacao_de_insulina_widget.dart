@@ -57,6 +57,25 @@ class _AdicionarAplicacaoDeInsulinaWidgetState
                 .toList()
                 .cast<InsulinaStruct>();
         safeSetState(() {});
+        _model.apiResultSugestao = await VittaglicoBackendaDevelopmentGroup
+            .obterLocaisRodizioDisponiveisCall
+            .call(
+          token: FFAppState().token.token,
+        );
+
+        FFAppState().SugestaoLocalRodizio = (VittaglicoBackendaDevelopmentGroup
+                .obterLocaisRodizioDisponiveisCall
+                .sugestoesLocalRodizio(
+                  (_model.apiResultSugestao?.jsonBody ?? ''),
+                )!
+                .toList()
+                .map<SugestaoLocalRodizioStruct?>(
+                    SugestaoLocalRodizioStruct.maybeFromMap)
+                .toList() as Iterable<SugestaoLocalRodizioStruct?>)
+            .withoutNulls
+            .toList()
+            .cast<SugestaoLocalRodizioStruct>();
+        safeSetState(() {});
       } else {
         context.safePop();
         ScaffoldMessenger.of(context).showSnackBar(
@@ -388,6 +407,139 @@ class _AdicionarAplicacaoDeInsulinaWidgetState
                                         },
                                       ),
                                     ].divide(SizedBox(width: 10.0)),
+                                  ),
+                                ),
+                                Container(
+                                  width: MediaQuery.sizeOf(context).width * 1.0,
+                                  constraints: BoxConstraints(
+                                    maxWidth:
+                                        MediaQuery.sizeOf(context).width * 0.95,
+                                  ),
+                                  decoration: BoxDecoration(),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        width: double.infinity,
+                                        decoration: BoxDecoration(),
+                                        child: Text(
+                                          'Local da aplicação para Rodízio',
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                font: GoogleFonts.inter(
+                                                  fontWeight:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodyMedium
+                                                          .fontWeight,
+                                                  fontStyle:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodyMedium
+                                                          .fontStyle,
+                                                ),
+                                                color: Color(0xFF0A014F),
+                                                fontSize: 12.0,
+                                                letterSpacing: 0.0,
+                                                fontWeight:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .fontWeight,
+                                                fontStyle:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .fontStyle,
+                                              ),
+                                        ),
+                                      ),
+                                      Align(
+                                        alignment:
+                                            AlignmentDirectional(0.0, 0.0),
+                                        child: Container(
+                                          width:
+                                              MediaQuery.sizeOf(context).width *
+                                                  1.0,
+                                          height: 46.0,
+                                          decoration: BoxDecoration(
+                                            color: FlutterFlowTheme.of(context)
+                                                .secondaryBackground,
+                                            borderRadius: BorderRadius.only(
+                                              bottomLeft: Radius.circular(6.0),
+                                              bottomRight: Radius.circular(6.0),
+                                              topLeft: Radius.circular(6.0),
+                                              topRight: Radius.circular(6.0),
+                                            ),
+                                          ),
+                                          child: FlutterFlowDropDown<String>(
+                                            controller: _model
+                                                    .rodizioValueController ??=
+                                                FormFieldController<String>(
+                                                    null),
+                                            options: FFAppState()
+                                                .SugestaoLocalRodizio
+                                                .map((e) => e.descricaoCompleta)
+                                                .toList(),
+                                            onChanged: (val) => safeSetState(
+                                                () =>
+                                                    _model.rodizioValue = val),
+                                            width: 200.0,
+                                            height: 40.0,
+                                            textStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyMedium
+                                                    .override(
+                                                      font: GoogleFonts.poppins(
+                                                        fontWeight:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyMedium
+                                                                .fontWeight,
+                                                        fontStyle:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyMedium
+                                                                .fontStyle,
+                                                      ),
+                                                      letterSpacing: 0.0,
+                                                      fontWeight:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyMedium
+                                                              .fontWeight,
+                                                      fontStyle:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyMedium
+                                                              .fontStyle,
+                                                    ),
+                                            hintText: 'Selecione o local...',
+                                            icon: Icon(
+                                              Icons.keyboard_arrow_down_rounded,
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .secondaryText,
+                                              size: 24.0,
+                                            ),
+                                            fillColor:
+                                                FlutterFlowTheme.of(context)
+                                                    .secondaryBackground,
+                                            elevation: 2.0,
+                                            borderColor: Colors.transparent,
+                                            borderWidth: 0.0,
+                                            borderRadius: 8.0,
+                                            margin:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    12.0, 0.0, 12.0, 0.0),
+                                            hidesUnderline: true,
+                                            isOverButton: false,
+                                            isSearchable: false,
+                                            isMultiSelect: false,
+                                          ),
+                                        ),
+                                      ),
+                                    ].divide(SizedBox(height: 5.0)),
                                   ),
                                 ),
                                 Container(
@@ -1041,6 +1193,7 @@ class _AdicionarAplicacaoDeInsulinaWidgetState
                             usuarioId: FFAppState().usuario.id,
                             insulinaId: _model.dropDownValue,
                             dataHoraAplicacao: _model.datePicked2?.toString(),
+                            descricaoCompleta: _model.rodizioValue,
                           );
 
                           if ((_model.apiResponse?.succeeded ?? true)) {

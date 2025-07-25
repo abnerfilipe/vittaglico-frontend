@@ -7,4 +7,5 @@ export 'correcao_struct.dart';
 export 'glicemia_struct.dart';
 export 'insulina_struct.dart';
 export 'notificacao_struct.dart';
+export 'sugestao_local_rodizio_struct.dart';
 export 'usuario_struct.dart';

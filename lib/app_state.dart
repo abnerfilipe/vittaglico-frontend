@@ -247,6 +247,37 @@ class FFAppState extends ChangeNotifier {
     prefs.setStringList(
         'ff_Glicemia', _Glicemia.map((x) => x.serialize()).toList());
   }
+
+  List<SugestaoLocalRodizioStruct> _SugestaoLocalRodizio = [];
+  List<SugestaoLocalRodizioStruct> get SugestaoLocalRodizio =>
+      _SugestaoLocalRodizio;
+  set SugestaoLocalRodizio(List<SugestaoLocalRodizioStruct> value) {
+    _SugestaoLocalRodizio = value;
+  }
+
+  void addToSugestaoLocalRodizio(SugestaoLocalRodizioStruct value) {
+    SugestaoLocalRodizio.add(value);
+  }
+
+  void removeFromSugestaoLocalRodizio(SugestaoLocalRodizioStruct value) {
+    SugestaoLocalRodizio.remove(value);
+  }
+
+  void removeAtIndexFromSugestaoLocalRodizio(int index) {
+    SugestaoLocalRodizio.removeAt(index);
+  }
+
+  void updateSugestaoLocalRodizioAtIndex(
+    int index,
+    SugestaoLocalRodizioStruct Function(SugestaoLocalRodizioStruct) updateFn,
+  ) {
+    SugestaoLocalRodizio[index] = updateFn(_SugestaoLocalRodizio[index]);
+  }
+
+  void insertAtIndexInSugestaoLocalRodizio(
+      int index, SugestaoLocalRodizioStruct value) {
+    SugestaoLocalRodizio.insert(index, value);
+  }
 }
 
 void _safeInit(Function() initializeField) {

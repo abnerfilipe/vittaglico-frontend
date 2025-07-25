@@ -154,7 +154,7 @@ class _CalcularCorrecaoWidgetState extends State<CalcularCorrecaoWidget> {
                                     constraints: BoxConstraints(
                                       maxHeight:
                                           MediaQuery.sizeOf(context).height *
-                                              0.8,
+                                              0.7,
                                     ),
                                     decoration: BoxDecoration(),
                                     child: Row(

@@ -14,6 +14,10 @@ class AplicacaoInsulinaStruct extends BaseStruct {
     String? usuarioId,
     InsulinaStruct? insulinaAssociada,
     String? insulinaId,
+    String? localAplicacao,
+    String? ladoAplicacao,
+    String? quadranteAplicacao,
+    String? descricaoCompleta,
   })  : _id = id,
         _quantidadeUnidades = quantidadeUnidades,
         _dataHoraAplicacao = dataHoraAplicacao,
@@ -21,7 +25,11 @@ class AplicacaoInsulinaStruct extends BaseStruct {
         _usuario = usuario,
         _usuarioId = usuarioId,
         _insulinaAssociada = insulinaAssociada,
-        _insulinaId = insulinaId;
+        _insulinaId = insulinaId,
+        _localAplicacao = localAplicacao,
+        _ladoAplicacao = ladoAplicacao,
+        _quadranteAplicacao = quadranteAplicacao,
+        _descricaoCompleta = descricaoCompleta;
 
   // "id" field.
   String? _id;
@@ -94,6 +102,34 @@ class AplicacaoInsulinaStruct extends BaseStruct {
 
   bool hasInsulinaId() => _insulinaId != null;
 
+  // "localAplicacao" field.
+  String? _localAplicacao;
+  String get localAplicacao => _localAplicacao ?? '';
+  set localAplicacao(String? val) => _localAplicacao = val;
+
+  bool hasLocalAplicacao() => _localAplicacao != null;
+
+  // "ladoAplicacao" field.
+  String? _ladoAplicacao;
+  String get ladoAplicacao => _ladoAplicacao ?? '';
+  set ladoAplicacao(String? val) => _ladoAplicacao = val;
+
+  bool hasLadoAplicacao() => _ladoAplicacao != null;
+
+  // "quadranteAplicacao" field.
+  String? _quadranteAplicacao;
+  String get quadranteAplicacao => _quadranteAplicacao ?? '';
+  set quadranteAplicacao(String? val) => _quadranteAplicacao = val;
+
+  bool hasQuadranteAplicacao() => _quadranteAplicacao != null;
+
+  // "descricaoCompleta" field.
+  String? _descricaoCompleta;
+  String get descricaoCompleta => _descricaoCompleta ?? '';
+  set descricaoCompleta(String? val) => _descricaoCompleta = val;
+
+  bool hasDescricaoCompleta() => _descricaoCompleta != null;
+
   static AplicacaoInsulinaStruct fromMap(Map<String, dynamic> data) =>
       AplicacaoInsulinaStruct(
         id: data['id'] as String?,
@@ -109,6 +145,10 @@ class AplicacaoInsulinaStruct extends BaseStruct {
             ? data['insulinaAssociada']
             : InsulinaStruct.maybeFromMap(data['insulinaAssociada']),
         insulinaId: data['insulinaId'] as String?,
+        localAplicacao: data['localAplicacao'] as String?,
+        ladoAplicacao: data['ladoAplicacao'] as String?,
+        quadranteAplicacao: data['quadranteAplicacao'] as String?,
+        descricaoCompleta: data['descricaoCompleta'] as String?,
       );
 
   static AplicacaoInsulinaStruct? maybeFromMap(dynamic data) => data is Map
@@ -124,6 +164,10 @@ class AplicacaoInsulinaStruct extends BaseStruct {
         'usuarioId': _usuarioId,
         'insulinaAssociada': _insulinaAssociada?.toMap(),
         'insulinaId': _insulinaId,
+        'localAplicacao': _localAplicacao,
+        'ladoAplicacao': _ladoAplicacao,
+        'quadranteAplicacao': _quadranteAplicacao,
+        'descricaoCompleta': _descricaoCompleta,
       }.withoutNulls;
 
   @override
@@ -158,6 +202,22 @@ class AplicacaoInsulinaStruct extends BaseStruct {
         ),
         'insulinaId': serializeParam(
           _insulinaId,
+          ParamType.String,
+        ),
+        'localAplicacao': serializeParam(
+          _localAplicacao,
+          ParamType.String,
+        ),
+        'ladoAplicacao': serializeParam(
+          _ladoAplicacao,
+          ParamType.String,
+        ),
+        'quadranteAplicacao': serializeParam(
+          _quadranteAplicacao,
+          ParamType.String,
+        ),
+        'descricaoCompleta': serializeParam(
+          _descricaoCompleta,
           ParamType.String,
         ),
       }.withoutNulls;
@@ -207,6 +267,26 @@ class AplicacaoInsulinaStruct extends BaseStruct {
           ParamType.String,
           false,
         ),
+        localAplicacao: deserializeParam(
+          data['localAplicacao'],
+          ParamType.String,
+          false,
+        ),
+        ladoAplicacao: deserializeParam(
+          data['ladoAplicacao'],
+          ParamType.String,
+          false,
+        ),
+        quadranteAplicacao: deserializeParam(
+          data['quadranteAplicacao'],
+          ParamType.String,
+          false,
+        ),
+        descricaoCompleta: deserializeParam(
+          data['descricaoCompleta'],
+          ParamType.String,
+          false,
+        ),
       );
 
   @override
@@ -222,7 +302,11 @@ class AplicacaoInsulinaStruct extends BaseStruct {
         usuario == other.usuario &&
         usuarioId == other.usuarioId &&
         insulinaAssociada == other.insulinaAssociada &&
-        insulinaId == other.insulinaId;
+        insulinaId == other.insulinaId &&
+        localAplicacao == other.localAplicacao &&
+        ladoAplicacao == other.ladoAplicacao &&
+        quadranteAplicacao == other.quadranteAplicacao &&
+        descricaoCompleta == other.descricaoCompleta;
   }
 
   @override
@@ -234,7 +318,11 @@ class AplicacaoInsulinaStruct extends BaseStruct {
         usuario,
         usuarioId,
         insulinaAssociada,
-        insulinaId
+        insulinaId,
+        localAplicacao,
+        ladoAplicacao,
+        quadranteAplicacao,
+        descricaoCompleta
       ]);
 }
 
@@ -247,6 +335,10 @@ AplicacaoInsulinaStruct createAplicacaoInsulinaStruct({
   String? usuarioId,
   InsulinaStruct? insulinaAssociada,
   String? insulinaId,
+  String? localAplicacao,
+  String? ladoAplicacao,
+  String? quadranteAplicacao,
+  String? descricaoCompleta,
 }) =>
     AplicacaoInsulinaStruct(
       id: id,
@@ -257,4 +349,8 @@ AplicacaoInsulinaStruct createAplicacaoInsulinaStruct({
       usuarioId: usuarioId,
       insulinaAssociada: insulinaAssociada ?? InsulinaStruct(),
       insulinaId: insulinaId,
+      localAplicacao: localAplicacao,
+      ladoAplicacao: ladoAplicacao,
+      quadranteAplicacao: quadranteAplicacao,
+      descricaoCompleta: descricaoCompleta,
     );
