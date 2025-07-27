@@ -2,36 +2,47 @@ version: 0.2
 
 env:
   variables:
-    FLUTTER_HOME: /opt/flutter
+    AWS_REGION: "us-east-2"
     AWS_ACCOUNT_ID: "535615247325"
     IMAGE_REPO_NAME: "vittaglico-frontend"
     IMAGE_TAG: "latest"
-    AWS_REGION: "us-east-2"
+    CONTAINER_NAME: "vittaglico-frontend-container"
+    FLUTTER_HOME: "/opt/flutter"
 
 phases:
   install:
+    runtime-versions:
+      nodejs: 20
     commands:
+      - echo "Instalando Flutter..."
       - git clone https://github.com/flutter/flutter.git $FLUTTER_HOME
       - export PATH="$PATH:$FLUTTER_HOME/bin"
       - flutter channel stable
       - flutter upgrade
       - flutter doctor -v
+  pre_build:
+    commands:
+      - echo "Instalando dependências Flutter..."
       - flutter pub get
+      - echo "Autenticando no Amazon ECR..."
+      - aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com
   build:
     commands:
+      - echo "Compilando aplicação Flutter para web..."
       - flutter build web --release
-      - echo "Construindo imagem Docker com Nginx para Flutter Web..."
-      - docker build -t $IMAGE_REPO_NAME:$IMAGE_TAG -f Dockerfile .
-      - docker tag $IMAGE_REPO_NAME:$IMAGE_TAG 535615247325.dkr.ecr.us-east-2.amazonaws.com/vittaglico-frontend:$IMAGE_TAG
+      - echo "Construindo a imagem Docker..."
+      - docker build -t $IMAGE_REPO_NAME:$IMAGE_TAG .
+      - echo "Marcando a imagem Docker..."
+      - docker tag $IMAGE_REPO_NAME:$IMAGE_TAG $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
   post_build:
     commands:
-      - echo "Autenticando com o ECR..."
-      - aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com
-      - echo "Enviando imagem para o ECR..."
-      - docker push 535615247325.dkr.ecr.us-east-2.amazonaws.com/vittaglico-frontend:$IMAGE_TAG
-      - echo "Imagem enviada para o ECR: 535615247325.dkr.ecr.us-east-2.amazonaws.com/vittaglico-frontend:$IMAGE_TAG"
+      - echo "Enviando a imagem Docker para o ECR..."
+      - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
+      - echo "Build concluído. Preparando para implantação..."
+      - echo "Criando arquivo de definições de imagem..."
+      - printf '[{"name":"%s","imageUri":"%s"}]' $CONTAINER_NAME $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG > imagedefinitions.json
 
 artifacts:
   files:
-    - "**/*"
-  base-directory: "build/web"
+    - imagedefinitions.json
+  discard-paths: yes
