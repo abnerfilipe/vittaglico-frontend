@@ -1,8 +1,14 @@
 version: 0.2
 
+env:
+  variables:
+    FLUTTER_HOME: /opt/flutter
+
 phases:
   install:
     commands:
+      - git clone https://github.com/flutter/flutter.git $FLUTTER_HOME
+      - export PATH="$PATH:$FLUTTER_HOME/bin"
       - flutter channel stable
       - flutter upgrade
       - flutter doctor -v
