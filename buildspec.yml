@@ -22,14 +22,14 @@ phases:
       - flutter build web --release
       - echo "Construindo imagem Docker com Nginx para Flutter Web..."
       - docker build -t $IMAGE_REPO_NAME:$IMAGE_TAG -f Dockerfile .
-      - docker tag $IMAGE_REPO_NAME:$IMAGE_TAG 535615247325.dkr.ecr.us-east-2.amazonaws.com/vittaglico-frontend:$IMAGE_TAG
+      - docker tag $IMAGE_REPO_NAME:$IMAGE_TAG $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
   post_build:
     commands:
       - echo "Autenticando com o ECR..."
       - aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com
       - echo "Enviando imagem para o ECR..."
-      - docker push 535615247325.dkr.ecr.us-east-2.amazonaws.com/vittaglico-frontend:$IMAGE_TAG
-      - echo "Imagem enviada para o ECR: 535615247325.dkr.ecr.us-east-2.amazonaws.com/vittaglico-frontend:$IMAGE_TAG"
+      - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
+      - echo "Imagem enviada para o ECR: $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG"
 
 artifacts:
   files:
